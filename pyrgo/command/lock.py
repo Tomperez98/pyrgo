@@ -1,5 +1,6 @@
 """lock command."""
 import click
+
 from pyrgo import _pyrgo
 
 
@@ -7,4 +8,5 @@ from pyrgo import _pyrgo
 def lock() -> None:
     """Lock dependencies."""
     print(dir(_pyrgo))
+
     print(_pyrgo.read_pyproject())

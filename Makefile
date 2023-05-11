@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 SHELL:=/usr/bin/env bash
 OS = $(shell uname | tr A-Z a-z)
-sources = fin_ally tests scripts
+sources = pyrgo tests scripts
 
 .PHONY: new-release
 new-release: ## Prepare new release for github.

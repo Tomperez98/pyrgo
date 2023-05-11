@@ -30,7 +30,6 @@ pyrgo = "pyrgo.__main__:cli"
 [tool.maturin]
 features = ["pyo3/extension-module"]
 module-name = "pyrgo._pyrgo"
-python-source = "python"
 strip = true
 
 [tool.ruff]
@@ -84,7 +83,6 @@ include = [
 [tool.mypy]
 files = [
     "pyrgo",
-    "tests",
 ]
 show_error_codes = true
 follow_imports = "normal"
