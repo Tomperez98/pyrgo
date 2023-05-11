@@ -29,6 +29,7 @@ pyrgo = "pyrgo.__main__:cli"
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
+module-name = "pyrgo._pyrgo"
 python-source = "python"
 strip = true
 
