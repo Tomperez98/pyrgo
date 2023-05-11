@@ -9,4 +9,6 @@ name = "pyrgo"
 crate-type = ["cdylib"]
 
 [dependencies]
+clap = "4.2.7"
 pyo3 = "0.18.3"
+toml = "0.7.3"

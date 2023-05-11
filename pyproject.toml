@@ -10,12 +10,93 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
-
-[tool.maturin]
-features = ["pyo3/extension-module"]
+dependencies = [
+    "click",
+    "ruff",
+    "mypy",
+    "black",
+    "pip-tools",
+]
 
 [project.optional-dependencies]
 dev = [
-    "pip-tools",
     "maturin",
+    "material",
 ]
+
+[project.scripts]
+pyrgo = "pyrgo.__main__:cli"
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+python-source = "python"
+strip = true
+
+[tool.ruff]
+line-length = 88
+ignore = [
+    "ANN101",
+    "D203",
+    "D212",
+]
+select = ["ALL"]
+fix = false
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+[tool.ruff.per-file-ignores]
+"scripts/*.py" = ["INP001"]
+"__init__.py" = ["D104"]
+
+[tool.ruff.isort]
+force-wrap-aliases = true
+combine-as-imports = true
+
+[tool.ruff.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+
+[tool.black]
+line-length = 88
+include = [
+    "pyrgo"
+]
+[tool.mypy]
+files = [
+    "pyrgo",
+    "tests",
+]
+show_error_codes = true
+follow_imports = "normal"
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+disallow_any_generics = true
+check_untyped_defs = true
+no_implicit_reexport = true
+warn_unused_configs = true
+disallow_subclassing_any = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+explicit_package_bases = true
