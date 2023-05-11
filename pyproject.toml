@@ -21,7 +21,6 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "maturin",
-    "material",
 ]
 
 [project.scripts]
