@@ -1,8 +1,6 @@
-use pyo3::prelude::*;
 use std::env;
 use std::fs;
 
-#[pyfunction]
 pub fn read_pyproject() -> String {
     let cwd = env::current_dir().expect("No able to indentify current directory.");
     let pyproject =

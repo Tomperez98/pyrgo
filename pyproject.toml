@@ -76,9 +76,8 @@ ban-relative-imports = "all"
 
 [tool.black]
 line-length = 88
-include = [
-    "pyrgo"
-]
+include = '\.pyi?$'
+
 [tool.mypy]
 files = [
     "pyrgo",

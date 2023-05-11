@@ -12,3 +12,4 @@ crate-type = ["cdylib"]
 clap = "4.2.7"
 pyo3 = "0.18.3"
 toml = "0.7.3"
+walkdir = "2.3.3"
