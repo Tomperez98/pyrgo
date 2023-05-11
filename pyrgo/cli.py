@@ -2,10 +2,10 @@
 import click
 
 from pyrgo.command.check import check
+from pyrgo.command.clean import clean
 from pyrgo.command.fmt import fmt
 from pyrgo.command.lock import lock
 from pyrgo.command.venv import venv
-from pyrgo.command.clean import clean
 
 
 @click.group()

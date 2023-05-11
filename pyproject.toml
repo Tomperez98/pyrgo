@@ -26,6 +26,11 @@ dev = [
 [project.scripts]
 pyrgo = "pyrgo.__main__:cli"
 
+[project.urls]
+Documentation = "https://github.com/Tomperez98/pyrgo#readme"
+Issues = "https://github.com/Tomperez98/pyrgo/issues"
+Source = "https://github.com/Tomperez98/pyrgo"
+
 [tool.maturin]
 features = ["pyo3/extension-module"]
 module-name = "pyrgo._pyrgo"
