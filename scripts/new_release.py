@@ -1,10 +1,9 @@
 """New release."""
 import pathlib
-
-import tomli
+import webbrowser
 from urllib.parse import urlencode
 
-import webbrowser
+import tomli
 
 
 def project_version(cwd: pathlib.Path) -> str:

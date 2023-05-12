@@ -84,9 +84,6 @@ line-length = 88
 include = '\.pyi?$'
 
 [tool.mypy]
-files = [
-    "pyrgo",
-]
 show_error_codes = true
 follow_imports = "normal"
 strict_optional = true

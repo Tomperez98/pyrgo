@@ -2,10 +2,7 @@
 
 import click
 
-from pyrgo import _pyrgo
-
 
 @click.command()
 def clean() -> None:
-    """Clear projects caches."""
-    _pyrgo.all_folders()
+    """Remove artifacts that pyrgo has generated in the past."""

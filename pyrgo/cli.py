@@ -1,11 +1,16 @@
 """Root CLI."""
+
 import click
 
+from pyrgo.command.add import add
 from pyrgo.command.check import check
 from pyrgo.command.clean import clean
 from pyrgo.command.fmt import fmt
+from pyrgo.command.init import init
 from pyrgo.command.lock import lock
+from pyrgo.command.new import new
 from pyrgo.command.venv import venv
+from pyrgo.utils import add_commands
 
 
 @click.group()
@@ -14,8 +19,16 @@ def cli() -> None:
     """pyrgo. Python package manager."""
 
 
-cli.add_command(cmd=fmt, name="fmt")
-cli.add_command(cmd=lock, name="lock")
-cli.add_command(cmd=check, name="check")
-cli.add_command(cmd=venv, name="venv")
-cli.add_command(cmd=clean, name="clean")
+add_commands(
+    cli=cli,
+    commands=[
+        check,
+        clean,
+        fmt,
+        init,
+        lock,
+        new,
+        venv,
+        add,
+    ],
+)
