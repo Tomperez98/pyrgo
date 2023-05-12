@@ -16,6 +16,9 @@ dependencies = [
     "mypy",
     "black",
     "pip-tools",
+    "pytest",
+    "mkdocs-material",
+    "hatch"
 ]
 
 [project.optional-dependencies]
