@@ -20,18 +20,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest] # [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Read `.tool-versions`
-        uses: marocchino/tool-versions-action@v1.1.1
-        id: versions
-
       - name: Set up Python ${{ steps.versions.outputs.python }}
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ steps.versions.outputs.python }}
+          python-version: ${{ matrix.python-version }}
           cache: "pip"
           cache-dependency-path: pyproject.toml
 

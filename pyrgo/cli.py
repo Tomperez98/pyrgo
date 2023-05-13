@@ -3,6 +3,7 @@
 import click
 
 from pyrgo.command.add import add
+from pyrgo.command.build import build
 from pyrgo.command.check import check
 from pyrgo.command.clean import clean
 from pyrgo.command.docs import docs
@@ -36,5 +37,6 @@ add_commands(
         test,
         docs,
         remove,
+        build,
     ],
 )
