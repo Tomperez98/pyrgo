@@ -7,7 +7,6 @@ import click
 
 from pyrgo.utilities.command import PythonExecCommand, inform_and_run_program
 from pyrgo.utilities.project import (
-    extract_pytest_relevant_paths,
     list_pytest_markers,
     read_pyproject,
 )
@@ -45,10 +44,7 @@ def test(
     marker: Optional[str],
 ) -> None:
     """Execute tests using `pytest`."""
-    cwd = pathlib.Path().cwd()
-    content = read_pyproject(cwd=cwd)
-
-    args_to_add = extract_pytest_relevant_paths(content=content)
+    args_to_add: List[str] = []
     if not no_strict_markers:
         args_to_add.append("--strict-markers")
 

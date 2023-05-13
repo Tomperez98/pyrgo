@@ -1,12 +1,10 @@
 """project utilities."""
 import pathlib
-from functools import cache
 from typing import Any, Dict, List
 
 import tomli
 
 
-@cache
 def read_pyproject(cwd: pathlib.Path) -> Dict[str, Any]:
     """Read `pyproject.toml`."""
     path_to_pyproject = cwd.joinpath("pyproject.toml")

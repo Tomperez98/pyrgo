@@ -20,7 +20,8 @@ dependencies = [
     "pip-tools",
     "pytest",
     "mkdocs-material",
-    "hatch"
+    "hatch",
+    "tomli"
 ]
 
 [[project.authors]]

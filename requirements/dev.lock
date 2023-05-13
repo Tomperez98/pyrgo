@@ -170,6 +170,7 @@ tomli==2.0.1
     #   hatchling
     #   mypy
     #   pyproject-hooks
+    #   pyrgo (pyproject.toml)
     #   pytest
 tomli-w==1.0.0
     # via hatch
