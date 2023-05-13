@@ -1,6 +1,7 @@
 """command utilities."""
 import subprocess
 import sys
+from typing import List
 
 if sys.version_info >= (3, 9):
     from typing import Literal
@@ -20,7 +21,7 @@ class PythonExecCommand:
         self.program = program
         self.args = [sys.executable, "-m", program]
 
-    def add_args(self, args: list[str]) -> Self:
+    def add_args(self, args: List[str]) -> Self:
         """Add args to execution."""
         self.args.extend(args)
         return self

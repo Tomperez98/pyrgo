@@ -1,5 +1,6 @@
 """docs serve command."""
 import sys
+from typing import List
 
 if sys.version_info >= (3, 9):
     from typing import Literal
@@ -52,7 +53,7 @@ def serve(
     strict: bool,
 ) -> None:
     """Serve project documentation."""
-    args_to_add: list[str] = ["serve"]
+    args_to_add: List[str] = ["serve"]
 
     if strict:
         args_to_add.append("--strict")

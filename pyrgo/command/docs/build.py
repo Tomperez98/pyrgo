@@ -1,5 +1,6 @@
 """docs build documentation."""
 import sys
+from typing import List
 
 if sys.version_info >= (3, 9):
     from typing import Literal
@@ -38,7 +39,7 @@ def build(
     strict: bool,
 ) -> None:
     """Build project documentation."""
-    args_to_add: list[str] = ["build"]
+    args_to_add: List[str] = ["build"]
     if strict:
         args_to_add.append("--strict")
     args_to_add.extend(["--theme", theme])
