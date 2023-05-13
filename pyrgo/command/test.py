@@ -1,10 +1,23 @@
 """test command."""
 
-from typing import Optional
+import pathlib
+from typing import List, Optional
 
 import click
 
 from pyrgo.utilities.command import PythonExecCommand, inform_and_run_program
+from pyrgo.utilities.project import (
+    extract_pytest_relevant_paths,
+    list_pytest_markers,
+    read_pyproject,
+)
+
+
+def dynamic_marker_choices() -> List[str]:
+    """Dynamic markers for options."""
+    cwd = pathlib.Path().cwd()
+    content = read_pyproject(cwd=cwd)
+    return list_pytest_markers(content=content)
 
 
 @click.command()
@@ -13,10 +26,7 @@ from pyrgo.utilities.command import PythonExecCommand, inform_and_run_program
     "--marked",
     "marker",
     type=click.Choice(
-        choices=[
-            "unit",
-            "integration",
-        ],
+        choices=dynamic_marker_choices(),
     ),
     default=None,
     help="Run tests based on marks. By default all tests are executed.",
@@ -35,9 +45,10 @@ def test(
     marker: Optional[str],
 ) -> None:
     """Execute tests using `pytest`."""
-    args_to_add = [
-        "tests",
-    ]
+    cwd = pathlib.Path().cwd()
+    content = read_pyproject(cwd=cwd)
+
+    args_to_add = extract_pytest_relevant_paths(content=content)
     if not no_strict_markers:
         args_to_add.append("--strict-markers")
 
