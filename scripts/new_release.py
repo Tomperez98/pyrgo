@@ -1,31 +1,16 @@
 """New release."""
 import pathlib
 import webbrowser
+from typing import Any, Dict
 from urllib.parse import urlencode
 
 import tomli
 
 
-def project_version(cwd: pathlib.Path) -> str:
-    """Read `Cargo.toml` current package version."""
+def project_project(cwd: pathlib.Path) -> Dict[str, Any]:
+    """Read `pyproject.toml` project."""
     try:
-        cargo_toml = tomli.loads(
-            cwd.joinpath(
-                "Cargo.toml",
-            ).read_text(encoding="utf-8"),
-        )
-    except FileNotFoundError:
-        raise
-    except Exception:
-        raise
-
-    return cargo_toml["package"]["version"]
-
-
-def project_source(cwd: pathlib.Path) -> str:
-    """Read `Source` from `pyproject.toml`."""
-    try:
-        pyproject_toml = tomli.loads(
+        pyproject = tomli.loads(
             cwd.joinpath(
                 "pyproject.toml",
             ).read_text(encoding="utf-8"),
@@ -35,22 +20,22 @@ def project_source(cwd: pathlib.Path) -> str:
     except Exception:
         raise
 
-    return pyproject_toml["project"]["urls"]["Source"]
+    return pyproject["project"]
 
 
 def main() -> None:
     """Prepare new release."""
     cwd = pathlib.Path().cwd()
-    version = project_version(cwd=cwd)
+    project = project_project(cwd=cwd)
+    version = project["version"]
+    source = project["urls"]["Source"]
     params = urlencode(
         query={
             "title": f"v{version}",
             "tag": f"v{version}",
         },
     )
-    package_source = project_source(cwd=cwd)
-
-    webbrowser.open_new_tab(url=f"{package_source}/releases/new?{params}")
+    webbrowser.open_new_tab(url=f"{source}/releases/new?{params}")
 
 
 if __name__ == "__main__":
