@@ -152,7 +152,7 @@ requests==2.30.0
     # via mkdocs-material
 rich==13.3.5
     # via hatch
-ruff==0.0.265
+ruff==0.0.267
     # via pyrgo (pyproject.toml)
 shellingham==1.5.0.post1
     # via hatch

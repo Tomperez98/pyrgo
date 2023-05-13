@@ -1,9 +1,11 @@
 [build-system]
-requires = ["maturin>=0.15,<0.16"]
-build-backend = "maturin"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "pyrgo"
+version = "0.2.0"
+readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
     "Programming Language :: Rust",
@@ -21,10 +23,12 @@ dependencies = [
     "hatch"
 ]
 
+[[project.authors]]
+name = "Tomas Perez Alvarez"
+email = "tomasperezalvarez@gmail.com"
+
 [project.optional-dependencies]
-dev = [
-    "maturin",
-]
+dev = []
 
 [project.scripts]
 pyrgo = "pyrgo.__main__:cli"
@@ -33,11 +37,6 @@ pyrgo = "pyrgo.__main__:cli"
 Documentation = "https://github.com/Tomperez98/pyrgo#readme"
 Issues = "https://github.com/Tomperez98/pyrgo/issues"
 Source = "https://github.com/Tomperez98/pyrgo"
-
-[tool.maturin]
-features = ["pyo3/extension-module"]
-module-name = "pyrgo._pyrgo"
-strip = true
 
 [tool.ruff]
 line-length = 88
@@ -92,7 +91,6 @@ testpaths = ["tests"]
 xfail_strict = true
 addopts = [
     "--import-mode=importlib",
-    "--strict-markers",
 ]
 markers = [
     "integration: mark integration tests.",
