@@ -1,5 +1,10 @@
 """test command utilitites."""
-from typing import Literal
+import sys
+
+if sys.version_info >= (3, 9):
+    from typing import Literal
+else:
+    from typing_extensions import Literal
 
 import pytest
 
