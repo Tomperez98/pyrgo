@@ -25,8 +25,8 @@ def dynamic_available_environments() -> List[str]:
             ),
         )
         sys.exit(1)
-    content = req_path.glob(f"*{wanted_prefix}")
-    return [x.name.removesuffix(wanted_prefix) for x in content if x.is_file()]
+
+    return [x.name for x in req_path.glob(f"*{wanted_prefix}") if x.is_file()]
 
 
 @click.command()
@@ -43,7 +43,8 @@ def dynamic_available_environments() -> List[str]:
     "editable",
     type=bool,
     default=True,
-    help="Install current project as editable after sync.",
+    help="Wheter or not to install current project in editable mode.\n"
+    "Defaults to `true`",
 )
 def sync(*, group: Optional[str], editable: bool) -> None:
     """Synchronize virtual environment with requirements.txt."""
