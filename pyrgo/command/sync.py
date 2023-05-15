@@ -55,7 +55,7 @@ def sync(*, group: Optional[str], editable: bool) -> None:
         command=PythonExecCommand(program="piptools").add_args(
             args=[
                 "sync",
-                f"{req_path!s}/{group}.lock",
+                f"{req_path!s}/{group}",
             ],
         ),
     )
