@@ -9,7 +9,7 @@ else:
     from typing_extensions import Literal
 import dataclasses
 
-import tomli
+import tomlkit
 from result import Err, Ok, Result
 from typing_extensions import assert_never
 
@@ -21,25 +21,51 @@ class Pyproject:
     """Dataclass representation of `pyproject.toml`."""
 
     cwd: pathlib.Path
-    data: Optional[Dict[str, Any]] = dataclasses.field(default=None, init=False)
+    data: Optional[tomlkit.TOMLDocument] = dataclasses.field(default=None, init=False)
 
     def read_pyproject_toml(self) -> Result[None, PyProjectTOMLNotFoundError]:
         """Read data from `pyproject.toml`."""
         path_to_pyproject = self.cwd.joinpath("pyproject.toml")
         if not path_to_pyproject.exists():
             return Err(PyProjectTOMLNotFoundError(cwd=self.cwd))
-        self.data = tomli.loads(path_to_pyproject.read_text(encoding="utf-8"))
+
+        self.data = tomlkit.parse(path_to_pyproject.read_bytes())
         return Ok()
+
+    def override_pyproject_toml(self) -> None:
+        """Override pyrproject toml."""
+        if not self.data:
+            raise RuntimeError
+        data_as_string = tomlkit.dumps(data=self.data, sort_keys=False)
+        path_to_pyproject = self.cwd.joinpath("pyprojecsst.toml")
+        path_to_pyproject.write_text(data=data_as_string, encoding="utf-8")
+
+    def project_section(self) -> Dict[str, Any]:
+        """Get `project` section."""
+        if not self.data:
+            raise RuntimeError
+
+        project: Optional[Dict[str, Any]] = self.data.get("project")
+        if not project:
+            raise RuntimeError
+        return project
 
     def _extract_pytest_relevant_paths(self) -> List[str]:
         if not self.data:
             raise RuntimeError
-        return self.data["tool"]["pytest"]["ini_options"]["testpaths"]
+        tools: Optional[Dict[str, Any]] = self.data.get("tool")
+        if not tools:
+            raise RuntimeError
+
+        return tools["pytest"]["ini_options"]["testpaths"]
 
     def _extract_core_path(self) -> str:
         if not self.data:
             raise RuntimeError
-        return self.data["project"]["name"]
+
+        project = self.project_section()
+
+        return project["name"]
 
     def extract_relevant_paths(self, paths_type: Literal["all", "pytest"]) -> List[str]:
         """Get relevant paths from `pyproject.toml` content."""
@@ -61,13 +87,18 @@ class Pyproject:
         def _split_and_first_element(x: str) -> str:
             return x.split(":")[0]
 
+        tools: Optional[Dict[str, Any]] = self.data.get("tool")
+        if not tools:
+            raise RuntimeError
         return [
             _split_and_first_element(x=x)
-            for x in self.data["tool"]["pytest"]["ini_options"]["markers"]
+            for x in tools["pytest"]["ini_options"]["markers"]
         ]
 
     def extract_optional_dependencies(self) -> Dict[str, Any]:
         """Extract optional depedencies."""
         if not self.data:
             raise RuntimeError
-        return self.data["project"]["optional-dependencies"]
+        project = self.project_section()
+
+        return project["optional-dependencies"]
