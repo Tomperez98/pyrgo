@@ -22,7 +22,8 @@ dependencies = [
     "mkdocs-material",
     "tomli",
     "result",
-    "build"
+    "build",
+    "tomlkit"
 ]
 
 [[project.authors]]
@@ -30,7 +31,7 @@ name = "Tomas Perez Alvarez"
 email = "tomasperezalvarez@gmail.com"
 
 [project.optional-dependencies]
-dev = []
+
 
 [project.scripts]
 pyrgo = "pyrgo.cli.__main__:cli"
