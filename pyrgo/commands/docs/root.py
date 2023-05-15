@@ -2,9 +2,9 @@
 
 import click
 
-from pyrgo.command.docs.build import build
-from pyrgo.command.docs.new import new
-from pyrgo.command.docs.serve import serve
+from pyrgo.commands.docs.build import build
+from pyrgo.commands.docs.new import new
+from pyrgo.commands.docs.serve import serve
 from pyrgo.utils import add_commands
 
 

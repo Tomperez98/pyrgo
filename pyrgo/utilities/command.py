@@ -3,14 +3,10 @@ import subprocess
 import sys
 from typing import List
 
-if sys.version_info >= (3, 9):
-    from typing import Literal
-else:
-    from typing_extensions import Literal
-
-
 import click
 from typing_extensions import Self
+
+from pyrgo.utilities.text import colorize_text
 
 
 class PythonExecCommand:
@@ -29,18 +25,6 @@ class PythonExecCommand:
     def run(self) -> None:
         """Run command."""
         subprocess.run(args=self.args)
-
-
-def colorize_text(
-    *,
-    text: str,
-    color: Literal[
-        "yellow",
-        "red",
-    ],
-) -> str:
-    """Colorize text."""
-    return click.style(text=text, fg=color)
 
 
 def inform_and_run_program(command: PythonExecCommand) -> None:

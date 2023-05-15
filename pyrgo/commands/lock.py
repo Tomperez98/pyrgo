@@ -9,14 +9,14 @@ from pyrgo.utilities.command import (
     PythonExecCommand,
     inform_and_run_program,
 )
-from pyrgo.utilities.project import extract_optional_dependencies, read_pyproject
+from pyrgo.utilities.project import Pyproject
 
 
 def dynamic_group_choices() -> List[str]:
     """Dynamic markers for options."""
-    cwd = pathlib.Path().cwd()
-    content = read_pyproject(cwd=cwd)
-    return list(extract_optional_dependencies(content=content).keys())
+    pyproject = Pyproject(cwd=pathlib.Path().cwd())
+    pyproject.read_pyproject_toml()
+    return list(pyproject.extract_optional_dependencies().keys())
 
 
 @click.command()

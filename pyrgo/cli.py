@@ -2,19 +2,19 @@
 
 import click
 
-from pyrgo.command.add import add
-from pyrgo.command.build import build
-from pyrgo.command.check import check
-from pyrgo.command.clean import clean
-from pyrgo.command.docs import docs
-from pyrgo.command.fmt import fmt
-from pyrgo.command.init import init
-from pyrgo.command.lock import lock
-from pyrgo.command.new import new
-from pyrgo.command.remove import remove
-from pyrgo.command.sync import sync
-from pyrgo.command.test import test
-from pyrgo.command.venv import venv
+from pyrgo.commands.add import add
+from pyrgo.commands.build import build
+from pyrgo.commands.check import check
+from pyrgo.commands.clean import clean
+from pyrgo.commands.docs import docs
+from pyrgo.commands.fmt import fmt
+from pyrgo.commands.init import init
+from pyrgo.commands.lock import lock
+from pyrgo.commands.new import new
+from pyrgo.commands.remove import remove
+from pyrgo.commands.sync import sync
+from pyrgo.commands.test import test
+from pyrgo.commands.venv import venv
 from pyrgo.utils import add_commands
 
 

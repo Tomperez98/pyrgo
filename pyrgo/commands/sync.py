@@ -7,9 +7,9 @@ import click
 
 from pyrgo.utilities.command import (
     PythonExecCommand,
-    colorize_text,
     inform_and_run_program,
 )
+from pyrgo.utilities.text import colorize_text
 
 
 def dynamic_available_environments() -> List[str]:
