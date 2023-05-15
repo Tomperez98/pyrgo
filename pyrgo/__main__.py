@@ -1,5 +1,7 @@
 """Python wrapper pyrgo entrypoint."""
 
+import sys
+
 from pyrgo.cli import cli
 
-cli()
+sys.exit(cli())

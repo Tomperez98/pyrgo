@@ -18,10 +18,13 @@ from pyrgo.commands.venv import venv
 from pyrgo.utils import add_commands
 
 
-@click.group()
-@click.version_option()
+@click.group(
+    context_settings={"help_option_names": ["-h", "--help"]},
+    invoke_without_command=False,
+)
+@click.version_option(prog_name="Pyrgo")
 def cli() -> None:
-    """pyrgo. Python package manager."""
+    """Pyrgo. Python package manager."""
 
 
 add_commands(

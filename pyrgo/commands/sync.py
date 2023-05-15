@@ -1,7 +1,7 @@
 """sync command."""
 import pathlib
 import sys
-from typing import List, Optional
+from typing import List
 
 import click
 
@@ -31,11 +31,11 @@ def dynamic_available_environments() -> List[str]:
 
 @click.command()
 @click.option(
-    "-g",
-    "--group",
-    "group",
+    "-env",
+    "--environment",
+    "environment",
     type=click.Choice(choices=dynamic_available_environments()),
-    default=None,
+    required=True,
     help="Sync to one of available enviroments.",
 )
 @click.option(
@@ -46,16 +46,15 @@ def dynamic_available_environments() -> List[str]:
     help="Wheter or not to install current project in editable mode.\n"
     "Defaults to `true`",
 )
-def sync(*, group: Optional[str], editable: bool) -> None:
+def sync(*, environment: str, editable: bool) -> None:
     """Synchronize virtual environment with requirements.txt."""
     cwd = pathlib.Path().cwd()
-
     req_path = cwd.joinpath("requirements")
     inform_and_run_program(
         command=PythonExecCommand(program="piptools").add_args(
             args=[
                 "sync",
-                f"{req_path!s}/{group}",
+                f"{req_path!s}/{environment}",
             ],
         ),
     )
