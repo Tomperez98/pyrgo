@@ -13,9 +13,9 @@ def _create_virtual_env(venv_dir: pathlib.Path) -> None:
 
 
 ACTIVATION_MSG: str = (
-    "\n```\nTo activate the virtual env run:\n\n"
+    "\nTo activate the virtual env run:\n\n"
     "On Windows, run:\n`.venv\\Scripts\\activate.bat`\n\n"
-    "On Unix or MacOS, run:\n`source .venv/bin/activate`\n```\n"
+    "On Unix or MacOS, run:\n`source .venv/bin/activate`\n"
 )
 
 
