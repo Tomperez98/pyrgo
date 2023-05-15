@@ -1,5 +1,6 @@
 """sync operation."""
 import pathlib
+from typing import List
 
 from result import Err, Ok, Result
 
@@ -29,23 +30,20 @@ def execute(
             ],
         ),
     )
+
+    project_install_args: List[str] = [
+        "install",
+        "--no-deps",
+    ]
+
     if editable:
-        inform_and_run_program(
-            command=PythonExecCommand(program="pip").add_args(
-                args=[
-                    "install",
-                    "-e",
-                    ".",
-                ],
-            ),
-        )
-    else:
-        inform_and_run_program(
-            command=PythonExecCommand(program="pip").add_args(
-                args=[
-                    "install",
-                    ".",
-                ],
-            ),
-        )
+        project_install_args.append("-e")
+
+    project_install_args.append(".")
+
+    inform_and_run_program(
+        command=PythonExecCommand(program="pip").add_args(
+            args=project_install_args,
+        ),
+    )
     return Ok()
