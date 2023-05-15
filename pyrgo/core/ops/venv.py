@@ -4,13 +4,8 @@ import pathlib
 import click
 from result import Ok, Result
 
+from pyrgo.core.contants import VENV_ACTIVATION_MSG
 from pyrgo.core.utilities.command import PythonExecCommand, inform_and_run_program
-
-ACTIVATION_MSG: str = (
-    "\nTo activate the virtual env run:\n\n"
-    "On Windows, run:\n`.venv\\Scripts\\activate.bat`\n\n"
-    "On Unix or MacOS, run:\n`source .venv/bin/activate`\n"
-)
 
 
 def create_virtual_env(venv_path: pathlib.Path) -> None:
@@ -38,5 +33,5 @@ def execute(cwd: pathlib.Path) -> Result[None, Exception]:
     else:
         create_virtual_env(venv_path=venv_path)
 
-    click.echo(message=ACTIVATION_MSG)
+    click.echo(message=VENV_ACTIVATION_MSG)
     return Ok()
