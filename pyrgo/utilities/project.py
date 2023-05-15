@@ -36,3 +36,8 @@ def list_pytest_markers(content: Dict[str, Any]) -> List[str]:
         _split_and_first_element(x=x)
         for x in content["tool"]["pytest"]["ini_options"]["markers"]
     ]
+
+
+def extract_optional_dependencies(content: Dict[str, Any]) -> Dict[str, Any]:
+    """Extract optional depedencies."""
+    return content["project"]["optional-dependencies"]

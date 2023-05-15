@@ -1,7 +1,70 @@
 """lock command."""
+import pathlib
+import sys
+from typing import List, Tuple
+
 import click
+
+from pyrgo.utilities.command import (
+    PythonExecCommand,
+    inform_and_run_program,
+)
+from pyrgo.utilities.project import extract_optional_dependencies, read_pyproject
+
+
+def dynamic_group_choices() -> List[str]:
+    """Dynamic markers for options."""
+    cwd = pathlib.Path().cwd()
+    content = read_pyproject(cwd=cwd)
+    return list(extract_optional_dependencies(content=content).keys())
 
 
 @click.command()
-def lock() -> None:
-    """Lock dependencies."""
+@click.option(
+    "-g",
+    "--group",
+    "groups",
+    type=click.Choice(choices=dynamic_group_choices()),
+    multiple=True,
+    default=None,
+    help="Name of an extras_require group to install.\n"
+    "By default only core requirements.",
+)
+def lock(groups: Tuple[str]) -> None:
+    """Lock dependencies using `piptools`."""
+    cwd = pathlib.Path().cwd()
+    cwd.joinpath("requirements").mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    if not groups:
+        inform_and_run_program(
+            command=PythonExecCommand(program="piptools").add_args(
+                args=[
+                    "compile",
+                    "--resolver=backtracking",
+                    "-o",
+                    "requirements/core.lock",
+                    "pyproject.toml",
+                ],
+            ),
+        )
+        sys.exit(0)
+
+    for group in groups:
+        inform_and_run_program(
+            command=PythonExecCommand(program="piptools").add_args(
+                args=[
+                    "compile",
+                    "--extra",
+                    group,
+                    "--resolver=backtracking",
+                    "-o",
+                    f"requirements/{group}.lock",
+                    "pyproject.toml",
+                ],
+            ),
+        )
+
+    sys.exit(0)

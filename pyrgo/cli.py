@@ -12,6 +12,7 @@ from pyrgo.command.init import init
 from pyrgo.command.lock import lock
 from pyrgo.command.new import new
 from pyrgo.command.remove import remove
+from pyrgo.command.sync import sync
 from pyrgo.command.test import test
 from pyrgo.command.venv import venv
 from pyrgo.utils import add_commands
@@ -38,5 +39,6 @@ add_commands(
         docs,
         remove,
         build,
+        sync,
     ],
 )
