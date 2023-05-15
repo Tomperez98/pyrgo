@@ -33,8 +33,10 @@ def dynamic_group_choices() -> List[str]:
 def lock(groups: Tuple[str]) -> None:
     """Lock dependencies using `piptools`."""
     cwd = pathlib.Path().cwd()
-    cwd.joinpath("requirements").mkdir(
-        parents=True,
+
+    req_path = cwd.joinpath("requirements")
+    req_path.mkdir(
+        parents=False,
         exist_ok=True,
     )
 
@@ -45,7 +47,7 @@ def lock(groups: Tuple[str]) -> None:
                     "compile",
                     "--resolver=backtracking",
                     "-o",
-                    "requirements/core.lock",
+                    f"{req_path!s}/core.lock",
                     "pyproject.toml",
                 ],
             ),
@@ -61,7 +63,7 @@ def lock(groups: Tuple[str]) -> None:
                     group,
                     "--resolver=backtracking",
                     "-o",
-                    f"requirements/{group}.lock",
+                    f"{req_path!s}/{group}.lock",
                     "pyproject.toml",
                 ],
             ),
