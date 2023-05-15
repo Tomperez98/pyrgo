@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyrgo"
-version = "0.2.2"
+version = "0.2.3"
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
@@ -20,9 +20,9 @@ dependencies = [
     "pip-tools",
     "pytest",
     "mkdocs-material",
-    "hatch",
     "tomli",
-    "result"
+    "result",
+    "build"
 ]
 
 [[project.authors]]

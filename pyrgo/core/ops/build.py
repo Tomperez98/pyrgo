@@ -7,10 +7,8 @@ from pyrgo.core.utilities.command import PythonExecCommand, inform_and_run_progr
 def execute() -> Result[None, Exception]:
     """Execute build operation."""
     inform_and_run_program(
-        command=PythonExecCommand(program="hatch").add_args(
-            args=[
-                "build",
-            ],
+        command=PythonExecCommand(program="build").add_args(
+            args=[],
         ),
     )
     return Ok()
