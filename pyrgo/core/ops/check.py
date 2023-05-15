@@ -8,7 +8,11 @@ from pyrgo.core.models.pyproject import Pyproject
 from pyrgo.core.utilities.command import PythonExecCommand, inform_and_run_program
 
 
-def execute(cwd: pathlib.Path) -> Result[None, Exception]:
+def execute(
+    *,
+    cwd: pathlib.Path,
+    add_noqa: bool,
+) -> Result[None, Exception]:
     """Execute check operation."""
     pyproject = Pyproject(cwd=cwd)
     read_pyproject = pyproject.read_pyproject_toml()
@@ -20,8 +24,13 @@ def execute(cwd: pathlib.Path) -> Result[None, Exception]:
         paths_type="all",
     )
 
+    ruff_args: List[str] = []
+    if add_noqa:
+        ruff_args.append("--add-noqa")
+    ruff_args.extend(relevant_paths)
+
     program_with_args: List[Tuple[str, List[str]]] = [
-        ("ruff", relevant_paths),
+        ("ruff", ruff_args),
         ("mypy", relevant_paths),
     ]
 

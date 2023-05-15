@@ -11,9 +11,17 @@ from pyrgo.core import ops
 
 
 @click.command()
-def check() -> None:
+@click.option(
+    "--add-noqa",
+    "add_noqa",
+    is_flag=True,
+    default=False,
+    type=bool,
+    help="Enable automatic additions of `noqa` directives to failing lines",
+)
+def check(*, add_noqa: bool) -> None:
     """Analyze the current package with `ruff` and `mypy`."""
-    executed = ops.check.execute(cwd=pathlib.Path().cwd())
+    executed = ops.check.execute(cwd=pathlib.Path().cwd(), add_noqa=add_noqa)
     if not isinstance(executed, Ok):
         click.echo(message=executed.err())
         sys.exit(1)
