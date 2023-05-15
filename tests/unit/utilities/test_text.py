@@ -8,7 +8,7 @@ else:
 
 import pytest
 
-from pyrgo.utilities.text import colorize_text
+from pyrgo.core.utilities.text import colorize_text
 
 
 @pytest.mark.unit()

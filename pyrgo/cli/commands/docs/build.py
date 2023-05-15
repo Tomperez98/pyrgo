@@ -1,6 +1,5 @@
 """docs build documentation."""
 import sys
-from typing import List
 
 if sys.version_info >= (3, 9):
     from typing import Literal
@@ -8,8 +7,9 @@ else:
     from typing_extensions import Literal
 
 import click
+from result import Ok
 
-from pyrgo.utilities.command import PythonExecCommand, inform_and_run_program
+from pyrgo.core import ops
 
 
 @click.command()
@@ -39,14 +39,9 @@ def build(
     strict: bool,
 ) -> None:
     """Build project documentation."""
-    args_to_add: List[str] = ["build"]
-    if strict:
-        args_to_add.append("--strict")
-    args_to_add.extend(["--theme", theme])
-    inform_and_run_program(
-        command=PythonExecCommand(
-            program="mkdocs",
-        ).add_args(
-            args=args_to_add,
-        ),
-    )
+    executed = ops.docs.build.execute(theme=theme, strict=strict)
+    if not isinstance(executed, Ok):
+        click.echo(message=executed.err())
+        sys.exit(1)
+
+    sys.exit(0)

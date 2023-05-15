@@ -2,10 +2,10 @@
 
 import click
 
-from pyrgo.commands.docs.build import build
-from pyrgo.commands.docs.new import new
-from pyrgo.commands.docs.serve import serve
-from pyrgo.utils import add_commands
+from pyrgo.cli.commands.docs.build import build
+from pyrgo.cli.commands.docs.new import new
+from pyrgo.cli.commands.docs.serve import serve
+from pyrgo.cli.utils import add_commands
 
 
 @click.group()

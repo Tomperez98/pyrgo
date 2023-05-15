@@ -1,6 +1,7 @@
 """docs serve command."""
 import sys
-from typing import List
+
+from result import Ok
 
 if sys.version_info >= (3, 9):
     from typing import Literal
@@ -10,10 +11,7 @@ else:
 
 import click
 
-from pyrgo.utilities.command import (
-    PythonExecCommand,
-    inform_and_run_program,
-)
+from pyrgo.core import ops
 
 
 @click.command()
@@ -53,17 +51,13 @@ def serve(
     strict: bool,
 ) -> None:
     """Serve project documentation."""
-    args_to_add: List[str] = ["serve"]
-
-    if strict:
-        args_to_add.append("--strict")
-    args_to_add.extend(["--theme", theme])
-    args_to_add.extend(["--dev-addr", dev_addr])
-
-    inform_and_run_program(
-        command=PythonExecCommand(
-            program="mkdocs",
-        ).add_args(
-            args=args_to_add,
-        ),
+    executed = ops.docs.serve.execute(
+        dev_address=dev_addr,
+        theme=theme,
+        strict=strict,
     )
+    if not isinstance(executed, Ok):
+        click.echo(message=executed.err())
+        sys.exit(1)
+
+    sys.exit(0)

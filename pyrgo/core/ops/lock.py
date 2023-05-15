@@ -1,47 +1,26 @@
-"""lock command."""
+"""lock operation."""
 import pathlib
-import sys
-from typing import List, Tuple
+from typing import Tuple
 
-import click
+from result import Ok, Result
 
-from pyrgo.utilities.command import (
+from pyrgo.core.contants import CORE_DEPENDENCIES_NAME
+from pyrgo.core.utilities.command import (
     PythonExecCommand,
     inform_and_run_program,
 )
-from pyrgo.utilities.project import Pyproject
 
 
-def dynamic_group_choices() -> List[str]:
-    """Dynamic markers for options."""
-    pyproject = Pyproject(cwd=pathlib.Path().cwd())
-    pyproject.read_pyproject_toml()
-    return ["core", *pyproject.extract_optional_dependencies().keys()]
-
-
-@click.command()
-@click.option(
-    "-g",
-    "--group",
-    "groups",
-    type=click.Choice(choices=dynamic_group_choices()),
-    multiple=True,
-    required=True,
-    help="Name of an extras_require group to install.",
-)
-def lock(groups: Tuple[str]) -> None:
-    """Lock dependencies using `piptools`."""
-    cwd = pathlib.Path().cwd()
+def execute(cwd: pathlib.Path, groups: Tuple[str]) -> Result[None, Exception]:
+    """Execute lock operation."""
     req_path = cwd.joinpath("requirements")
     req_path.mkdir(
         parents=False,
         exist_ok=True,
     )
-
     only_req = req_path.relative_to(cwd)
-
     for group in groups:
-        if group == "core":
+        if group == CORE_DEPENDENCIES_NAME:
             inform_and_run_program(
                 command=PythonExecCommand(program="piptools").add_args(
                     args=[
@@ -68,4 +47,4 @@ def lock(groups: Tuple[str]) -> None:
                 ),
             )
 
-    sys.exit(0)
+    return Ok()

@@ -10,7 +10,10 @@ else:
 import dataclasses
 
 import tomli
+from result import Err, Ok, Result
 from typing_extensions import assert_never
+
+from pyrgo.core.errors import PyProjectTOMLNotFoundError
 
 
 @dataclasses.dataclass(frozen=False, eq=False)
@@ -20,12 +23,13 @@ class Pyproject:
     cwd: pathlib.Path
     data: Optional[Dict[str, Any]] = dataclasses.field(default=None, init=False)
 
-    def read_pyproject_toml(self) -> None:
+    def read_pyproject_toml(self) -> Result[None, PyProjectTOMLNotFoundError]:
         """Read data from `pyproject.toml`."""
         path_to_pyproject = self.cwd.joinpath("pyproject.toml")
         if not path_to_pyproject.exists():
-            raise RuntimeError
+            return Err(PyProjectTOMLNotFoundError(cwd=self.cwd))
         self.data = tomli.loads(path_to_pyproject.read_text(encoding="utf-8"))
+        return Ok()
 
     def _extract_pytest_relevant_paths(self) -> List[str]:
         if not self.data:

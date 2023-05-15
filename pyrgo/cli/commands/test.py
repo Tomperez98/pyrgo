@@ -1,12 +1,14 @@
 """test command."""
 
 import pathlib
+import sys
 from typing import List, Optional
 
 import click
+from result import Ok
 
-from pyrgo.utilities.command import PythonExecCommand, inform_and_run_program
-from pyrgo.utilities.project import Pyproject
+from pyrgo.core import ops
+from pyrgo.core.models.pyproject import Pyproject
 
 
 def dynamic_marker_choices() -> List[str]:
@@ -32,13 +34,10 @@ def test(
     marker: Optional[str],
 ) -> None:
     """Execute tests using `pytest`."""
-    args_to_add: List[str] = []
+    executed = ops.test.execute(marker=marker)
 
-    if marker:
-        args_to_add.extend(["-m", marker])
+    if not isinstance(executed, Ok):
+        click.echo(message=executed.err())
+        sys.exit(1)
 
-    inform_and_run_program(
-        command=PythonExecCommand(program="pytest").add_args(
-            args=args_to_add,
-        ),
-    )
+    sys.exit(0)

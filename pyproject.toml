@@ -21,7 +21,8 @@ dependencies = [
     "pytest",
     "mkdocs-material",
     "hatch",
-    "tomli"
+    "tomli",
+    "result"
 ]
 
 [[project.authors]]
@@ -32,7 +33,7 @@ email = "tomasperezalvarez@gmail.com"
 dev = []
 
 [project.scripts]
-pyrgo = "pyrgo.__main__:cli"
+pyrgo = "pyrgo.cli.__main__:cli"
 
 [project.urls]
 Documentation = "https://github.com/Tomperez98/pyrgo#readme"

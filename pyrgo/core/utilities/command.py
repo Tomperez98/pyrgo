@@ -6,7 +6,7 @@ from typing import List
 import click
 from typing_extensions import Self
 
-from pyrgo.utilities.text import colorize_text
+from pyrgo.core.utilities.text import colorize_text
 
 
 class PythonExecCommand:
