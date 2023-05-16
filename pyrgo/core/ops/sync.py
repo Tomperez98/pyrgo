@@ -7,6 +7,7 @@ from pyrgo.core.models.command import (
     PythonExecCommand,
 )
 from pyrgo.core.utilities.command import inform_and_run_program
+from pyrgo.core.utilities.text import path_to_lock_file
 
 
 def execute(
@@ -19,14 +20,17 @@ def execute(
     piptools_command = PythonExecCommand(program="piptools")
     pip_command = PythonExecCommand(program="pip")
 
+    lock_file_path = path_to_lock_file(
+        cwd=app_config.cwd,
+        requirements_path=app_config.requirements_path,
+        group=environment,
+        lock_file_format=app_config.lock_file_format,
+    )
+
     piptools_command.add_args(
         args=[
             "sync",
-            "{requirements_path}/{environment}.{lock_file_format}".format(
-                requirements_path=app_config.requirements_path,
-                environment=environment,
-                lock_file_format=app_config.lock_file_format,
-            ),
+            lock_file_path,
         ],
     )
     pip_command.add_args(

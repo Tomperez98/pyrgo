@@ -33,7 +33,6 @@ email = "tomasperezalvarez@gmail.com"
 
 [project.optional-dependencies]
 
-
 [project.scripts]
 pyrgo = "pyrgo.cli.cli:root"
 
