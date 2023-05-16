@@ -12,6 +12,7 @@ def execute(
     *,
     cwd: pathlib.Path,
     add_noqa: bool,
+    ignore_noqa: bool,
 ) -> Result[None, Exception]:
     """Execute check operation."""
     pyproject = Pyproject(cwd=cwd)
@@ -27,6 +28,9 @@ def execute(
     ruff_args: List[str] = []
     if add_noqa:
         ruff_args.append("--add-noqa")
+    if ignore_noqa:
+        ruff_args.append("--ignore-noqa")
+
     ruff_args.extend(relevant_paths)
 
     program_with_args: List[Tuple[str, List[str]]] = [
