@@ -1,6 +1,6 @@
 # WIP
 
-[- [ ] `add` command](#add-command)
+[[ ] `add` command](#add-command)
 
 ## Notes on missing bullet points
 
