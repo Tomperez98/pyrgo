@@ -29,7 +29,7 @@ def execute() -> Result[None, Exception]:
                 message="Project already has a virtual enviroment located at `.venv`",
             )
         elif app_config.venv_path.is_file():
-            app_config.venv_path.unlink(missing_ok=False)
+            app_config.venv_path.unlink()
             create_virtual_env(venv_path=app_config.venv_path)
     else:
         create_virtual_env(venv_path=app_config.venv_path)
