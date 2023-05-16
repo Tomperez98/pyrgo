@@ -5,6 +5,7 @@ from typing import List
 
 import click
 
+from pyrgo.core.models.pyproject import Pyproject
 from pyrgo.core.utilities.text import colorize_text
 
 
@@ -36,3 +37,10 @@ def dynamic_available_environments() -> List[str]:
         for x in req_path.glob(f"*{wanted_prefix}")
         if x.is_file()
     ]
+
+
+def dynamic_marker_choices() -> List[str]:
+    """Dynamic markers for options."""
+    pyproject = Pyproject(cwd=pathlib.Path().cwd())
+    pyproject.read_pyproject_toml()
+    return pyproject.list_pytest_markers()
