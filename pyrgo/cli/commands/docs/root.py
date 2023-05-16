@@ -10,7 +10,7 @@ from pyrgo.cli.utils import add_commands
 
 @click.group()
 def docs() -> None:
-    """Document you project."""
+    """Document you project with `mkdocs-material`."""
 
 
 add_commands(
