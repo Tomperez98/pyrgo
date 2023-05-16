@@ -4,7 +4,7 @@ import sys
 if sys.version_info >= (3, 9):
     from typing import Literal
 else:
-    from typing_extensions import Literal
+    from typing_extensions import Literal  # pragma: no cover
 import pathlib
 
 import click
