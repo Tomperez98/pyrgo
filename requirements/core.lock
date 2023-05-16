@@ -87,7 +87,7 @@ pathspec==0.11.1
     # via black
 pip-api==0.0.30
     # via pip-audit
-pip-audit==2.5.4
+pip-audit==2.4.13
     # via pyrgo (pyproject.toml)
 pip-requirements-parser==32.0.1
     # via pip-audit
@@ -124,6 +124,8 @@ requests==2.30.0
     # via
     #   cachecontrol
     #   mkdocs-material
+resolvelib==1.0.1
+    # via pip-audit
 result==0.10.0
     # via pyrgo (pyproject.toml)
 rich==13.3.5

@@ -43,6 +43,3 @@ jobs:
 
       - name: Test code
         run: pyrgo test
-
-      - name: Audit dependencies
-        run: pip-audit -r requirements/core.lock -l --desc

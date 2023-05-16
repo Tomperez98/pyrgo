@@ -24,7 +24,7 @@ dependencies = [
     "result",
     "build",
     "tomlkit",
-    "pip-audit",
+    "pip-audit==2.4.13",
 ]
 
 [[project.authors]]
