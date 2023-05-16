@@ -2,7 +2,7 @@
 
 from result import Ok, Result
 
-from pyrgo.core.config import app_config
+from pyrgo.core.config import Config
 from pyrgo.core.models.command import (
     PythonExecCommand,
 )
@@ -13,6 +13,7 @@ def execute(
     *,
     environment: str,
     editable: bool,
+    app_config: Config,
 ) -> Result[None, Exception]:
     """Execute sync operation."""
     piptools_command = PythonExecCommand(program="piptools")

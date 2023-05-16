@@ -13,8 +13,8 @@ from pyrgo.logging import logger
 
 
 @dataclasses.dataclass(frozen=True, repr=False, eq=False)
-class _Config:
-    """Configuration variables dataclass."""
+class Config:
+    """Configuration variables."""
 
     cwd: pathlib.Path
     pyproject_toml_path: pathlib.Path
@@ -50,7 +50,7 @@ class _ConfigBuilder:
         artifacts_paths: Set[str],
         venv: str,
     ) -> Self:
-        """Attach application paths."""
+        """Attach configuration by paths."""
         self.cwd = cwd
         self.pyproject_toml_path = cwd.joinpath("pyproject.toml")
         if not self.pyproject_toml_path.exists() and self.pyproject_toml_path.is_file():
@@ -81,12 +81,14 @@ class _ConfigBuilder:
         core_dependecies_name: str,
         lock_file_format: str,
     ) -> Self:
+        """Attach various configurations."""
         self.venv_activation_msg = venv_activation_msg
         self.core_dependecies_name = core_dependecies_name
         self.lock_file_format = lock_file_format
         return self
 
-    def build(self) -> _Config:
+    def build(self) -> Config:
+        """Build config."""
         if not (
             self.artifacts_paths
             and self.cwd
@@ -104,7 +106,7 @@ class _ConfigBuilder:
         ):
             raise RuntimeError
 
-        return _Config(
+        return Config(
             cwd=self.cwd,
             pyproject_toml_path=self.pyproject_toml_path,
             requirements_path=self.requirements_path,

@@ -3,14 +3,14 @@ from typing import List, Tuple
 
 from result import Ok, Result
 
-from pyrgo.core.config import app_config
+from pyrgo.core.config import Config
 from pyrgo.core.models.command import (
     PythonExecCommand,
 )
 from pyrgo.core.utilities.command import inform_and_run_program
 
 
-def execute(groups: Tuple[str]) -> Result[None, Exception]:
+def execute(groups: Tuple[str], app_config: Config) -> Result[None, Exception]:
     """Execute lock operation."""
     only_req = app_config.requirements_path.relative_to(app_config.cwd)
     commands: List[PythonExecCommand] = []

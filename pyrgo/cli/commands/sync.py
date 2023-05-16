@@ -6,6 +6,7 @@ from result import Ok
 
 from pyrgo.cli.utils import dynamic_available_environments
 from pyrgo.core import ops
+from pyrgo.core.config import app_config
 
 
 @click.command()
@@ -30,6 +31,7 @@ def sync(*, environment: str, editable: bool) -> None:
     executed = ops.sync.execute(
         environment=environment,
         editable=editable,
+        app_config=app_config,
     )
     if not isinstance(executed, Ok):
         click.echo(message=executed.err())
