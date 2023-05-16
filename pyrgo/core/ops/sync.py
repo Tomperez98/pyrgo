@@ -22,7 +22,7 @@ def execute(
         PythonExecCommand(program="piptools").add_args(
             args=[
                 "sync",
-                f"{app_config.requirements_path!s}/{environment}.lock",
+                f"{app_config.requirements_path!s}/{environment}{app_config.lock_file_format}",
             ],
         ),
     )

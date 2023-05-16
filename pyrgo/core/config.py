@@ -23,6 +23,7 @@ class _Config:
     venv_path: pathlib.Path
     venv_activation_msg: str
     core_dependecies_name: str
+    lock_file_format: str
 
 
 class _ConfigBuilder:
@@ -37,6 +38,7 @@ class _ConfigBuilder:
         self.artifacts_paths: Optional[List[pathlib.Path]] = None
         self.venv_activation_msg: Optional[str] = None
         self.core_dependecies_name: Optional[str] = None
+        self.lock_file_format: Optional[str] = None
 
     def attach_paths(
         self,
@@ -52,7 +54,7 @@ class _ConfigBuilder:
             raise PyProjectTOMLNotFoundError(cwd=self.cwd)
         self.requirements_path = cwd.joinpath("requirements")
         if not self.requirements_path.exists():
-            logger.info(
+            logger.warning(
                 "creating `requirements/` directory at {location}",
                 location=self.requirements_path,
             )
@@ -67,9 +69,11 @@ class _ConfigBuilder:
         self,
         venv_activation_msg: str,
         core_dependecies_name: str,
+        lock_file_format: str,
     ) -> Self:
         self.venv_activation_msg = venv_activation_msg
         self.core_dependecies_name = core_dependecies_name
+        self.lock_file_format = lock_file_format
         return self
 
     def build(self) -> _Config:
@@ -82,7 +86,11 @@ class _ConfigBuilder:
             and self.venv_path
         ):
             raise RuntimeError
-        if not (self.venv_activation_msg and self.core_dependecies_name):
+        if not (
+            self.venv_activation_msg
+            and self.core_dependecies_name
+            and self.lock_file_format
+        ):
             raise RuntimeError
 
         return _Config(
@@ -94,6 +102,7 @@ class _ConfigBuilder:
             venv_activation_msg=self.venv_activation_msg,
             core_dependecies_name=self.core_dependecies_name,
             venv_path=self.venv_path,
+            lock_file_format=self.lock_file_format,
         )
 
 
@@ -119,5 +128,6 @@ app_config = (
             "On Unix or MacOS, run:\n`source .venv/bin/activate`\n"
         ),
         core_dependecies_name="core",
+        lock_file_format=".txt",
     )
 ).build()
