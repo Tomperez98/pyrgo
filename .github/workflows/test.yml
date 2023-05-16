@@ -34,8 +34,8 @@ jobs:
 
       - name: Install deps
         run: |
-          pip install -U pip && \
-          pip install -r requirements/core.lock && \
+          pip install -U pip
+          pip install -r requirements/core.lock
           pip install --no-deps -e .
 
       - name: Check code
