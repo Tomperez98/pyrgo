@@ -8,6 +8,7 @@ from typing_extensions import Self
 from pyrgo.core.errors import (
     PyProjectTOMLNotFoundError,
 )
+from pyrgo.core.models.pyproject import Pyproject
 from pyrgo.logging import logger
 
 
@@ -24,6 +25,7 @@ class _Config:
     venv_activation_msg: str
     core_dependecies_name: str
     lock_file_format: str
+    pyproject_toml: Pyproject
 
 
 class _ConfigBuilder:
@@ -39,6 +41,7 @@ class _ConfigBuilder:
         self.venv_activation_msg: Optional[str] = None
         self.core_dependecies_name: Optional[str] = None
         self.lock_file_format: Optional[str] = None
+        self.pyproject_toml: Optional[Pyproject] = None
 
     def attach_paths(
         self,
@@ -52,6 +55,12 @@ class _ConfigBuilder:
         self.pyproject_toml_path = cwd.joinpath("pyproject.toml")
         if not self.pyproject_toml_path.exists() and self.pyproject_toml_path.is_file():
             raise PyProjectTOMLNotFoundError(cwd=self.cwd)
+
+        self.pyproject_toml = Pyproject()
+        self.pyproject_toml.read_pyproject_toml(
+            pyproject_path=self.pyproject_toml_path,
+        ).unwrap()
+
         self.requirements_path = cwd.joinpath("requirements")
         if not self.requirements_path.exists():
             logger.warning(
@@ -63,6 +72,7 @@ class _ConfigBuilder:
         self.caches_paths = [cwd.joinpath(x) for x in cache_paths]
         self.artifacts_paths = [cwd.joinpath(x) for x in artifacts_paths]
         self.venv_path = cwd.joinpath(venv)
+
         return self
 
     def attach_other(
@@ -84,6 +94,7 @@ class _ConfigBuilder:
             and self.requirements_path
             and self.caches_paths
             and self.venv_path
+            and self.pyproject_toml
         ):
             raise RuntimeError
         if not (
@@ -103,6 +114,7 @@ class _ConfigBuilder:
             core_dependecies_name=self.core_dependecies_name,
             venv_path=self.venv_path,
             lock_file_format=self.lock_file_format,
+            pyproject_toml=self.pyproject_toml,
         )
 
 

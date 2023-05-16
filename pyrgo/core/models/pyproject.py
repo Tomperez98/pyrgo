@@ -13,8 +13,6 @@ import tomlkit
 from result import Ok, Result
 from typing_extensions import assert_never
 
-from pyrgo.core.config import app_config
-
 
 @dataclasses.dataclass(frozen=False, eq=False)
 class Pyproject:
@@ -30,12 +28,12 @@ class Pyproject:
         self.data = tomlkit.parse(pyproject_path.read_bytes())
         return Ok()
 
-    def override_pyproject_toml(self) -> None:
+    def override_pyproject_toml(self, new_path: pathlib.Path) -> None:
         """Override pyrproject toml."""
         if not self.data:
             raise RuntimeError
         data_as_string = tomlkit.dumps(data=self.data, sort_keys=False)
-        app_config.pyproject_toml_path.write_text(data=data_as_string, encoding="utf-8")
+        new_path.write_text(data=data_as_string, encoding="utf-8")
 
     def project_section(self) -> Dict[str, Any]:
         """Get `project` section."""

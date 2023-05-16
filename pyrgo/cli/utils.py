@@ -4,7 +4,6 @@ from typing import List
 import click
 
 from pyrgo.core.config import app_config
-from pyrgo.core.models.pyproject import Pyproject
 
 
 def add_commands(
@@ -27,16 +26,12 @@ def dynamic_available_environments() -> List[str]:
 
 def dynamic_marker_choices() -> List[str]:
     """Dynamic markers for options."""
-    pyproject = Pyproject()
-    pyproject.read_pyproject_toml(pyproject_path=app_config.pyproject_toml_path)
-    return pyproject.list_pytest_markers()
+    return app_config.pyproject_toml.list_pytest_markers()
 
 
 def dynamic_group_choices() -> List[str]:
     """Dynamic markers for options."""
-    pyproject = Pyproject()
-    pyproject.read_pyproject_toml(pyproject_path=app_config.pyproject_toml_path)
     return [
         app_config.core_dependecies_name,
-        *pyproject.extract_optional_dependencies().keys(),
+        *app_config.pyproject_toml.extract_optional_dependencies().keys(),
     ]

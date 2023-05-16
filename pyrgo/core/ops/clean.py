@@ -1,21 +1,13 @@
 """clean operation."""
 import shutil
 
-from result import Err, Ok, Result
+from result import Ok, Result
 
 from pyrgo.core.config import app_config
-from pyrgo.core.models.pyproject import Pyproject
 
 
 def execute() -> Result[None, Exception]:
     """Execute clean operation."""
-    pyproject = Pyproject()
-    read_pyproject = pyproject.read_pyproject_toml(
-        pyproject_path=app_config.pyproject_toml_path,
-    )
-    if not isinstance(read_pyproject, Ok):
-        return Err(read_pyproject.err())
-
     for cache in app_config.caches_paths:
         if cache.exists() and cache.is_dir():
             shutil.rmtree(cache)
@@ -28,7 +20,7 @@ def execute() -> Result[None, Exception]:
         else:
             continue
 
-    relevant_paths = pyproject.extract_relevant_paths(
+    relevant_paths = app_config.pyproject_toml.extract_relevant_paths(
         paths_type="all",
     )
 

@@ -1,10 +1,9 @@
 """fmt operation."""
 from typing import List, Tuple
 
-from result import Err, Ok, Result
+from result import Ok, Result
 
 from pyrgo.core.config import app_config
-from pyrgo.core.models.pyproject import Pyproject
 from pyrgo.core.utilities.command import (
     PythonExecCommand,
     inform_and_run_program,
@@ -13,15 +12,7 @@ from pyrgo.core.utilities.command import (
 
 def execute() -> Result[None, Exception]:
     """Execute fmt operation."""
-    pyproject = Pyproject()
-    read_pyproject = pyproject.read_pyproject_toml(
-        pyproject_path=app_config.pyproject_toml_path,
-    )
-
-    if not isinstance(read_pyproject, Ok):
-        return Err(read_pyproject.err())
-
-    relevant_paths = pyproject.extract_relevant_paths(paths_type="all")
+    relevant_paths = app_config.pyproject_toml.extract_relevant_paths(paths_type="all")
 
     program_with_args: List[Tuple[str, List[str]]] = [
         ("ruff", ["--fix-only", *relevant_paths]),

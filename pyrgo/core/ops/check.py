@@ -1,10 +1,9 @@
 """check operation."""
 from typing import List, Tuple
 
-from result import Err, Ok, Result
+from result import Ok, Result
 
 from pyrgo.core.config import app_config
-from pyrgo.core.models.pyproject import Pyproject
 from pyrgo.core.utilities.command import PythonExecCommand, inform_and_run_program
 
 
@@ -14,15 +13,7 @@ def execute(
     ignore_noqa: bool,
 ) -> Result[None, Exception]:
     """Execute check operation."""
-    pyproject = Pyproject()
-    read_pyproject = pyproject.read_pyproject_toml(
-        pyproject_path=app_config.pyproject_toml_path,
-    )
-
-    if not isinstance(read_pyproject, Ok):
-        return Err(read_pyproject.err())
-
-    relevant_paths = pyproject.extract_relevant_paths(
+    relevant_paths = app_config.pyproject_toml.extract_relevant_paths(
         paths_type="all",
     )
     ruff_args: List[str] = []
