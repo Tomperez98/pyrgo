@@ -2,7 +2,7 @@
 
 from result import Ok, Result
 
-from pyrgo.core.config import app_config
+from pyrgo.core.config import Config
 from pyrgo.core.models.command import (
     PythonExecCommand,
 )
@@ -13,6 +13,7 @@ def execute(
     *,
     add_noqa: bool,
     ignore_noqa: bool,
+    app_config: Config,
 ) -> Result[None, Exception]:
     """Execute check operation."""
     relevant_paths = app_config.pyproject_toml.extract_relevant_paths(paths_type="all")

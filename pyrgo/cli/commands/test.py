@@ -8,6 +8,7 @@ from result import Ok
 
 from pyrgo.cli.utils import dynamic_marker_choices
 from pyrgo.core import ops
+from pyrgo.core.config import app_config
 
 
 @click.command()
@@ -28,6 +29,7 @@ def test(
     """Execute tests using `pytest`."""
     executed = ops.test.execute(
         marker=marker,
+        app_config=app_config,
     )
     if not isinstance(executed, Ok):
         click.echo(message=executed.err())

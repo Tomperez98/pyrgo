@@ -7,6 +7,7 @@ import click
 from result import Ok
 
 from pyrgo.core import ops
+from pyrgo.core.config import app_config
 
 
 @click.command()
@@ -31,6 +32,7 @@ def check(*, add_noqa: bool, ignore_noqa: bool) -> None:
     executed = ops.check.execute(
         add_noqa=add_noqa,
         ignore_noqa=ignore_noqa,
+        app_config=app_config,
     )
     if not isinstance(executed, Ok):
         click.echo(message=executed.err())

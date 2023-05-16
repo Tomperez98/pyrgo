@@ -7,6 +7,7 @@ from result import Ok
 
 from pyrgo.cli.utils import dynamic_group_choices
 from pyrgo.core import ops
+from pyrgo.core.config import app_config
 
 
 @click.command()
@@ -21,7 +22,10 @@ from pyrgo.core import ops
 )
 def lock(groups: Tuple[str]) -> None:
     """Lock dependencies using `piptools`."""
-    executed = ops.lock.execute(groups=groups)
+    executed = ops.lock.execute(
+        groups=groups,
+        app_config=app_config,
+    )
     if not isinstance(executed, Ok):
         click.echo(message=executed.err())
         sys.exit(1)

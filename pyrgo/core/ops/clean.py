@@ -3,10 +3,10 @@ import shutil
 
 from result import Ok, Result
 
-from pyrgo.core.config import app_config
+from pyrgo.core.config import Config
 
 
-def execute() -> Result[None, Exception]:
+def execute(app_config: Config) -> Result[None, Exception]:
     """Execute clean operation."""
     for cache in app_config.caches_paths:
         if cache.exists() and cache.is_dir():
