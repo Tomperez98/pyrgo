@@ -15,9 +15,12 @@ Python project manager inspired in [Cargo](https://doc.rust-lang.org/cargo/).
 - Artifacts building:
   - [build](https://pypa-build.readthedocs.io/en/stable/)
 - Package management:
+  - [pip](https://pip.pypa.io/en/stable/)
   - [pip-tools](https://pip-tools.readthedocs.io/en/latest/)
 - Code documentation:
   - [mkdocs-material](https://squidfunk.github.io/mkdocs-material/)
+- Virtual enviroment:
+  - [venv](https://virtualenv.pypa.io/en/latest/)
 
 All behind a unified API.
 
