@@ -36,6 +36,8 @@ def execute() -> Result[None, Exception]:
             ),
         )
 
-    inform_and_run_program(commands=commands)
+    inform_and_run_program(
+        commands=commands,
+    )
 
     return Ok()

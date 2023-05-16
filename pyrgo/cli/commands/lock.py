@@ -1,23 +1,12 @@
 """lock command."""
 import sys
-from typing import List, Tuple
+from typing import Tuple
 
 import click
 from result import Ok
 
+from pyrgo.cli.utils import dynamic_group_choices
 from pyrgo.core import ops
-from pyrgo.core.config import app_config
-from pyrgo.core.models.pyproject import Pyproject
-
-
-def dynamic_group_choices() -> List[str]:
-    """Dynamic markers for options."""
-    pyproject = Pyproject()
-    pyproject.read_pyproject_toml(pyproject_path=app_config.pyproject_toml_path)
-    return [
-        app_config.core_dependecies_name,
-        *pyproject.extract_optional_dependencies().keys(),
-    ]
 
 
 @click.command()

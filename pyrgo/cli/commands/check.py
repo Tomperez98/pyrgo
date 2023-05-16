@@ -35,5 +35,4 @@ def check(*, add_noqa: bool, ignore_noqa: bool) -> None:
     if not isinstance(executed, Ok):
         click.echo(message=executed.err())
         sys.exit(1)
-
     sys.exit(0)

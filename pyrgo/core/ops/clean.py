@@ -13,7 +13,6 @@ def execute() -> Result[None, Exception]:
     read_pyproject = pyproject.read_pyproject_toml(
         pyproject_path=app_config.pyproject_toml_path,
     )
-
     if not isinstance(read_pyproject, Ok):
         return Err(read_pyproject.err())
 

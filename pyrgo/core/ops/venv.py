@@ -30,9 +30,15 @@ def execute() -> Result[None, Exception]:
             )
         elif app_config.venv_path.is_file():
             app_config.venv_path.unlink()
-            create_virtual_env(venv_path=app_config.venv_path)
+            create_virtual_env(
+                venv_path=app_config.venv_path,
+            )
     else:
-        create_virtual_env(venv_path=app_config.venv_path)
+        create_virtual_env(
+            venv_path=app_config.venv_path,
+        )
 
-    click.echo(message=app_config.venv_activation_msg)
+    click.echo(
+        message=app_config.venv_activation_msg,
+    )
     return Ok()

@@ -31,3 +31,13 @@ def dynamic_marker_choices() -> List[str]:
     pyproject = Pyproject()
     pyproject.read_pyproject_toml(pyproject_path=app_config.pyproject_toml_path)
     return pyproject.list_pytest_markers()
+
+
+def dynamic_group_choices() -> List[str]:
+    """Dynamic markers for options."""
+    pyproject = Pyproject()
+    pyproject.read_pyproject_toml(pyproject_path=app_config.pyproject_toml_path)
+    return [
+        app_config.core_dependecies_name,
+        *pyproject.extract_optional_dependencies().keys(),
+    ]

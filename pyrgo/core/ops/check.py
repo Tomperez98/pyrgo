@@ -25,7 +25,6 @@ def execute(
     relevant_paths = pyproject.extract_relevant_paths(
         paths_type="all",
     )
-
     ruff_args: List[str] = []
     if add_noqa:
         ruff_args.append("--add-noqa")
