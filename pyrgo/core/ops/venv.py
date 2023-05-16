@@ -4,7 +4,10 @@ import click
 from result import Ok, Result
 
 from pyrgo.core.config import app_config
-from pyrgo.core.utilities.command import PythonExecCommand, inform_and_run_program
+from pyrgo.core.models.command import (
+    PythonExecCommand,
+)
+from pyrgo.core.utilities.command import inform_and_run_program
 
 
 def execute() -> Result[None, Exception]:
