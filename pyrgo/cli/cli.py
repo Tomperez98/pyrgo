@@ -3,6 +3,7 @@
 import click
 
 from pyrgo.cli.commands.add import add
+from pyrgo.cli.commands.audit import audit
 from pyrgo.cli.commands.build import build
 from pyrgo.cli.commands.check import check
 from pyrgo.cli.commands.clean import clean
@@ -43,5 +44,6 @@ add_commands(
         remove,
         build,
         sync,
+        audit,
     ],
 )

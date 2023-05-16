@@ -23,7 +23,8 @@ dependencies = [
     "tomli",
     "result",
     "build",
-    "tomlkit"
+    "tomlkit",
+    "pip-audit",
 ]
 
 [[project.authors]]
