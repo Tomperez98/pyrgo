@@ -37,7 +37,7 @@ pyrgo -h
 #   build   Build project.
 #   check   Analyze the current package with `ruff` and `mypy`.
 #   clean   Remove artifacts that pyrgo has generated in the past.
-#   docs    Document you project.
+#   docs    Document you project with `mkdocs-material`.
 #   fmt     Format all files of the current project using `black` and `ruff`.
 #   init    Create a new pyrgo project in an existing directory.
 #   lock    Lock dependencies using `piptools`.
