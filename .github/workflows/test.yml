@@ -33,7 +33,10 @@ jobs:
           cache-dependency-path: pyproject.toml
 
       - name: Install deps
-        run: pip install -U pip && pip install -e ".[dev]"
+        run: |
+          pip install -U pip
+          pip install -r requirements/core.txt
+          pip install --no-deps -e .
 
       - name: Check code
         run: pyrgo check

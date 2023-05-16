@@ -1,21 +1,13 @@
 """test command."""
 
-import pathlib
 import sys
-from typing import List, Optional
+from typing import Optional
 
 import click
 from result import Ok
 
+from pyrgo.cli.utils import dynamic_marker_choices
 from pyrgo.core import ops
-from pyrgo.core.models.pyproject import Pyproject
-
-
-def dynamic_marker_choices() -> List[str]:
-    """Dynamic markers for options."""
-    pyproject = Pyproject(cwd=pathlib.Path().cwd())
-    pyproject.read_pyproject_toml()
-    return pyproject.list_pytest_markers()
 
 
 @click.command()
@@ -34,10 +26,10 @@ def test(
     marker: Optional[str],
 ) -> None:
     """Execute tests using `pytest`."""
-    executed = ops.test.execute(marker=marker)
-
+    executed = ops.test.execute(
+        marker=marker,
+    )
     if not isinstance(executed, Ok):
         click.echo(message=executed.err())
         sys.exit(1)
-
     sys.exit(0)
