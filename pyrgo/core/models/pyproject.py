@@ -10,26 +10,24 @@ else:
 import dataclasses
 
 import tomlkit
-from result import Err, Ok, Result
+from result import Ok, Result
 from typing_extensions import assert_never
 
-from pyrgo.core.errors import PyProjectTOMLNotFoundError
+from pyrgo.core.config import app_config
 
 
 @dataclasses.dataclass(frozen=False, eq=False)
 class Pyproject:
     """Dataclass representation of `pyproject.toml`."""
 
-    cwd: pathlib.Path
     data: Optional[tomlkit.TOMLDocument] = dataclasses.field(default=None, init=False)
 
-    def read_pyproject_toml(self) -> Result[None, PyProjectTOMLNotFoundError]:
+    def read_pyproject_toml(
+        self,
+        pyproject_path: pathlib.Path,
+    ) -> Result[None, Exception]:
         """Read data from `pyproject.toml`."""
-        path_to_pyproject = self.cwd.joinpath("pyproject.toml")
-        if not path_to_pyproject.exists():
-            return Err(PyProjectTOMLNotFoundError(cwd=self.cwd))
-
-        self.data = tomlkit.parse(path_to_pyproject.read_bytes())
+        self.data = tomlkit.parse(pyproject_path.read_bytes())
         return Ok()
 
     def override_pyproject_toml(self) -> None:
@@ -37,8 +35,7 @@ class Pyproject:
         if not self.data:
             raise RuntimeError
         data_as_string = tomlkit.dumps(data=self.data, sort_keys=False)
-        path_to_pyproject = self.cwd.joinpath("pyprojecsst.toml")
-        path_to_pyproject.write_text(data=data_as_string, encoding="utf-8")
+        app_config.pyproject_toml_path.write_text(data=data_as_string, encoding="utf-8")
 
     def project_section(self) -> Dict[str, Any]:
         """Get `project` section."""

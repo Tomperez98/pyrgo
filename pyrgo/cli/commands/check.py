@@ -1,7 +1,6 @@
 """check command."""
 
 
-import pathlib
 import sys
 
 import click
@@ -30,7 +29,6 @@ from pyrgo.core import ops
 def check(*, add_noqa: bool, ignore_noqa: bool) -> None:
     """Analyze the current package with `ruff` and `mypy`."""
     executed = ops.check.execute(
-        cwd=pathlib.Path().cwd(),
         add_noqa=add_noqa,
         ignore_noqa=ignore_noqa,
     )

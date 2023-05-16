@@ -3,10 +3,9 @@ import subprocess
 import sys
 from typing import List
 
-import click
 from typing_extensions import Self
 
-from pyrgo.core.utilities.text import colorize_text
+from pyrgo.logging import logger
 
 
 class PythonExecCommand:
@@ -24,15 +23,13 @@ class PythonExecCommand:
 
     def run(self) -> None:
         """Run command."""
-        subprocess.run(args=self.args)
+        logger.info("Running {command}", command=self.args)
+        try:
+            subprocess.run(args=self.args, check=True)
+        except subprocess.CalledProcessError as e:
+            logger.error(e)
 
 
 def inform_and_run_program(command: PythonExecCommand) -> None:
     """Inform and run program."""
-    click.echo(
-        message=colorize_text(
-            text=f"running {command.program}...",
-            color="yellow",
-        ),
-    )
     command.run()

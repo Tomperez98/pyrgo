@@ -1,26 +1,24 @@
 """lock operation."""
-import pathlib
 from typing import Tuple
 
 from result import Ok, Result
 
-from pyrgo.core.contants import CORE_DEPENDENCIES_NAME
+from pyrgo.core.config import app_config
 from pyrgo.core.utilities.command import (
     PythonExecCommand,
     inform_and_run_program,
 )
 
 
-def execute(cwd: pathlib.Path, groups: Tuple[str]) -> Result[None, Exception]:
+def execute(groups: Tuple[str]) -> Result[None, Exception]:
     """Execute lock operation."""
-    req_path = cwd.joinpath("requirements")
-    req_path.mkdir(
+    app_config.requirements_path.mkdir(
         parents=False,
         exist_ok=True,
     )
-    only_req = req_path.relative_to(cwd)
+    only_req = app_config.requirements_path.relative_to(app_config.cwd)
     for group in groups:
-        if group == CORE_DEPENDENCIES_NAME:
+        if group == app_config.core_dependecies_name:
             inform_and_run_program(
                 command=PythonExecCommand(program="piptools").add_args(
                     args=[

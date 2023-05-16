@@ -1,5 +1,4 @@
 """sync command."""
-import pathlib
 import sys
 
 import click
@@ -28,9 +27,7 @@ from pyrgo.core import ops
 )
 def sync(*, environment: str, editable: bool) -> None:
     """Synchronize virtual environment with requirements.txt."""
-    cwd = pathlib.Path().cwd()
     executed = ops.sync.execute(
-        cwd=cwd,
         environment=environment,
         editable=editable,
     )

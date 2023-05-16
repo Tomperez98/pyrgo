@@ -1,10 +1,9 @@
 """sync operation."""
-import pathlib
 from typing import List
 
-from result import Err, Ok, Result
+from result import Ok, Result
 
-from pyrgo.core.errors import RequirementsFolderNotFoundError
+from pyrgo.core.config import app_config
 from pyrgo.core.utilities.command import (
     PythonExecCommand,
     inform_and_run_program,
@@ -13,20 +12,15 @@ from pyrgo.core.utilities.command import (
 
 def execute(
     *,
-    cwd: pathlib.Path,
     environment: str,
     editable: bool,
-) -> Result[None, RequirementsFolderNotFoundError]:
+) -> Result[None, Exception]:
     """Execute sync operation."""
-    req_path = cwd.joinpath("requirements")
-    if not req_path.exists() and req_path.is_dir():
-        return Err(RequirementsFolderNotFoundError(cwd=cwd))
-
     inform_and_run_program(
         command=PythonExecCommand(program="piptools").add_args(
             args=[
                 "sync",
-                f"{req_path!s}/{environment}.lock",
+                f"{app_config.requirements_path!s}/{environment}.lock",
             ],
         ),
     )

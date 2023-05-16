@@ -1,26 +1,31 @@
 """clean operation."""
-import pathlib
 import shutil
 
 from result import Err, Ok, Result
 
-from pyrgo.core.contants import FOLDERS_TO_BE_CLEANED
-from pyrgo.core.errors import PyProjectTOMLNotFoundError
+from pyrgo.core.config import app_config
 from pyrgo.core.models.pyproject import Pyproject
 
 
-def execute(cwd: pathlib.Path) -> Result[None, PyProjectTOMLNotFoundError]:
+def execute() -> Result[None, Exception]:
     """Execute clean operation."""
-    pyproject = Pyproject(cwd=cwd)
-    read_pyproject = pyproject.read_pyproject_toml()
+    pyproject = Pyproject()
+    read_pyproject = pyproject.read_pyproject_toml(
+        pyproject_path=app_config.pyproject_toml_path,
+    )
 
     if not isinstance(read_pyproject, Ok):
         return Err(read_pyproject.err())
 
-    for folder in FOLDERS_TO_BE_CLEANED:
-        path_to_cache = pyproject.cwd.joinpath(folder)
-        if path_to_cache.exists() and path_to_cache.is_dir():
-            shutil.rmtree(path_to_cache)
+    for cache in app_config.caches_paths:
+        if cache.exists() and cache.is_dir():
+            shutil.rmtree(cache)
+        else:
+            continue
+
+    for artifact in app_config.artifacts_paths:
+        if artifact.exists() and artifact.is_dir():
+            shutil.rmtree(artifact)
         else:
             continue
 
@@ -29,7 +34,7 @@ def execute(cwd: pathlib.Path) -> Result[None, PyProjectTOMLNotFoundError]:
     )
 
     for relevant_path in relevant_paths:
-        for pycaches in pyproject.cwd.joinpath(relevant_path).rglob(
+        for pycaches in app_config.cwd.joinpath(relevant_path).rglob(
             pattern="__pycache__",
         ):
             if pycaches.is_file():

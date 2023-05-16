@@ -1,10 +1,9 @@
 """fmt operation."""
-import pathlib
 from typing import List, Tuple
 
 from result import Err, Ok, Result
 
-from pyrgo.core.errors import PyProjectTOMLNotFoundError
+from pyrgo.core.config import app_config
 from pyrgo.core.models.pyproject import Pyproject
 from pyrgo.core.utilities.command import (
     PythonExecCommand,
@@ -12,10 +11,12 @@ from pyrgo.core.utilities.command import (
 )
 
 
-def execute(cwd: pathlib.Path) -> Result[None, PyProjectTOMLNotFoundError]:
+def execute() -> Result[None, Exception]:
     """Execute fmt operation."""
-    pyproject = Pyproject(cwd=cwd)
-    read_pyproject = pyproject.read_pyproject_toml()
+    pyproject = Pyproject()
+    read_pyproject = pyproject.read_pyproject_toml(
+        pyproject_path=app_config.pyproject_toml_path,
+    )
 
     if not isinstance(read_pyproject, Ok):
         return Err(read_pyproject.err())
