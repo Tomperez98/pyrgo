@@ -23,7 +23,8 @@ dependencies = [
     "tomli",
     "result",
     "build",
-    "tomlkit"
+    "tomlkit",
+    "loguru"
 ]
 
 [[project.authors]]
@@ -34,7 +35,7 @@ email = "tomasperezalvarez@gmail.com"
 
 
 [project.scripts]
-pyrgo = "pyrgo.cli.__main__:cli"
+pyrgo = "pyrgo.cli.__main__:root"
 
 [project.urls]
 Documentation = "https://github.com/Tomperez98/pyrgo#readme"

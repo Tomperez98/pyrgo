@@ -8,13 +8,15 @@ from pyrgo.core.utilities.command import PythonExecCommand, inform_and_run_progr
 
 def execute(*, marker: Optional[str]) -> Result[None, Exception]:
     """Execute test operation."""
+    base_command = PythonExecCommand(program="pytest")
     command_args: List[str] = []
     if marker:
         command_args.extend(["-m", marker])
 
+    if command_args:
+        base_command.add_args(command_args)
+
     inform_and_run_program(
-        command=PythonExecCommand(program="pytest").add_args(
-            args=command_args,
-        ),
+        commands=[base_command],
     )
     return Ok()

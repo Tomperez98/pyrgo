@@ -18,10 +18,12 @@ def execute(*, dev_address: str, theme: str, strict: bool) -> Result[None, Excep
     command_args.extend(["--theme", theme])
     command_args.extend(["--dev-addr", dev_address])
     inform_and_run_program(
-        command=PythonExecCommand(
-            program="mkdocs",
-        ).add_args(
-            args=command_args,
-        ),
+        commands=[
+            PythonExecCommand(
+                program="mkdocs",
+            ).add_args(
+                args=command_args,
+            ),
+        ],
     )
     return Ok()

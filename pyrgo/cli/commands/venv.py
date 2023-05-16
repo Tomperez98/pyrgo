@@ -1,6 +1,5 @@
 """activate command."""
 
-import pathlib
 import sys
 
 import click
@@ -12,10 +11,8 @@ from pyrgo.core import ops
 @click.command
 def venv() -> None:
     """Create project virtual environment."""
-    cwd = pathlib.Path().cwd()
-    executed = ops.venv.execute(cwd=cwd)
+    executed = ops.venv.execute()
     if not isinstance(executed, Ok):
         click.echo(message=executed.err())
         sys.exit(1)
-
     sys.exit(0)

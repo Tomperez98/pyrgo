@@ -1,30 +1,21 @@
 """check operation."""
-import pathlib
 from typing import List, Tuple
 
-from result import Err, Ok, Result
+from result import Ok, Result
 
-from pyrgo.core.models.pyproject import Pyproject
+from pyrgo.core.config import app_config
 from pyrgo.core.utilities.command import PythonExecCommand, inform_and_run_program
 
 
 def execute(
     *,
-    cwd: pathlib.Path,
     add_noqa: bool,
     ignore_noqa: bool,
 ) -> Result[None, Exception]:
     """Execute check operation."""
-    pyproject = Pyproject(cwd=cwd)
-    read_pyproject = pyproject.read_pyproject_toml()
-
-    if not isinstance(read_pyproject, Ok):
-        return Err(read_pyproject.err())
-
-    relevant_paths = pyproject.extract_relevant_paths(
+    relevant_paths = app_config.pyproject_toml.extract_relevant_paths(
         paths_type="all",
     )
-
     ruff_args: List[str] = []
     if add_noqa:
         ruff_args.append("--add-noqa")
@@ -38,11 +29,12 @@ def execute(
         ("mypy", relevant_paths),
     ]
 
+    commands: List[PythonExecCommand] = []
     for program, program_args in program_with_args:
-        inform_and_run_program(
-            command=PythonExecCommand(program=program).add_args(
+        commands.append(
+            PythonExecCommand(program=program).add_args(
                 args=program_args,
             ),
         )
-
+    inform_and_run_program(commands=commands)
     return Ok()
