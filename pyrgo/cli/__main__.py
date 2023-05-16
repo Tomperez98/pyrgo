@@ -1,8 +1,8 @@
 """Pyrgo cli entrypoint."""
 
 
+import sys
+
 from pyrgo.cli.cli import root
 
-__all__ = [
-    "root",
-]
+sys.exit(root())

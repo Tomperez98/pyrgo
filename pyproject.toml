@@ -35,7 +35,7 @@ email = "tomasperezalvarez@gmail.com"
 
 
 [project.scripts]
-pyrgo = "pyrgo.cli.__main__:root"
+pyrgo = "pyrgo.cli.cli:root"
 
 [project.urls]
 Documentation = "https://github.com/Tomperez98/pyrgo#readme"
