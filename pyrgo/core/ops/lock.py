@@ -12,10 +12,6 @@ from pyrgo.core.utilities.command import (
 
 def execute(groups: Tuple[str]) -> Result[None, Exception]:
     """Execute lock operation."""
-    app_config.requirements_path.mkdir(
-        parents=False,
-        exist_ok=True,
-    )
     only_req = app_config.requirements_path.relative_to(app_config.cwd)
     commands: List[PythonExecCommand] = []
     for group in groups:
@@ -26,7 +22,7 @@ def execute(groups: Tuple[str]) -> Result[None, Exception]:
                         "compile",
                         "--resolver=backtracking",
                         "-o",
-                        f"{only_req!s}/{group}{app_config.lock_file_format}",
+                        f"{only_req!s}/{group}.{app_config.lock_file_format}",
                         "pyproject.toml",
                     ],
                 ),
@@ -41,7 +37,7 @@ def execute(groups: Tuple[str]) -> Result[None, Exception]:
                         group,
                         "--resolver=backtracking",
                         "-o",
-                        f"{only_req!s}/{group}{app_config.lock_file_format}",
+                        f"{only_req!s}/{group}.{app_config.lock_file_format}",
                         "pyproject.toml",
                     ],
                 ),

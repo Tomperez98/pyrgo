@@ -1,5 +1,5 @@
 """test operation."""
-from typing import List, Optional
+from typing import Optional
 
 from result import Ok, Result
 
@@ -8,15 +8,13 @@ from pyrgo.core.utilities.command import PythonExecCommand, inform_and_run_progr
 
 def execute(*, marker: Optional[str]) -> Result[None, Exception]:
     """Execute test operation."""
-    base_command = PythonExecCommand(program="pytest")
-    command_args: List[str] = []
+    pytest_command = PythonExecCommand(program="pytest")
     if marker:
-        command_args.extend(["-m", marker])
-
-    if command_args:
-        base_command.add_args(command_args)
+        pytest_command.add_args(args=["-m", marker])
 
     inform_and_run_program(
-        commands=[base_command],
+        commands=[
+            pytest_command,
+        ],
     )
     return Ok()

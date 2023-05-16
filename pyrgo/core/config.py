@@ -140,6 +140,6 @@ app_config = (
             "On Unix or MacOS, run:\n`source .venv/bin/activate`\n"
         ),
         core_dependecies_name="core",
-        lock_file_format=".txt",
+        lock_file_format="txt",
     )
 ).build()

@@ -18,8 +18,8 @@ def add_commands(
 def dynamic_available_environments() -> List[str]:
     """Dynamic available environments in `requirements/`."""
     return [
-        x.name.rstrip(app_config.lock_file_format)
-        for x in app_config.requirements_path.glob(f"*{app_config.lock_file_format}")
+        x.name.rstrip(f".{app_config.lock_file_format}")
+        for x in app_config.requirements_path.glob(f"*.{app_config.lock_file_format}")
         if x.is_file()
     ]
 

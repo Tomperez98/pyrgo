@@ -1,6 +1,5 @@
 """docs build operation."""
 
-from typing import List
 
 from result import Ok, Result
 
@@ -13,19 +12,17 @@ def execute(
     strict: bool,
 ) -> Result[None, Exception]:
     """Execute docs build operation."""
-    command_args: List[str] = ["build"]
+    build_command = PythonExecCommand(program="mkdocs").add_args(
+        args=[
+            "build",
+        ],
+    )
     if strict:
-        command_args.append("--strict")
+        build_command.add_args(args=["--strict"])
 
-    command_args.extend(["--theme", theme])
+    build_command.add_args(args=["--theme", theme])
 
     inform_and_run_program(
-        commands=[
-            PythonExecCommand(
-                program="mkdocs",
-            ).add_args(
-                args=command_args,
-            ),
-        ],
+        commands=[build_command],
     )
     return Ok()

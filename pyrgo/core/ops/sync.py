@@ -1,5 +1,4 @@
 """sync operation."""
-from typing import List
 
 from result import Ok, Result
 
@@ -16,33 +15,34 @@ def execute(
     editable: bool,
 ) -> Result[None, Exception]:
     """Execute sync operation."""
-    commands: List[PythonExecCommand] = []
+    piptools_command = PythonExecCommand(program="piptools")
+    pip_command = PythonExecCommand(program="pip")
 
-    commands.append(
-        PythonExecCommand(program="piptools").add_args(
-            args=[
-                "sync",
-                f"{app_config.requirements_path!s}/{environment}{app_config.lock_file_format}",
-            ],
-        ),
+    piptools_command.add_args(
+        args=[
+            "sync",
+            "{requirements_path}/{environment}.{lock_file_format}".format(
+                requirements_path=app_config.requirements_path,
+                environment=environment,
+                lock_file_format=app_config.lock_file_format,
+            ),
+        ],
     )
-
-    project_install_args: List[str] = [
-        "install",
-        "--no-deps",
-    ]
-
+    pip_command.add_args(
+        args=[
+            "install",
+            "--no-deps",
+        ],
+    )
     if editable:
-        project_install_args.append("-e")
+        pip_command.add_args(args=["-e"])
 
-    project_install_args.append(".")
+    pip_command.add_args(args=["."])
 
-    commands.append(
-        PythonExecCommand(program="pip").add_args(
-            args=project_install_args,
-        ),
-    )
     inform_and_run_program(
-        commands=commands,
+        commands=[
+            piptools_command,
+            pip_command,
+        ],
     )
     return Ok()
