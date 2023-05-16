@@ -16,8 +16,10 @@ def execute(
     editable: bool,
 ) -> Result[None, Exception]:
     """Execute sync operation."""
-    inform_and_run_program(
-        command=PythonExecCommand(program="piptools").add_args(
+    commands: List[PythonExecCommand] = []
+
+    commands.append(
+        PythonExecCommand(program="piptools").add_args(
             args=[
                 "sync",
                 f"{app_config.requirements_path!s}/{environment}.lock",
@@ -35,9 +37,12 @@ def execute(
 
     project_install_args.append(".")
 
-    inform_and_run_program(
-        command=PythonExecCommand(program="pip").add_args(
+    commands.append(
+        PythonExecCommand(program="pip").add_args(
             args=project_install_args,
         ),
+    )
+    inform_and_run_program(
+        commands=commands,
     )
     return Ok()

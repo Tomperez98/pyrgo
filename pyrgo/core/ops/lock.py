@@ -1,5 +1,5 @@
 """lock operation."""
-from typing import Tuple
+from typing import List, Tuple
 
 from result import Ok, Result
 
@@ -17,10 +17,11 @@ def execute(groups: Tuple[str]) -> Result[None, Exception]:
         exist_ok=True,
     )
     only_req = app_config.requirements_path.relative_to(app_config.cwd)
+    commands: List[PythonExecCommand] = []
     for group in groups:
         if group == app_config.core_dependecies_name:
-            inform_and_run_program(
-                command=PythonExecCommand(program="piptools").add_args(
+            commands.append(
+                PythonExecCommand(program="piptools").add_args(
                     args=[
                         "compile",
                         "--resolver=backtracking",
@@ -30,9 +31,10 @@ def execute(groups: Tuple[str]) -> Result[None, Exception]:
                     ],
                 ),
             )
+
         else:
-            inform_and_run_program(
-                command=PythonExecCommand(program="piptools").add_args(
+            commands.append(
+                PythonExecCommand(program="piptools").add_args(
                     args=[
                         "compile",
                         "--extra",
@@ -44,5 +46,9 @@ def execute(groups: Tuple[str]) -> Result[None, Exception]:
                     ],
                 ),
             )
+
+    inform_and_run_program(
+        commands=commands,
+    )
 
     return Ok()

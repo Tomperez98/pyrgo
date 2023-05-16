@@ -28,11 +28,14 @@ def execute() -> Result[None, Exception]:
         ("black", relevant_paths),
     ]
 
+    commands: List[PythonExecCommand] = []
     for program, program_args in program_with_args:
-        inform_and_run_program(
-            command=PythonExecCommand(program=program).add_args(
+        commands.append(
+            PythonExecCommand(program=program).add_args(
                 args=program_args,
             ),
         )
+
+    inform_and_run_program(commands=commands)
 
     return Ok()

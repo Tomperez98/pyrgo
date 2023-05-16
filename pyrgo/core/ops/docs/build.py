@@ -20,10 +20,12 @@ def execute(
     command_args.extend(["--theme", theme])
 
     inform_and_run_program(
-        command=PythonExecCommand(
-            program="mkdocs",
-        ).add_args(
-            args=command_args,
-        ),
+        commands=[
+            PythonExecCommand(
+                program="mkdocs",
+            ).add_args(
+                args=command_args,
+            ),
+        ],
     )
     return Ok()

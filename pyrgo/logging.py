@@ -10,7 +10,7 @@ def configure_logger() -> None:
     logger.remove()
     fmt = (
         "<lvl>[{level}]</lvl> "
-        "Message : {message} "
+        "{message} "
         "<green>{name}:{function}:{line}</green> "
         "@ {time:HH:mm:ss}"
     )

@@ -12,11 +12,13 @@ from pyrgo.core.utilities.command import (
 def execute() -> Result[None, Exception]:
     """Execute docs new operation."""
     inform_and_run_program(
-        command=PythonExecCommand(program="mkdocs").add_args(
-            [
-                "new",
-                str(app_config.cwd),
-            ],
-        ),
+        commands=[
+            PythonExecCommand(program="mkdocs").add_args(
+                [
+                    "new",
+                    str(app_config.cwd),
+                ],
+            ),
+        ],
     )
     return Ok()

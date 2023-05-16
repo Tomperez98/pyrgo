@@ -11,11 +11,13 @@ from pyrgo.core.utilities.command import PythonExecCommand, inform_and_run_progr
 def create_virtual_env(venv_path: pathlib.Path) -> None:
     """Create a virtual enviroment folder."""
     inform_and_run_program(
-        command=PythonExecCommand(program="venv").add_args(
-            args=[
-                venv_path.name,
-            ],
-        ),
+        commands=[
+            PythonExecCommand(program="venv").add_args(
+                args=[
+                    venv_path.name,
+                ],
+            ),
+        ],
     )
 
 

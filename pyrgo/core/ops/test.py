@@ -13,8 +13,10 @@ def execute(*, marker: Optional[str]) -> Result[None, Exception]:
         command_args.extend(["-m", marker])
 
     inform_and_run_program(
-        command=PythonExecCommand(program="pytest").add_args(
-            args=command_args,
-        ),
+        commands=[
+            PythonExecCommand(program="pytest").add_args(
+                args=command_args,
+            ),
+        ],
     )
     return Ok()
