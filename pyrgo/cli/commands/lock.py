@@ -19,11 +19,20 @@ from pyrgo.core.config import app_config
     required=True,
     help="Name of an extras_require group to install; may be used more than once",
 )
-def lock(groups: Tuple[str]) -> None:
+@click.option(
+    "--generate-hashes",
+    "generate_hashes",
+    is_flag=True,
+    default=False,
+    show_default=True,
+    help="Generate pip 8 style hashes in the resulting requirements file.",
+)
+def lock(*, groups: Tuple[str], generate_hashes: bool) -> None:
     """Lock dependencies using `piptools`."""
     executed = ops.lock.execute(
         groups=groups,
         app_config=app_config,
+        generate_hashes=generate_hashes,
     )
     if not isinstance(executed, Ok):
         sys.exit(1)

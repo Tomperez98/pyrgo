@@ -25,7 +25,8 @@ dependencies = [
     "build",
     "tomlkit",
     "loguru",
-    "pip-audit==2.5.5"
+    "pip-audit>=2.5.5",
+    "rtoml"
 ]
 
 [[project.authors]]

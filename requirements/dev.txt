@@ -137,6 +137,8 @@ result==0.10.0
     # via pyrgo (pyproject.toml)
 rich==13.3.5
     # via pip-audit
+rtoml==0.9.0
+    # via pyrgo (pyproject.toml)
 ruff==0.0.267
     # via pyrgo (pyproject.toml)
 six==1.16.0

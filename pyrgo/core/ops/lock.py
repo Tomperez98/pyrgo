@@ -13,8 +13,10 @@ from pyrgo.core.utilities.text import path_to_lock_file
 
 
 def execute(
+    *,
     groups: Tuple[str],
     app_config: Config,
+    generate_hashes: bool,
 ) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute lock operation."""
     app_config.requirements_path.relative_to(app_config.cwd)
@@ -32,6 +34,13 @@ def execute(
             group=group,
             lock_file_format=app_config.lock_file_format,
         )
+        if generate_hashes:
+            piptools_command.add_args(
+                args=[
+                    "--generate-hashes",
+                ],
+            )
+
         piptools_command.add_args(
             args=[
                 "--resolver=backtracking",
