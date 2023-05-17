@@ -89,7 +89,7 @@ pathspec==0.11.1
     # via black
 pip-api==0.0.30
     # via pip-audit
-pip-audit==2.5.2
+pip-audit==2.5.5
     # via pyrgo (pyproject.toml)
 pip-requirements-parser==32.0.1
     # via pip-audit
@@ -122,10 +122,11 @@ pyyaml-env-tag==0.1
     # via mkdocs
 regex==2023.5.5
     # via mkdocs-material
-requests==2.30.0
+requests==2.29.0
     # via
     #   cachecontrol
     #   mkdocs-material
+    #   pip-audit
 result==0.10.0
     # via pyrgo (pyproject.toml)
 rich==13.3.5
@@ -154,7 +155,7 @@ tomlkit==0.11.8
     # via pyrgo (pyproject.toml)
 typing-extensions==4.5.0
     # via mypy
-urllib3==2.0.2
+urllib3==1.26.15
     # via requests
 watchdog==3.0.0
     # via mkdocs
