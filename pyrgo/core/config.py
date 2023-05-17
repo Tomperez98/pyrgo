@@ -3,6 +3,7 @@ import dataclasses
 import pathlib
 from typing import List, Optional, Set
 
+import tomlkit
 from typing_extensions import Self
 
 from pyrgo.core.errors import (
@@ -27,11 +28,18 @@ class Config:
     lock_file_format: str
     pyproject_toml: Pyproject
 
+    def available_environments(self) -> List[str]:
+        """List available environments in `requirements/`."""
+        return [
+            x.name.rstrip(f".{self.lock_file_format}")
+            for x in self.requirements_path.glob(f"*.{self.lock_file_format}")
+            if x.is_file()
+        ]
 
-class _ConfigBuilder:
-    """Configuration builder."""
 
+class ConfigBuilder:  # noqa: D101
     def __init__(self) -> None:
+        """Build `Config`."""
         self.cwd: Optional[pathlib.Path] = None
         self.pyproject_toml_path: Optional[pathlib.Path] = None
         self.requirements_path: Optional[pathlib.Path] = None
@@ -56,11 +64,6 @@ class _ConfigBuilder:
         if not self.pyproject_toml_path.exists() and self.pyproject_toml_path.is_file():
             raise PyProjectTOMLNotFoundError(cwd=self.cwd)
 
-        self.pyproject_toml = Pyproject()
-        self.pyproject_toml.read_pyproject_toml(
-            pyproject_path=self.pyproject_toml_path,
-        ).unwrap()
-
         self.requirements_path = cwd.joinpath("requirements")
         if not self.requirements_path.exists():
             logger.warning(
@@ -72,7 +75,6 @@ class _ConfigBuilder:
         self.caches_paths = [cwd.joinpath(x) for x in cache_paths]
         self.artifacts_paths = [cwd.joinpath(x) for x in artifacts_paths]
         self.venv_path = cwd.joinpath(venv)
-
         return self
 
     def attach_other(
@@ -85,6 +87,18 @@ class _ConfigBuilder:
         self.venv_activation_msg = venv_activation_msg
         self.core_dependecies_name = core_dependecies_name
         self.lock_file_format = lock_file_format
+        return self
+
+    def attach_pyproject(self) -> Self:
+        """Attach pyproject."""
+        if not (self.core_dependecies_name and self.pyproject_toml_path):
+            raise RuntimeError
+
+        self.pyproject_toml = Pyproject(
+            core_dependency_name=self.core_dependecies_name,
+            data=tomlkit.parse(self.pyproject_toml_path.read_bytes()),
+        )
+
         return self
 
     def build(self) -> Config:
@@ -121,7 +135,16 @@ class _ConfigBuilder:
 
 
 app_config = (
-    _ConfigBuilder()
+    ConfigBuilder()
+    .attach_other(
+        venv_activation_msg=(
+            "\nTo activate the virtual env run:\n\n"
+            "On Windows, run:\n`.venv\\Scripts\\activate.bat`\n\n"
+            "On Unix or MacOS, run:\n`source .venv/bin/activate`\n"
+        ),
+        core_dependecies_name="core",
+        lock_file_format="txt",
+    )
     .attach_paths(
         cwd=pathlib.Path().cwd(),
         cache_paths={
@@ -135,13 +158,5 @@ app_config = (
         },
         venv=".venv",
     )
-    .attach_other(
-        venv_activation_msg=(
-            "\nTo activate the virtual env run:\n\n"
-            "On Windows, run:\n`.venv\\Scripts\\activate.bat`\n\n"
-            "On Unix or MacOS, run:\n`source .venv/bin/activate`\n"
-        ),
-        core_dependecies_name="core",
-        lock_file_format="txt",
-    )
+    .attach_pyproject()
 ).build()

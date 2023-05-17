@@ -89,7 +89,7 @@ pathspec==0.11.1
     # via black
 pip-api==0.0.30
     # via pip-audit
-pip-audit==2.5.4
+pip-audit==2.5.2
     # via pyrgo (pyproject.toml)
 pip-requirements-parser==32.0.1
     # via pip-audit

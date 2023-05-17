@@ -10,7 +10,6 @@ else:
 import dataclasses
 
 import tomlkit
-from result import Ok, Result
 from typing_extensions import assert_never
 
 
@@ -18,15 +17,8 @@ from typing_extensions import assert_never
 class Pyproject:
     """Dataclass representation of `pyproject.toml`."""
 
-    data: Optional[tomlkit.TOMLDocument] = dataclasses.field(default=None, init=False)
-
-    def read_pyproject_toml(
-        self,
-        pyproject_path: pathlib.Path,
-    ) -> Result[None, Exception]:
-        """Read data from `pyproject.toml`."""
-        self.data = tomlkit.parse(pyproject_path.read_bytes())
-        return Ok()
+    core_dependency_name: str
+    data: tomlkit.TOMLDocument
 
     def override_pyproject_toml(self, new_path: pathlib.Path) -> None:
         """Override pyrproject toml."""
@@ -43,11 +35,13 @@ class Pyproject:
         project: Optional[Dict[str, Any]] = self.data.get("project")
         if not project:
             raise RuntimeError
+
         return project
 
     def _extract_pytest_relevant_paths(self) -> List[str]:
         if not self.data:
             raise RuntimeError
+
         tools: Optional[Dict[str, Any]] = self.data.get("tool")
         if not tools:
             raise RuntimeError
@@ -66,6 +60,7 @@ class Pyproject:
         """Get relevant paths from `pyproject.toml` content."""
         if paths_type == "pytest":
             return self._extract_pytest_relevant_paths()
+
         if paths_type == "all":
             all_paths: List[str] = []
             all_paths.append(self._extract_core_path())
@@ -97,3 +92,7 @@ class Pyproject:
         project = self.project_section()
 
         return project["optional-dependencies"]
+
+    def dependency_groups(self) -> List[str]:
+        """List all avaible dependency groups."""
+        return [self.core_dependency_name, *self.extract_optional_dependencies().keys()]

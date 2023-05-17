@@ -6,7 +6,6 @@ from typing import Optional
 import click
 from result import Ok
 
-from pyrgo.cli.utils import dynamic_marker_choices
 from pyrgo.core import ops
 from pyrgo.core.config import app_config
 
@@ -17,7 +16,7 @@ from pyrgo.core.config import app_config
     "--marked",
     "marker",
     type=click.Choice(
-        choices=dynamic_marker_choices(),
+        choices=app_config.pyproject_toml.list_pytest_markers(),
     ),
     default=None,
     help="Run tests based on marks. By default all tests are executed.",

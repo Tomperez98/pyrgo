@@ -5,7 +5,6 @@ import sys
 import click
 from result import Ok
 
-from pyrgo.cli.utils import dynamic_available_environments
 from pyrgo.core import ops
 from pyrgo.core.config import app_config
 
@@ -15,7 +14,7 @@ from pyrgo.core.config import app_config
     "-e",
     "--env",
     "environment",
-    type=click.Choice(choices=dynamic_available_environments()),
+    type=click.Choice(choices=app_config.available_environments()),
     required=True,
     help="Audit to one of available enviroments.",
 )

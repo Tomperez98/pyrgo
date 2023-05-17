@@ -5,7 +5,6 @@ from typing import Tuple
 import click
 from result import Ok
 
-from pyrgo.cli.utils import dynamic_group_choices
 from pyrgo.core import ops
 from pyrgo.core.config import app_config
 
@@ -15,7 +14,7 @@ from pyrgo.core.config import app_config
     "-g",
     "--group",
     "groups",
-    type=click.Choice(choices=dynamic_group_choices()),
+    type=click.Choice(choices=app_config.pyproject_toml.dependency_groups()),
     multiple=True,
     required=True,
     help="Name of an extras_require group to install; may be used more than once",
