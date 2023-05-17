@@ -16,7 +16,6 @@ def new() -> None:
         app_config=app_config,
     )
     if not isinstance(executed, Ok):
-        click.echo(message=executed.err())
         sys.exit(1)
 
     sys.exit(0)

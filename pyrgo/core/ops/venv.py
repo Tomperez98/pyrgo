@@ -1,5 +1,8 @@
 """venv operation."""
 
+import subprocess
+from typing import List
+
 import click
 from result import Ok, Result
 
@@ -10,7 +13,7 @@ from pyrgo.core.models.command import (
 from pyrgo.core.utilities.command import inform_and_run_program
 
 
-def execute(app_config: Config) -> Result[None, Exception]:
+def execute(app_config: Config) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute venv operation."""
     venv_command = PythonExecCommand(program="venv").add_args(
         args=[
@@ -22,18 +25,16 @@ def execute(app_config: Config) -> Result[None, Exception]:
             click.echo(
                 message="Project already has a virtual enviroment located at `.venv`",
             )
-        elif app_config.venv_path.is_file():
+            return Ok()
+        if app_config.venv_path.is_file():
             app_config.venv_path.unlink()
-            inform_and_run_program(
+            return inform_and_run_program(
                 commands=[venv_command],
             )
+        raise RuntimeError
 
-    else:
-        inform_and_run_program(
+    if not app_config.venv_path.exists():
+        return inform_and_run_program(
             commands=[venv_command],
         )
-
-    click.echo(
-        message=app_config.venv_activation_msg,
-    )
-    return Ok()
+    raise RuntimeError

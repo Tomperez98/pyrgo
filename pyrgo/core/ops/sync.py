@@ -1,6 +1,9 @@
 """sync operation."""
 
-from result import Ok, Result
+import subprocess
+from typing import List
+
+from result import Result
 
 from pyrgo.core.config import Config
 from pyrgo.core.models.command import (
@@ -15,7 +18,7 @@ def execute(
     environment: str,
     editable: bool,
     app_config: Config,
-) -> Result[None, Exception]:
+) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute sync operation."""
     piptools_command = PythonExecCommand(program="piptools")
     pip_command = PythonExecCommand(program="pip")
@@ -44,10 +47,9 @@ def execute(
 
     pip_command.add_args(args=["."])
 
-    inform_and_run_program(
+    return inform_and_run_program(
         commands=[
             piptools_command,
             pip_command,
         ],
     )
-    return Ok()

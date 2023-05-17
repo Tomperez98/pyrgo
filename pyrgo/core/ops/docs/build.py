@@ -1,7 +1,10 @@
 """docs build operation."""
 
 
-from result import Ok, Result
+import subprocess
+from typing import List
+
+from result import Result
 
 from pyrgo.core.models.command import (
     PythonExecCommand,
@@ -13,7 +16,7 @@ def execute(
     *,
     theme: str,
     strict: bool,
-) -> Result[None, Exception]:
+) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute docs build operation."""
     build_command = PythonExecCommand(program="mkdocs").add_args(
         args=[
@@ -25,7 +28,6 @@ def execute(
 
     build_command.add_args(args=["--theme", theme])
 
-    inform_and_run_program(
+    return inform_and_run_program(
         commands=[build_command],
     )
-    return Ok()

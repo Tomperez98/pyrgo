@@ -1,7 +1,8 @@
 """lock operation."""
+import subprocess
 from typing import List, Tuple
 
-from result import Ok, Result
+from result import Result
 
 from pyrgo.core.config import Config
 from pyrgo.core.models.command import (
@@ -11,7 +12,10 @@ from pyrgo.core.utilities.command import inform_and_run_program
 from pyrgo.core.utilities.text import path_to_lock_file
 
 
-def execute(groups: Tuple[str], app_config: Config) -> Result[None, Exception]:
+def execute(
+    groups: Tuple[str],
+    app_config: Config,
+) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute lock operation."""
     app_config.requirements_path.relative_to(app_config.cwd)
     commands: List[PythonExecCommand] = []
@@ -38,8 +42,6 @@ def execute(groups: Tuple[str], app_config: Config) -> Result[None, Exception]:
         )
         commands.append(piptools_command)
 
-    inform_and_run_program(
+    return inform_and_run_program(
         commands=commands,
     )
-
-    return Ok()

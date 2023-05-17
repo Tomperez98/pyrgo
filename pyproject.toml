@@ -24,7 +24,8 @@ dependencies = [
     "result",
     "build",
     "tomlkit",
-    "loguru"
+    "loguru",
+    "pip-audit"
 ]
 
 [[project.authors]]

@@ -1,6 +1,9 @@
 """docs serve operation."""
 
-from result import Ok, Result
+import subprocess
+from typing import List
+
+from result import Result
 
 from pyrgo.core.models.command import (
     PythonExecCommand,
@@ -8,7 +11,12 @@ from pyrgo.core.models.command import (
 from pyrgo.core.utilities.command import inform_and_run_program
 
 
-def execute(*, dev_address: str, theme: str, strict: bool) -> Result[None, Exception]:
+def execute(
+    *,
+    dev_address: str,
+    theme: str,
+    strict: bool,
+) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute docs serve operation."""
     serve_command = PythonExecCommand(program="mkdocs").add_args(
         args=[
@@ -27,7 +35,6 @@ def execute(*, dev_address: str, theme: str, strict: bool) -> Result[None, Excep
         ],
     )
 
-    inform_and_run_program(
+    return inform_and_run_program(
         commands=[serve_command],
     )
-    return Ok()
