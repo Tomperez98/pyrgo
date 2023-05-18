@@ -8,7 +8,7 @@ if sys.version_info >= (3, 9):
     from typing import Literal
 else:
     from typing_extensions import Literal
-import rtoml
+import tomli
 
 from pyrgo.core.errors import PyProjectTOMLNotFoundError
 
@@ -109,5 +109,9 @@ def build_config(  # noqa: PLR0913
         ),
         core_deps_alias=core_deps_alias,
         lock_file_format=lock_file_format,
-        pyproject=rtoml.load(path_to_pyproject_toml),
+        pyproject=tomli.loads(
+            path_to_pyproject_toml.read_text(
+                encoding="UTF-8",
+            ),
+        ),
     )
