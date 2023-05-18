@@ -20,10 +20,14 @@ from pyrgo.cli.utils import add_commands
 
 
 @click.group(
-    context_settings={"help_option_names": ["-h", "--help"]},
-    invoke_without_command=False,
+    context_settings={
+        "help_option_names": [
+            "-h",
+            "--help",
+        ],
+    },
 )
-@click.version_option(prog_name="Pyrgo")
+@click.version_option()
 def root() -> None:
     """Pyrgo. Python package manager."""
 
