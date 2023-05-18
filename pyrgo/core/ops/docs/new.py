@@ -1,24 +1,27 @@
 """docs new operation."""
 
-from result import Ok, Result
+import subprocess
+from typing import List
 
-from pyrgo.core.config import app_config
-from pyrgo.core.utilities.command import (
+from result import Result
+
+from pyrgo.core.models.command import (
     PythonExecCommand,
-    inform_and_run_program,
 )
+from pyrgo.core.models.config import Config
+from pyrgo.core.utilities.command import inform_and_run_program
 
 
-def execute() -> Result[None, Exception]:
+def execute(app_config: Config) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute docs new operation."""
-    inform_and_run_program(
-        commands=[
-            PythonExecCommand(program="mkdocs").add_args(
-                [
-                    "new",
-                    str(app_config.cwd),
-                ],
-            ),
+    new_command = PythonExecCommand(
+        program="mkdocs",
+    ).add_args(
+        args=[
+            "new",
         ],
     )
-    return Ok()
+    new_command.add_args(args=[str(app_config.cwd)])
+    return inform_and_run_program(
+        commands=[new_command],
+    )

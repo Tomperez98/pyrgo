@@ -5,8 +5,8 @@ from typing import Tuple
 import click
 from result import Ok
 
-from pyrgo.cli.utils import dynamic_group_choices
 from pyrgo.core import ops
+from pyrgo.core.constants import app_config
 
 
 @click.command()
@@ -14,15 +14,26 @@ from pyrgo.core import ops
     "-g",
     "--group",
     "groups",
-    type=click.Choice(choices=dynamic_group_choices()),
+    type=click.Choice(choices=app_config.dependency_groups),
     multiple=True,
     required=True,
     help="Name of an extras_require group to install; may be used more than once",
 )
-def lock(groups: Tuple[str]) -> None:
+@click.option(
+    "--generate-hashes",
+    "generate_hashes",
+    is_flag=True,
+    default=False,
+    show_default=True,
+    help="Generate pip 8 style hashes in the resulting requirements file.",
+)
+def lock(*, groups: Tuple[str], generate_hashes: bool) -> None:
     """Lock dependencies using `piptools`."""
-    executed = ops.lock.execute(groups=groups)
+    executed = ops.lock.execute(
+        groups=groups,
+        app_config=app_config,
+        generate_hashes=generate_hashes,
+    )
     if not isinstance(executed, Ok):
-        click.echo(message=executed.err())
         sys.exit(1)
     sys.exit(0)

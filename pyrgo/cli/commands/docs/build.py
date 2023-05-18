@@ -39,9 +39,11 @@ def build(
     strict: bool,
 ) -> None:
     """Build project documentation."""
-    executed = ops.docs.build.execute(theme=theme, strict=strict)
+    executed = ops.docs.build.execute(
+        theme=theme,
+        strict=strict,
+    )
     if not isinstance(executed, Ok):
-        click.echo(message=executed.err())
         sys.exit(1)
 
     sys.exit(0)

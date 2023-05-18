@@ -1,34 +1,32 @@
 """clean operation."""
+import itertools
 import shutil
 
 from result import Ok, Result
 
-from pyrgo.core.config import app_config
+from pyrgo.core.models.config import Config
 
 
-def execute() -> Result[None, Exception]:
+def execute(app_config: Config) -> Result[None, Exception]:
     """Execute clean operation."""
-    for cache in app_config.caches_paths:
-        if cache.exists() and cache.is_dir():
-            shutil.rmtree(cache)
-        else:
-            continue
+    for to_be_clean in itertools.chain(
+        app_config.caches,
+        app_config.artifacts,
+    ):
+        if to_be_clean.exists() and to_be_clean.is_dir():
+            shutil.rmtree(to_be_clean)
 
-    for artifact in app_config.artifacts_paths:
-        if artifact.exists() and artifact.is_dir():
-            shutil.rmtree(artifact)
-        else:
-            continue
-
-    relevant_paths = app_config.pyproject_toml.extract_relevant_paths(
-        paths_type="all",
-    )
-
-    for relevant_path in relevant_paths:
+    for relevant_path in app_config.relevant_paths:
         for pycaches in app_config.cwd.joinpath(relevant_path).rglob(
             pattern="__pycache__",
         ):
-            if pycaches.is_file():
-                raise RuntimeError
             shutil.rmtree(pycaches)
+
+    for env_not_as_opt_dep in set(app_config.available_envs).difference(
+        set(app_config.dependency_groups),
+    ):
+        app_config.requirements_dir.joinpath(
+            f"{env_not_as_opt_dep}.{app_config.lock_file_format}",
+        ).unlink()
+
     return Ok()

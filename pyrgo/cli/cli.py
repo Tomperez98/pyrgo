@@ -3,6 +3,7 @@
 import click
 
 from pyrgo.cli.commands.add import add
+from pyrgo.cli.commands.audit import audit
 from pyrgo.cli.commands.build import build
 from pyrgo.cli.commands.check import check
 from pyrgo.cli.commands.clean import clean
@@ -19,10 +20,14 @@ from pyrgo.cli.utils import add_commands
 
 
 @click.group(
-    context_settings={"help_option_names": ["-h", "--help"]},
-    invoke_without_command=False,
+    context_settings={
+        "help_option_names": [
+            "-h",
+            "--help",
+        ],
+    },
 )
-@click.version_option(prog_name="Pyrgo")
+@click.version_option()
 def root() -> None:
     """Pyrgo. Python package manager."""
 
@@ -43,5 +48,6 @@ add_commands(
         remove,
         build,
         sync,
+        audit,
     ],
 )

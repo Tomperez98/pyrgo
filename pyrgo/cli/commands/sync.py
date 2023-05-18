@@ -4,8 +4,8 @@ import sys
 import click
 from result import Ok
 
-from pyrgo.cli.utils import dynamic_available_environments
 from pyrgo.core import ops
+from pyrgo.core.constants import app_config
 
 
 @click.command()
@@ -13,7 +13,7 @@ from pyrgo.core import ops
     "-e",
     "--env",
     "environment",
-    type=click.Choice(choices=dynamic_available_environments()),
+    type=click.Choice(choices=app_config.available_envs),
     required=True,
     help="Sync to one of available enviroments.",
 )
@@ -30,8 +30,8 @@ def sync(*, environment: str, editable: bool) -> None:
     executed = ops.sync.execute(
         environment=environment,
         editable=editable,
+        app_config=app_config,
     )
     if not isinstance(executed, Ok):
-        click.echo(message=executed.err())
         sys.exit(1)
     sys.exit(0)

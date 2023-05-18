@@ -1,22 +1,36 @@
 """test operation."""
+import subprocess
 from typing import List, Optional
 
-from result import Ok, Result
+from result import Result
 
-from pyrgo.core.utilities.command import PythonExecCommand, inform_and_run_program
+from pyrgo.core.models.command import (
+    PythonExecCommand,
+)
+from pyrgo.core.models.config import Config
+from pyrgo.core.utilities.command import inform_and_run_program
 
 
-def execute(*, marker: Optional[str]) -> Result[None, Exception]:
+def execute(
+    *,
+    marker: Optional[str],
+    app_config: Config,
+) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute test operation."""
-    base_command = PythonExecCommand(program="pytest")
-    command_args: List[str] = []
-    if marker:
-        command_args.extend(["-m", marker])
-
-    if command_args:
-        base_command.add_args(command_args)
-
-    inform_and_run_program(
-        commands=[base_command],
+    pytest_command = PythonExecCommand(
+        program="pytest",
     )
-    return Ok()
+    if marker:
+        pytest_command.add_args(
+            args=[
+                "-m",
+                marker,
+            ],
+        )
+
+    pytest_command.add_args(args=app_config.pytest_paths)
+    return inform_and_run_program(
+        commands=[
+            pytest_command,
+        ],
+    )
