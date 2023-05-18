@@ -27,7 +27,6 @@ dependencies = [
     "build",
     "loguru",
     "pip-audit>=2.5.5",
-    
 ]
 
 [project.optional-dependencies]
