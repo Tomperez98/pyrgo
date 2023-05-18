@@ -12,6 +12,9 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
+authors = [
+    { name = "Tomas Perez Alvarez", email = "tomasperezalvarez@gmail.com"}
+]
 dependencies = [
     "click",
     "ruff",
@@ -20,18 +23,13 @@ dependencies = [
     "pip-tools",
     "pytest",
     "mkdocs-material",
-    "tomli",
     "result",
     "build",
-    "tomlkit",
     "loguru",
     "pip-audit>=2.5.5",
-    "rtoml"
+    "rtoml",
+    "tomlkit"
 ]
-
-[[project.authors]]
-name = "Tomas Perez Alvarez"
-email = "tomasperezalvarez@gmail.com"
 
 [project.optional-dependencies]
 dev = [
@@ -83,11 +81,15 @@ exclude = [
 "tests/*.py" = ["INP001", "S101"]
 
 [tool.ruff.isort]
+known-first-party = ["pyrgo"]
 force-wrap-aliases = true
 combine-as-imports = true
 
 [tool.ruff.flake8-tidy-imports]
 ban-relative-imports = "all"
+
+[tool.ruff.flake8-quotes]
+inline-quotes = "double"
 
 
 [tool.black]

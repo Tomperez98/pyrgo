@@ -18,7 +18,9 @@ def execute(
     strict: bool,
 ) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute docs build operation."""
-    build_command = PythonExecCommand(program="mkdocs").add_args(
+    build_command = PythonExecCommand(
+        program="mkdocs",
+    ).add_args(
         args=[
             "build",
         ],

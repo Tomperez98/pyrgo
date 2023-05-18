@@ -12,8 +12,8 @@ class TestPyProjectNotFoundError:
 
     def test_error_message(self) -> None:
         """Test error message."""
-        cwd = pathlib.Path.cwd()
+        path_to_toml = pathlib.Path.cwd().joinpath("pyproject_toml")
         assert (
-            str(PyProjectTOMLNotFoundError(cwd=cwd))
-            == f"No `pyproject.toml` found at current directory {cwd!s}"
+            str(PyProjectTOMLNotFoundError(pyproject_toml=path_to_toml))
+            == f"No `pyproject.toml` found at current directory {path_to_toml!s}"
         )

@@ -5,7 +5,7 @@ import click
 from result import Ok
 
 from pyrgo.core import ops
-from pyrgo.core.config import app_config
+from pyrgo.core.constants import app_config
 
 
 @click.command()
@@ -13,7 +13,7 @@ from pyrgo.core.config import app_config
     "-e",
     "--env",
     "environment",
-    type=click.Choice(choices=app_config.available_environments()),
+    type=click.Choice(choices=app_config.available_envs),
     required=True,
     help="Sync to one of available enviroments.",
 )

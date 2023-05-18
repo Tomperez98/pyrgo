@@ -12,7 +12,9 @@ from pyrgo.core.models.command import PythonExecCommand
 @pytest.mark.integration()
 def test_execute_command() -> None:
     """Test execute command."""
-    PythonExecCommand(program="ruff").add_args(args=["--version"]).run()
+    PythonExecCommand(program="ruff").add_args(
+        args=["--version"],
+    ).run()
 
 
 @pytest.mark.unit()

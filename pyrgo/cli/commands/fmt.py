@@ -6,7 +6,7 @@ import click
 from result import Ok
 
 from pyrgo.core import ops
-from pyrgo.core.config import app_config
+from pyrgo.core.constants import app_config
 
 
 @click.command()

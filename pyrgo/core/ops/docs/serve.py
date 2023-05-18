@@ -18,7 +18,9 @@ def execute(
     strict: bool,
 ) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute docs serve operation."""
-    serve_command = PythonExecCommand(program="mkdocs").add_args(
+    serve_command = PythonExecCommand(
+        program="mkdocs",
+    ).add_args(
         args=[
             "serve",
         ],
