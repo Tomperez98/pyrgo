@@ -13,9 +13,11 @@ def execute(app_config: Config) -> Result[None, List[subprocess.CalledProcessErr
     """Execute init operation."""
     cookiecutter_command = PythonExecCommand(program="cookiecutter").add_args(
         args=[
-            str(app_config.starter_project),
+            "--accept-hooks",
+            "yes",
             "--output-dir",
             "tmp/",
+            str(app_config.starter_project),
         ],
     )
 
