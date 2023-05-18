@@ -1,6 +1,6 @@
 """lock operation."""
 import subprocess
-from typing import List, Tuple
+from typing import Iterable, List
 
 from result import Result
 
@@ -14,13 +14,17 @@ from pyrgo.core.utilities.text import path_to_lock_file
 
 def execute(
     *,
-    groups: Tuple[str],
+    groups: Iterable[str],
     app_config: Config,
     generate_hashes: bool,
 ) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute lock operation."""
     app_config.requirements_dir.relative_to(app_config.cwd)
     commands: List[PythonExecCommand] = []
+
+    if not groups:
+        groups = app_config.dependency_groups
+
     for group in groups:
         piptools_command = PythonExecCommand(
             program="piptools",

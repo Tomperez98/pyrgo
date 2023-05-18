@@ -1,4 +1,16 @@
-from pyrgo.core.ops import audit, build, check, clean, docs, fmt, lock, sync, test, venv
+from pyrgo.core.ops import (
+    audit,
+    build,
+    check,
+    clean,
+    docs,
+    fmt,
+    init,
+    lock,
+    sync,
+    test,
+    venv,
+)
 
 __all__ = [
     "test",
@@ -11,4 +23,5 @@ __all__ = [
     "sync",
     "clean",
     "audit",
+    "init",
 ]

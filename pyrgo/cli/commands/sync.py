@@ -22,8 +22,8 @@ from pyrgo.core.constants import app_config
     "editable",
     type=bool,
     default=True,
-    help="Wheter or not to install current project in editable mode.\n"
-    "Defaults to `true`",
+    show_default=True,
+    help="Wheter or not to install current project in editable mode.",
 )
 def sync(*, environment: str, editable: bool) -> None:
     """Synchronize virtual environment with requirements.txt."""

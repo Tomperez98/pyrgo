@@ -27,7 +27,7 @@ from pyrgo.cli.utils import add_commands
         ],
     },
 )
-@click.version_option()
+@click.version_option(None, "-v", "--version")
 def root() -> None:
     """Pyrgo. Python package manager."""
 

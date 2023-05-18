@@ -8,6 +8,10 @@
 --trusted-host pypi.org
 --trusted-host files.pythonhosted.org
 
+arrow==1.2.3
+    # via jinja2-time
+binaryornot==0.4.4
+    # via cookiecutter
 black==23.3.0
     # via pyrgo (pyproject.toml)
 build==0.10.0
@@ -18,16 +22,21 @@ cachecontrol[filecache]==0.12.11
     # via pip-audit
 certifi==2023.5.7
     # via requests
+chardet==5.1.0
+    # via binaryornot
 charset-normalizer==3.1.0
     # via requests
 click==8.1.3
     # via
     #   black
+    #   cookiecutter
     #   mkdocs
     #   pip-tools
     #   pyrgo (pyproject.toml)
 colorama==0.4.6
     # via mkdocs-material
+cookiecutter==2.1.1
+    # via pyrgo (pyproject.toml)
 coverage[toml]==7.2.5
     # via pytest-cov
 cyclonedx-python-lib==2.7.1
@@ -44,8 +53,12 @@ iniconfig==2.0.0
     # via pytest
 jinja2==3.1.2
     # via
+    #   cookiecutter
+    #   jinja2-time
     #   mkdocs
     #   mkdocs-material
+jinja2-time==0.2.0
+    # via cookiecutter
 lockfile==0.12.2
     # via cachecontrol
 loguru==0.7.0
@@ -118,9 +131,14 @@ pytest==7.3.1
 pytest-cov==4.0.0
     # via pyrgo (pyproject.toml)
 python-dateutil==2.8.2
-    # via ghp-import
+    # via
+    #   arrow
+    #   ghp-import
+python-slugify==8.0.1
+    # via cookiecutter
 pyyaml==6.0
     # via
+    #   cookiecutter
     #   mkdocs
     #   pymdown-extensions
     #   pyyaml-env-tag
@@ -131,6 +149,7 @@ regex==2023.5.5
 requests==2.29.0
     # via
     #   cachecontrol
+    #   cookiecutter
     #   mkdocs-material
     #   pip-audit
 result==0.10.0
@@ -145,6 +164,8 @@ six==1.16.0
     #   python-dateutil
 sortedcontainers==2.4.0
     # via cyclonedx-python-lib
+text-unidecode==1.3
+    # via python-slugify
 toml==0.10.2
     # via
     #   cyclonedx-python-lib

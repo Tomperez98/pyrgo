@@ -11,6 +11,7 @@ else:
 import tomli
 
 from pyrgo.core.errors import PyProjectTOMLNotFoundError
+from pyrgo.core.resources import RESOURCER_PATH
 
 
 @dataclass(
@@ -31,6 +32,7 @@ class Config:
     core_deps_alias: str
     lock_file_format: Literal["txt"]
     pyproject: Dict[str, Any]
+    starter_project: Path
 
     @property
     def available_envs(self) -> List[str]:
@@ -88,6 +90,7 @@ def build_config(  # noqa: PLR0913
     venv_dir: str,
     lock_file_format: Literal["txt"],
     core_deps_alias: str,
+    starter_project: str,
 ) -> Config:
     """Build config."""
     path_to_pyproject_toml = cwd.joinpath("pyproject.toml")
@@ -95,9 +98,14 @@ def build_config(  # noqa: PLR0913
         raise PyProjectTOMLNotFoundError(
             pyproject_toml=path_to_pyproject_toml,
         )
+
+    requirements_path = cwd.joinpath("requirements")
+    if not requirements_path.exists() and requirements_path.is_dir():
+        requirements_path.mkdir(parents=False, exist_ok=False)
+
     return Config(
         cwd=cwd,
-        requirements_dir=cwd.joinpath("requirements"),
+        requirements_dir=requirements_path,
         pyproject_file=path_to_pyproject_toml,
         caches=[cwd.joinpath(x) for x in cache_directories],
         artifacts=[cwd.joinpath(x) for x in artifacts_directories],
@@ -114,4 +122,5 @@ def build_config(  # noqa: PLR0913
                 encoding="UTF-8",
             ),
         ),
+        starter_project=RESOURCER_PATH.parent.joinpath(starter_project),
     )

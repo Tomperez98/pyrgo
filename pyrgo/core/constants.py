@@ -17,4 +17,5 @@ app_config = build_config(
     venv_dir=".venv",
     lock_file_format="txt",
     core_deps_alias="core",
+    starter_project="starter-project.zip",
 )
