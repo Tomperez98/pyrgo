@@ -1,29 +1,42 @@
 """docs serve operation."""
+
+import subprocess
 from typing import List
 
-from result import Ok, Result
+from result import Result
 
-from pyrgo.core.utilities.command import (
+from pyrgo.core.models.command import (
     PythonExecCommand,
-    inform_and_run_program,
 )
+from pyrgo.core.utilities.command import inform_and_run_program
 
 
-def execute(*, dev_address: str, theme: str, strict: bool) -> Result[None, Exception]:
+def execute(
+    *,
+    dev_address: str,
+    theme: str,
+    strict: bool,
+) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute docs serve operation."""
-    command_args: List[str] = ["serve"]
-    if strict:
-        command_args.append("--strict")
-
-    command_args.extend(["--theme", theme])
-    command_args.extend(["--dev-addr", dev_address])
-    inform_and_run_program(
-        commands=[
-            PythonExecCommand(
-                program="mkdocs",
-            ).add_args(
-                args=command_args,
-            ),
+    serve_command = PythonExecCommand(
+        program="mkdocs",
+    ).add_args(
+        args=[
+            "serve",
         ],
     )
-    return Ok()
+    if strict:
+        serve_command.add_args(args=["--strict"])
+
+    serve_command.add_args(
+        args=[
+            "--theme",
+            theme,
+            "--dev-addr",
+            dev_address,
+        ],
+    )
+
+    return inform_and_run_program(
+        commands=[serve_command],
+    )

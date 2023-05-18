@@ -1,0 +1,32 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./Cargo.toml",
+        "./Cargo.toml"
+    ],
+    "editor.minimap.enabled": true,
+    "editor.renderWhitespace": "all",
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+        88,
+        100
+    ],
+    "python.testing.pytestArgs": [
+        "tests",
+        // https://github.com/microsoft/vscode-python/issues/693#issuecomment-367856613
+        "--no-cov",
+    ],
+    "[python]": {
+        "gitlens.codeLens.symbolScopes": [
+            "!Module"
+        ],
+        "editor.wordBasedSuggestions": true,
+        "editor.defaultFormatter": "ms-python.black-formatter",
+    },
+    "python.linting.lintOnSave": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "none",
+    "python.linting.mypyEnabled": true,
+    "python.linting.mypyPath": "mypy",
+    "python.testing.pytestEnabled": true,
+    "python.analysis.diagnosticMode": "workspace" // Mypy is doing this.
+}

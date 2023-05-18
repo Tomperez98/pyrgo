@@ -1,40 +1,43 @@
 """check operation."""
-from typing import List, Tuple
+import subprocess
+from typing import List
 
-from result import Ok, Result
+from result import Result
 
-from pyrgo.core.config import app_config
-from pyrgo.core.utilities.command import PythonExecCommand, inform_and_run_program
+from pyrgo.core.models.command import (
+    PythonExecCommand,
+)
+from pyrgo.core.models.config import Config
+from pyrgo.core.utilities.command import inform_and_run_program
 
 
 def execute(
     *,
     add_noqa: bool,
     ignore_noqa: bool,
-) -> Result[None, Exception]:
+    app_config: Config,
+) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute check operation."""
-    relevant_paths = app_config.pyproject_toml.extract_relevant_paths(
-        paths_type="all",
+    ruff_command = PythonExecCommand(
+        program="ruff",
     )
-    ruff_args: List[str] = []
+    mypy_command = PythonExecCommand(
+        program="mypy",
+    )
+
     if add_noqa:
-        ruff_args.append("--add-noqa")
+        ruff_command.add_args(args=["--add-noqa"])
     if ignore_noqa:
-        ruff_args.append("--ignore-noqa")
+        ruff_command.add_args(args=["--ignore-noqa"])
 
-    ruff_args.extend(relevant_paths)
-
-    program_with_args: List[Tuple[str, List[str]]] = [
-        ("ruff", ruff_args),
-        ("mypy", relevant_paths),
-    ]
-
-    commands: List[PythonExecCommand] = []
-    for program, program_args in program_with_args:
-        commands.append(
-            PythonExecCommand(program=program).add_args(
-                args=program_args,
-            ),
+    for command in [ruff_command, mypy_command]:
+        command.add_args(
+            args=app_config.relevant_paths,
         )
-    inform_and_run_program(commands=commands)
-    return Ok()
+
+    return inform_and_run_program(
+        commands=[
+            ruff_command,
+            mypy_command,
+        ],
+    )

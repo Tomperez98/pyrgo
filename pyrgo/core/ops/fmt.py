@@ -1,34 +1,30 @@
 """fmt operation."""
-from typing import List, Tuple
 
-from result import Ok, Result
+import subprocess
+from typing import List
 
-from pyrgo.core.config import app_config
-from pyrgo.core.utilities.command import (
+from result import Result
+
+from pyrgo.core.models.command import (
     PythonExecCommand,
-    inform_and_run_program,
 )
+from pyrgo.core.models.config import Config
+from pyrgo.core.utilities.command import inform_and_run_program
 
 
-def execute() -> Result[None, Exception]:
+def execute(app_config: Config) -> Result[None, List[subprocess.CalledProcessError]]:
     """Execute fmt operation."""
-    relevant_paths = app_config.pyproject_toml.extract_relevant_paths(paths_type="all")
+    ruff_command = PythonExecCommand(program="ruff").add_args(args=["--fix-only"])
+    black_command = PythonExecCommand(program="black")
 
-    program_with_args: List[Tuple[str, List[str]]] = [
-        ("ruff", ["--fix-only", *relevant_paths]),
-        ("black", relevant_paths),
-    ]
-
-    commands: List[PythonExecCommand] = []
-    for program, program_args in program_with_args:
-        commands.append(
-            PythonExecCommand(program=program).add_args(
-                args=program_args,
-            ),
+    for command in [ruff_command, black_command]:
+        command.add_args(
+            args=app_config.relevant_paths,
         )
 
-    inform_and_run_program(
-        commands=commands,
+    return inform_and_run_program(
+        commands=[
+            ruff_command,
+            black_command,
+        ],
     )
-
-    return Ok()

@@ -1,13 +1,10 @@
-"""sync operation."""
-
+"""audit operation."""
 import subprocess
 from typing import List
 
 from result import Result
 
-from pyrgo.core.models.command import (
-    PythonExecCommand,
-)
+from pyrgo.core.models.command import PythonExecCommand
 from pyrgo.core.models.config import Config
 from pyrgo.core.utilities.command import inform_and_run_program
 from pyrgo.core.utilities.text import path_to_lock_file
@@ -15,16 +12,13 @@ from pyrgo.core.utilities.text import path_to_lock_file
 
 def execute(
     *,
-    environment: str,
-    editable: bool,
     app_config: Config,
+    environment: str,
+    fix: bool,
 ) -> Result[None, List[subprocess.CalledProcessError]]:
-    """Execute sync operation."""
-    piptools_command = PythonExecCommand(
-        program="piptools",
-    )
-    pip_command = PythonExecCommand(
-        program="pip",
+    """Execute audit operation."""
+    pipaudit_command = PythonExecCommand(
+        program="pip_audit",
     )
 
     lock_file_path = path_to_lock_file(
@@ -34,26 +28,23 @@ def execute(
         lock_file_format=app_config.lock_file_format,
     )
 
-    piptools_command.add_args(
+    pipaudit_command.add_args(
         args=[
-            "sync",
+            "-r",
             lock_file_path,
+            "-l",
+            "--desc",
         ],
     )
-    pip_command.add_args(
-        args=[
-            "install",
-            "--no-deps",
-        ],
-    )
-    if editable:
-        pip_command.add_args(args=["-e"])
-
-    pip_command.add_args(args=["."])
+    if fix:
+        pipaudit_command.add_args(
+            args=[
+                "--fix",
+            ],
+        )
 
     return inform_and_run_program(
         commands=[
-            piptools_command,
-            pip_command,
+            pipaudit_command,
         ],
     )
