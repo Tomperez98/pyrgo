@@ -27,7 +27,7 @@ dependencies = [
     "build",
     "loguru",
     "pip-audit>=2.5.5",
-    "tomli"
+    
 ]
 
 [project.optional-dependencies]

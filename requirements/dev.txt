@@ -156,7 +156,6 @@ tomli==2.0.1
     #   coverage
     #   mypy
     #   pyproject-hooks
-    #   pyrgo (pyproject.toml)
     #   pytest
 typing-extensions==4.5.0
     # via mypy

@@ -22,4 +22,11 @@ def execute(app_config: Config) -> Result[None, Exception]:
         ):
             shutil.rmtree(pycaches)
 
+    for env_not_as_opt_dep in set(app_config.available_envs).difference(
+        set(app_config.dependency_groups),
+    ):
+        app_config.requirements_dir.joinpath(
+            f"{env_not_as_opt_dep}.{app_config.lock_file_format}",
+        ).unlink()
+
     return Ok()
