@@ -35,7 +35,8 @@ dev = [
 ]
 
 [project.scripts]
-pyrgo = "pyrgo.cli.cli:root"
+pyrgo = "pyrgo.cli.pyrgo_core.cli:root"
+pyrgo-init = "pyrgo.cli.pyrgo_init.cli:root"
 
 [project.urls]
 Documentation = "https://github.com/Tomperez98/pyrgo#readme"
