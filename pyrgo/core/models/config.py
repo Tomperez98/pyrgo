@@ -122,5 +122,5 @@ def build_config(  # noqa: PLR0913
                 encoding="UTF-8",
             ),
         ),
-        starter_project=RESOURCER_PATH.parent.joinpath(starter_project),
+        starter_project=RESOURCER_PATH.joinpath(starter_project),
     )
