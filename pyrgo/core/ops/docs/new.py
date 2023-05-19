@@ -25,7 +25,7 @@ def execute(app_config: Config) -> Result[None, list[subprocess.CalledProcessErr
             "new",
         ],
     )
-    new_command.add_args(args=[str(app_config.cwd)])
+    new_command.add_args(args=[app_config.cwd.as_posix()])
     return inform_and_run_program(
         commands=[new_command],
     )

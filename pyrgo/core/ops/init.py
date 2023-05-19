@@ -30,12 +30,8 @@ def execute(
             return Err(template_path.err())
 
         shutil.move(
-            src=str(template_path.unwrap()),
-            dst=str(
-                app_config.cwd.joinpath(
-                    "tmp",
-                ),
-            ),
+            src=template_path.unwrap().as_posix(),
+            dst=app_config.cwd.joinpath(".").as_posix(),
         )
 
     return Ok()

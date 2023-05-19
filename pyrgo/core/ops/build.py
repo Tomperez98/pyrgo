@@ -23,7 +23,7 @@ def execute(app_config: Config) -> Result[None, list[subprocess.CalledProcessErr
     )
     build_command.add_args(
         args=[
-            str(app_config.cwd),
+            app_config.cwd.as_posix(),
         ],
     )
     return inform_and_run_program(

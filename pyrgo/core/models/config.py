@@ -99,9 +99,7 @@ def build_config(  # noqa: PLR0913
     """Build config."""
     path_to_pyproject_toml = cwd.joinpath("pyproject.toml")
     if not path_to_pyproject_toml.exists() and path_to_pyproject_toml.is_file():
-        raise PyProjectTOMLNotFoundError(
-            pyproject_toml=path_to_pyproject_toml,
-        )
+        raise PyProjectTOMLNotFoundError(pyproject_toml=path_to_pyproject_toml)
 
     requirements_path = cwd.joinpath("requirements")
     if not requirements_path.exists() and requirements_path.is_dir():
