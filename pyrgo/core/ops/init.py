@@ -30,9 +30,11 @@ def execute(
             return Err(template_path.err())
 
         shutil.move(
-            src=template_path.unwrap(),
-            dst=app_config.cwd.joinpath(
-                "tmp",
+            src=str(template_path.unwrap()),
+            dst=str(
+                app_config.cwd.joinpath(
+                    "tmp",
+                ),
             ),
         )
 
