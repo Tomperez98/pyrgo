@@ -1,4 +1,6 @@
 """Application contants."""
+from __future__ import annotations
+
 from pathlib import Path
 
 from pyrgo.core.models.config import build_config
@@ -17,5 +19,5 @@ app_config = build_config(
     venv_dir=".venv",
     lock_file_format="txt",
     core_deps_alias="core",
-    starter_project="starter-project.zip",
+    starter_project="starter-project",
 )

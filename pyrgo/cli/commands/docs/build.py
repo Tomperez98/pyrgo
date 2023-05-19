@@ -1,10 +1,14 @@
 """docs build documentation."""
-import sys
+from __future__ import annotations
 
-if sys.version_info >= (3, 9):
-    from typing import Literal
-else:
-    from typing_extensions import Literal
+import sys
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    if sys.version_info >= (3, 9):
+        from typing import Literal
+    else:
+        from typing_extensions import Literal
 
 import click
 from result import Ok

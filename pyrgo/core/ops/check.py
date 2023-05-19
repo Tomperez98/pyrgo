@@ -1,14 +1,19 @@
 """check operation."""
-import subprocess
-from typing import List
+from __future__ import annotations
 
-from result import Result
+from typing import TYPE_CHECKING
 
 from pyrgo.core.models.command import (
     PythonExecCommand,
 )
-from pyrgo.core.models.config import Config
 from pyrgo.core.utilities.command import inform_and_run_program
+
+if TYPE_CHECKING:
+    import subprocess
+
+    from result import Result
+
+    from pyrgo.core.models.config import Config
 
 
 def execute(
@@ -16,7 +21,7 @@ def execute(
     add_noqa: bool,
     ignore_noqa: bool,
     app_config: Config,
-) -> Result[None, List[subprocess.CalledProcessError]]:
+) -> Result[None, list[subprocess.CalledProcessError]]:
     """Execute check operation."""
     ruff_command = PythonExecCommand(
         program="ruff",

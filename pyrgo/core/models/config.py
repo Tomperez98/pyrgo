@@ -1,17 +1,21 @@
 """Project config."""
-import sys
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, Dict, List
+from __future__ import annotations
 
-if sys.version_info >= (3, 9):
-    from typing import Literal
-else:
-    from typing_extensions import Literal
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Any
+
 import tomli
 
 from pyrgo.core.errors import PyProjectTOMLNotFoundError
-from pyrgo.core.resources import RESOURCER_PATH
+
+if TYPE_CHECKING:
+    import sys
+    from pathlib import Path
+
+    if sys.version_info >= (3, 9):
+        from typing import Literal
+    else:
+        from typing_extensions import Literal
 
 
 @dataclass(
@@ -25,17 +29,17 @@ class Config:
     cwd: Path
     requirements_dir: Path
     pyproject_file: Path
-    caches: List[Path]
-    artifacts: List[Path]
+    caches: list[Path]
+    artifacts: list[Path]
     venv_dir: Path
     venv_activation_msg: str
     core_deps_alias: str
     lock_file_format: Literal["txt"]
-    pyproject: Dict[str, Any]
-    starter_project: Path
+    pyproject: dict[str, Any]
+    starter_project: str
 
     @property
-    def available_envs(self) -> List[str]:
+    def available_envs(self) -> list[str]:
         """List available envs found at `requirements_dir`."""
         requirements_file_pattern = f"*.{self.lock_file_format}"
         return [
@@ -47,25 +51,25 @@ class Config:
         ]
 
     @property
-    def pytest_makers(self) -> List[str]:
+    def pytest_makers(self) -> list[str]:
         """List all custom-defined `pytest` markers."""
-        makers: List[str] = self.pyproject["tool"]["pytest"]["ini_options"]["markers"]
+        makers: list[str] = self.pyproject["tool"]["pytest"]["ini_options"]["markers"]
         return [x.split(sep=":")[0] for x in makers]
 
     @property
-    def optional_dependency_groups(self) -> Dict[str, List[str]]:
+    def optional_dependency_groups(self) -> dict[str, list[str]]:
         """List all optional-dependency groups."""
         return self.pyproject["project"]["optional-dependencies"]
 
     @property
-    def dependency_groups(self) -> List[str]:
+    def dependency_groups(self) -> list[str]:
         """List all defined dependency groups."""
-        dependency_groups: List[str] = [self.core_deps_alias]
+        dependency_groups: list[str] = [self.core_deps_alias]
         dependency_groups.extend(self.optional_dependency_groups)
         return dependency_groups
 
     @property
-    def pytest_paths(self) -> List[str]:
+    def pytest_paths(self) -> list[str]:
         """List all `pytest` testpaths."""
         return self.pyproject["tool"]["pytest"]["ini_options"]["testpaths"]
 
@@ -75,9 +79,9 @@ class Config:
         return self.pyproject["project"]["name"]
 
     @property
-    def relevant_paths(self) -> List[str]:
+    def relevant_paths(self) -> list[str]:
         """Project relevant paths."""
-        relevant_paths: List[str] = []
+        relevant_paths: list[str] = []
         relevant_paths.extend(self.pytest_paths)
         relevant_paths.append(self.project_path)
         return relevant_paths
@@ -85,8 +89,8 @@ class Config:
 
 def build_config(  # noqa: PLR0913
     cwd: Path,
-    cache_directories: List[str],
-    artifacts_directories: List[str],
+    cache_directories: list[str],
+    artifacts_directories: list[str],
     venv_dir: str,
     lock_file_format: Literal["txt"],
     core_deps_alias: str,
@@ -122,5 +126,5 @@ def build_config(  # noqa: PLR0913
                 encoding="UTF-8",
             ),
         ),
-        starter_project=RESOURCER_PATH.joinpath(starter_project),
+        starter_project=starter_project,
     )

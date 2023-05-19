@@ -1,15 +1,20 @@
 """lock operation."""
-import subprocess
-from typing import Iterable, List
+from __future__ import annotations
 
-from result import Result
+from typing import TYPE_CHECKING, Iterable
 
 from pyrgo.core.models.command import (
     PythonExecCommand,
 )
-from pyrgo.core.models.config import Config
 from pyrgo.core.utilities.command import inform_and_run_program
 from pyrgo.core.utilities.text import path_to_lock_file
+
+if TYPE_CHECKING:
+    import subprocess
+
+    from result import Result
+
+    from pyrgo.core.models.config import Config
 
 
 def execute(
@@ -17,10 +22,10 @@ def execute(
     groups: Iterable[str],
     app_config: Config,
     generate_hashes: bool,
-) -> Result[None, List[subprocess.CalledProcessError]]:
+) -> Result[None, list[subprocess.CalledProcessError]]:
     """Execute lock operation."""
     app_config.requirements_dir.relative_to(app_config.cwd)
-    commands: List[PythonExecCommand] = []
+    commands: list[PythonExecCommand] = []
 
     if not groups:
         groups = app_config.dependency_groups

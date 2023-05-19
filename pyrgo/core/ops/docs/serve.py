@@ -1,14 +1,17 @@
 """docs serve operation."""
+from __future__ import annotations
 
-import subprocess
-from typing import List
-
-from result import Result
+from typing import TYPE_CHECKING
 
 from pyrgo.core.models.command import (
     PythonExecCommand,
 )
 from pyrgo.core.utilities.command import inform_and_run_program
+
+if TYPE_CHECKING:
+    import subprocess
+
+    from result import Result
 
 
 def execute(
@@ -16,7 +19,7 @@ def execute(
     dev_address: str,
     theme: str,
     strict: bool,
-) -> Result[None, List[subprocess.CalledProcessError]]:
+) -> Result[None, list[subprocess.CalledProcessError]]:
     """Execute docs serve operation."""
     serve_command = PythonExecCommand(
         program="mkdocs",

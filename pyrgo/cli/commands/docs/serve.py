@@ -1,12 +1,16 @@
 """docs serve command."""
+from __future__ import annotations
+
 import sys
+from typing import TYPE_CHECKING
 
 from result import Ok
 
-if sys.version_info >= (3, 9):
-    from typing import Literal
-else:
-    from typing_extensions import Literal
+if TYPE_CHECKING:
+    if sys.version_info >= (3, 9):
+        from typing import Literal
+    else:
+        from typing_extensions import Literal
 
 
 import click

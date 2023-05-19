@@ -1,6 +1,7 @@
 """lock command."""
+from __future__ import annotations
+
 import sys
-from typing import Tuple
 
 import click
 from result import Ok
@@ -27,7 +28,7 @@ from pyrgo.core.constants import app_config
     show_default=True,
     help="Generate pip 8 style hashes in the resulting requirements file.",
 )
-def lock(*, groups: Tuple[str, ...], generate_hashes: bool) -> None:
+def lock(*, groups: tuple[str, ...], generate_hashes: bool) -> None:
     """Lock dependencies using `piptools`."""
     executed = ops.lock.execute(
         groups=groups,

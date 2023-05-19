@@ -1,20 +1,24 @@
 """command utilities."""
-import subprocess
-from typing import List
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 import click
 from result import Err, Ok, Result
 
-from pyrgo.core.models.command import PythonExecCommand
+if TYPE_CHECKING:
+    import subprocess
+
+    from pyrgo.core.models.command import PythonExecCommand
 from pyrgo.core.utilities.text import colorize_text
 
 
 def inform_and_run_program(
-    commands: List[PythonExecCommand],
-) -> Result[None, List[subprocess.CalledProcessError]]:
+    commands: list[PythonExecCommand],
+) -> Result[None, list[subprocess.CalledProcessError]]:
     """Inform and run program."""
     execution_failed = False
-    subprocess_errors: List[subprocess.CalledProcessError] = []
+    subprocess_errors: list[subprocess.CalledProcessError] = []
     for command in commands:
         command_to_be_executed = " ".join(command.args)
         click.echo(

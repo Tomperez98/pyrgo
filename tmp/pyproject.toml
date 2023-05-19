@@ -3,44 +3,25 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "pyrgo"
-version = "0.2.4"
+name = "name"
+version = "0.1.0"
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
-    "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
 authors = [
-    { name = "Tomas Perez Alvarez", email = "tomasperezalvarez@gmail.com"}
+    { name = "author", email = "author-email"}
 ]
 dependencies = [
-    "click",
-    "ruff",
-    "mypy",
-    "black",
-    "pip-tools",
-    "pytest",
-    "mkdocs-material",
-    "result",
-    "build",
-    "loguru",
-    "pip-audit>=2.5.5",
+    
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest-cov"
+    "pyrgo"
 ]
-
-[project.scripts]
-pyrgo = "pyrgo.cli.cli:root"
-
-[project.urls]
-Documentation = "https://github.com/Tomperez98/pyrgo#readme"
-Issues = "https://github.com/Tomperez98/pyrgo/issues"
-Source = "https://github.com/Tomperez98/pyrgo"
 
 [tool.ruff]
 line-length = 88
@@ -79,10 +60,9 @@ exclude = [
 "tests/*.py" = ["INP001", "S101"]
 
 [tool.ruff.isort]
-known-first-party = ["pyrgo"]
+known-first-party = ["name"]
 force-wrap-aliases = true
 combine-as-imports = true
-required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.flake8-tidy-imports]
 ban-relative-imports = "all"
@@ -101,33 +81,10 @@ xfail_strict = true
 addopts = [
     "--import-mode=importlib",
     "--strict-markers",
-    "--cov-fail-under=5",
-    "--cov-report=term-missing:skip-covered",
-    "--cov-config=pyproject.toml",
-    "--cov=pyrgo",
 ]
 markers = [
     "integration: mark integration tests.",
     "unit: mark unittest.",
-]
-
-[tool.coverage.run]
-branch = true
-parallel = true
-omit = [
-    "pyrgo/logging.py",
-    "pyrgo/cli/**",
-    "pyrgo/**/__init__.py"
-]
-relative_files = true
-
-[tool.coverage.report]
-precision = 1
-exclude_lines = [
-    "if __name__ == .__main__.:",
-    "if TYPE_CHECKING:",
-    "@overload",
-    "raise NotImplementedError",
 ]
 
 [tool.mypy]

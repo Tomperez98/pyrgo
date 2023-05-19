@@ -1,10 +1,14 @@
 """clean operation."""
+from __future__ import annotations
+
 import itertools
 import shutil
+from typing import TYPE_CHECKING
 
 from result import Ok, Result
 
-from pyrgo.core.models.config import Config
+if TYPE_CHECKING:
+    from pyrgo.core.models.config import Config
 
 
 def execute(app_config: Config) -> Result[None, Exception]:

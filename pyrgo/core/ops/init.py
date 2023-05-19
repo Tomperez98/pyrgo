@@ -1,30 +1,39 @@
 """init operation."""
-import subprocess
+from __future__ import annotations
+
+import shutil
 import tempfile
-from typing import List
+from pathlib import Path
+from typing import TYPE_CHECKING
 
-from result import Result
+from result import Err, Ok, Result
 
-from pyrgo.core.models.command import PythonExecCommand
-from pyrgo.core.models.config import Config
-from pyrgo.core.utilities.command import inform_and_run_program
+from pyrgo.core.utilities.io import prepare_starter_project
+
+if TYPE_CHECKING:
+    from pyrgo.core.models.config import Config
 
 
-def execute(app_config: Config) -> Result[None, List[subprocess.CalledProcessError]]:
+def execute(
+    app_config: Config,
+    project_name: str,
+) -> Result[None, Exception]:
     """Execute init operation."""
-    with tempfile.TemporaryDirectory() as temp_dir:
-        cookiecutter_command = PythonExecCommand(program="cookiecutter").add_args(
-            args=[
-                "--accept-hooks",
-                "yes",
-                "--output-dir",
-                temp_dir,
-                str(app_config.starter_project),
-            ],
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_dir = Path(tmp)
+        template_path = prepare_starter_project(
+            app_config=app_config,
+            project_name=project_name,
+            tmp_dir=tmp_dir,
+        )
+        if not isinstance(template_path, Ok):
+            return Err(template_path.err())
+
+        shutil.move(
+            src=template_path.unwrap(),
+            dst=app_config.cwd.joinpath(
+                "tmp",
+            ),
         )
 
-        return inform_and_run_program(
-            commands=[
-                cookiecutter_command,
-            ],
-        )
+    return Ok()
