@@ -7,7 +7,6 @@ from pyrgo.core.ops import (
     clean,
     docs,
     fmt,
-    init,
     lock,
     sync,
     test,
@@ -25,5 +24,4 @@ __all__ = [
     "sync",
     "clean",
     "audit",
-    "init",
 ]

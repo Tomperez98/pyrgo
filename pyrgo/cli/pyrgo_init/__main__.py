@@ -1,4 +1,4 @@
-"""Pyrgo cli 'python -m pyrgo.cli.pyrgo_init' entrypoint."""
+"""Pyrgo cli 'python -m pyrgo.cli.pyrgo_core' entrypoint."""
 from __future__ import annotations
 
 import sys
