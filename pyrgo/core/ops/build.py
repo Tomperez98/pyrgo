@@ -1,24 +1,29 @@
 """build operation."""
-import subprocess
-from typing import List
+from __future__ import annotations
 
-from result import Result
+from typing import TYPE_CHECKING
 
 from pyrgo.core.models.command import (
     PythonExecCommand,
 )
-from pyrgo.core.models.config import Config
 from pyrgo.core.utilities.command import inform_and_run_program
 
+if TYPE_CHECKING:
+    import subprocess
 
-def execute(app_config: Config) -> Result[None, List[subprocess.CalledProcessError]]:
+    from result import Result
+
+    from pyrgo.core.models.config import Config
+
+
+def execute(app_config: Config) -> Result[None, list[subprocess.CalledProcessError]]:
     """Execute build operation."""
     build_command = PythonExecCommand(
         program="build",
     )
     build_command.add_args(
         args=[
-            str(app_config.cwd),
+            app_config.cwd.as_posix(),
         ],
     )
     return inform_and_run_program(

@@ -1,12 +1,15 @@
 """Cli utilitites."""
-from typing import List
+from __future__ import annotations
 
-import click
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import click
 
 
 def add_commands(
     cli: click.Group,
-    commands: List[click.Command],
+    commands: list[click.Command],
 ) -> None:
     """Add commands to CLI group."""
     for command in commands:

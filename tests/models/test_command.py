@@ -1,8 +1,8 @@
 """Test command models."""
+from __future__ import annotations
 
 import itertools
 import sys
-from typing import List
 
 import pytest
 
@@ -36,7 +36,7 @@ def test_execute_command() -> None:
         ),
     ],
 )
-def test_args_building(program: str, commands: List[List[str]]) -> None:
+def test_args_building(program: str, commands: list[list[str]]) -> None:
     """Test args building works as expected."""
     command = PythonExecCommand(program=program)
     for set_of_commands in commands:

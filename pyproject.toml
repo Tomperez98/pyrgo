@@ -27,7 +27,6 @@ dependencies = [
     "build",
     "loguru",
     "pip-audit>=2.5.5",
-    
 ]
 
 [project.optional-dependencies]
@@ -36,7 +35,8 @@ dev = [
 ]
 
 [project.scripts]
-pyrgo = "pyrgo.cli.cli:root"
+pyrgo = "pyrgo.cli.pyrgo_core.cli:root"
+pyrgo-new = "pyrgo.cli.pyrgo_new.cli:new"
 
 [project.urls]
 Documentation = "https://github.com/Tomperez98/pyrgo#readme"
@@ -83,6 +83,7 @@ exclude = [
 known-first-party = ["pyrgo"]
 force-wrap-aliases = true
 combine-as-imports = true
+required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.flake8-tidy-imports]
 ban-relative-imports = "all"
@@ -124,7 +125,6 @@ relative_files = true
 [tool.coverage.report]
 precision = 1
 exclude_lines = [
-    'pragma: no cover',
     "if __name__ == .__main__.:",
     "if TYPE_CHECKING:",
     "@overload",

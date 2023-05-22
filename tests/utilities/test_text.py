@@ -1,16 +1,20 @@
 """test command utilitites."""
-import sys
-
-if sys.version_info >= (3, 9):
-    from typing import Literal
-else:
-    from typing_extensions import Literal
+from __future__ import annotations
 
 import pathlib
+from typing import TYPE_CHECKING
 
 import pytest
 
 from pyrgo.core.utilities.text import colorize_text, path_to_lock_file
+
+if TYPE_CHECKING:
+    import sys
+
+    if sys.version_info >= (3, 9):
+        from typing import Literal
+    else:
+        from typing_extensions import Literal
 
 
 @pytest.mark.unit()

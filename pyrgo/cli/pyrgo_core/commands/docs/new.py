@@ -1,4 +1,5 @@
-"""clean command."""
+"""docs new command."""
+from __future__ import annotations
 
 import sys
 
@@ -10,11 +11,12 @@ from pyrgo.core.constants import app_config
 
 
 @click.command()
-def clean() -> None:
-    """Remove artifacts that pyrgo has generated in the past."""
-    executed = ops.clean.execute(
+def new() -> None:
+    """Create a new MkDocs project."""
+    executed = ops.docs.new.execute(
         app_config=app_config,
     )
     if not isinstance(executed, Ok):
         sys.exit(1)
+
     sys.exit(0)

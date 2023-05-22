@@ -1,4 +1,6 @@
 """Application contants."""
+from __future__ import annotations
+
 from pathlib import Path
 
 from pyrgo.core.models.config import build_config

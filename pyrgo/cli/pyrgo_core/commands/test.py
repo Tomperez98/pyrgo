@@ -1,7 +1,7 @@
 """test command."""
+from __future__ import annotations
 
 import sys
-from typing import Optional
 
 import click
 from result import Ok
@@ -23,7 +23,7 @@ from pyrgo.core.constants import app_config
 )
 def test(
     *,
-    marker: Optional[str],
+    marker: str | None,
 ) -> None:
     """Execute tests using `pytest`."""
     executed = ops.test.execute(

@@ -1,4 +1,5 @@
-"""build command."""
+"""clean command."""
+from __future__ import annotations
 
 import sys
 
@@ -9,10 +10,10 @@ from pyrgo.core import ops
 from pyrgo.core.constants import app_config
 
 
-@click.command
-def build() -> None:
-    """Build project."""
-    executed = ops.build.execute(
+@click.command()
+def clean() -> None:
+    """Remove artifacts that pyrgo has generated in the past."""
+    executed = ops.clean.execute(
         app_config=app_config,
     )
     if not isinstance(executed, Ok):

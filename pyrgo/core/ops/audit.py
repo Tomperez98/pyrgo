@@ -1,11 +1,16 @@
 """audit operation."""
-import subprocess
-from typing import List
+from __future__ import annotations
 
-from result import Result
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import subprocess
+
+    from result import Result
+
+    from pyrgo.core.models.config import Config
 
 from pyrgo.core.models.command import PythonExecCommand
-from pyrgo.core.models.config import Config
 from pyrgo.core.utilities.command import inform_and_run_program
 from pyrgo.core.utilities.text import path_to_lock_file
 
@@ -15,7 +20,7 @@ def execute(
     app_config: Config,
     environment: str,
     fix: bool,
-) -> Result[None, List[subprocess.CalledProcessError]]:
+) -> Result[None, list[subprocess.CalledProcessError]]:
     """Execute audit operation."""
     pipaudit_command = PythonExecCommand(
         program="pip_audit",

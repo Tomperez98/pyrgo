@@ -1,29 +1,22 @@
-"""docs serve command."""
+"""docs build documentation."""
+from __future__ import annotations
+
 import sys
+from typing import TYPE_CHECKING
 
-from result import Ok
-
-if sys.version_info >= (3, 9):
-    from typing import Literal
-else:
-    from typing_extensions import Literal
-
+if TYPE_CHECKING:
+    if sys.version_info >= (3, 9):
+        from typing import Literal
+    else:
+        from typing_extensions import Literal
 
 import click
+from result import Ok
 
 from pyrgo.core import ops
 
 
 @click.command()
-@click.option(
-    "-a",
-    "--dev-addr",
-    "dev_addr",
-    metavar="<IP:PORT>",
-    default="localhost:8000",
-    type=str,
-    help="IP address and port to serve documentation locally (default: localhost:8000)",
-)
 @click.option(
     "-t",
     "--theme",
@@ -40,9 +33,8 @@ from pyrgo.core import ops
     default=False,
     help="Enable strict mode. This will cause MkDocs to abort the build on any warnings.",  # noqa: E501
 )
-def serve(
+def build(
     *,
-    dev_addr: str,
     theme: Literal[
         "material",
         "mkdocs",
@@ -50,9 +42,8 @@ def serve(
     ],
     strict: bool,
 ) -> None:
-    """Serve project documentation."""
-    executed = ops.docs.serve.execute(
-        dev_address=dev_addr,
+    """Build project documentation."""
+    executed = ops.docs.build.execute(
         theme=theme,
         strict=strict,
     )

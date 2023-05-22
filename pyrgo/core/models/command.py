@@ -1,11 +1,15 @@
 """Python command."""
+from __future__ import annotations
+
 import subprocess
 import sys
 from dataclasses import dataclass, field
-from typing import List
+from typing import TYPE_CHECKING
 
 from result import Err, Ok, Result
-from typing_extensions import Self
+
+if TYPE_CHECKING:
+    from typing_extensions import Self
 
 
 @dataclass(
@@ -17,12 +21,12 @@ class PythonExecCommand:
     """Command builder."""
 
     program: str
-    args: List[str] = field(init=False)
+    args: list[str] = field(init=False)
 
     def __post_init__(self) -> None:  # noqa: D105
         self.args = [sys.executable, "-m", self.program]
 
-    def add_args(self, args: List[str]) -> Self:
+    def add_args(self, args: list[str]) -> Self:
         """Add args to execution."""
         self.args.extend(args)
         return self

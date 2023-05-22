@@ -1,7 +1,7 @@
 """venv operation."""
+from __future__ import annotations
 
-import subprocess
-from typing import List
+from typing import TYPE_CHECKING
 
 import click
 from result import Ok, Result
@@ -9,11 +9,15 @@ from result import Ok, Result
 from pyrgo.core.models.command import (
     PythonExecCommand,
 )
-from pyrgo.core.models.config import Config
 from pyrgo.core.utilities.command import inform_and_run_program
 
+if TYPE_CHECKING:
+    import subprocess
 
-def execute(app_config: Config) -> Result[None, List[subprocess.CalledProcessError]]:
+    from pyrgo.core.models.config import Config
+
+
+def execute(app_config: Config) -> Result[None, list[subprocess.CalledProcessError]]:
     """Execute venv operation."""
     venv_command = PythonExecCommand(
         program="venv",

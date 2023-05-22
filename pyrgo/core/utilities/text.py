@@ -1,13 +1,18 @@
 """Text utilities."""
-import sys
+from __future__ import annotations
 
-if sys.version_info >= (3, 9):
-    from typing import Literal
-else:
-    from typing_extensions import Literal  # pragma: no cover
-import pathlib
+from typing import TYPE_CHECKING
 
 import click
+
+if TYPE_CHECKING:
+    import sys
+
+    if sys.version_info >= (3, 9):
+        from typing import Literal
+    else:
+        from typing_extensions import Literal  # pragma: no cover
+    from pathlib import Path
 
 
 def colorize_text(
@@ -23,8 +28,8 @@ def colorize_text(
 
 
 def path_to_lock_file(
-    cwd: pathlib.Path,
-    requirements_path: pathlib.Path,
+    cwd: Path,
+    requirements_path: Path,
     group: str,
     lock_file_format: str,
 ) -> str:
