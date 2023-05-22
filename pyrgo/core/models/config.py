@@ -36,7 +36,6 @@ class Config:
     core_deps_alias: str
     lock_file_format: Literal["txt"]
     pyproject: dict[str, Any]
-    starter_project: str
 
     @property
     def available_envs(self) -> list[str]:
@@ -94,7 +93,6 @@ def build_config(  # noqa: PLR0913
     venv_dir: str,
     lock_file_format: Literal["txt"],
     core_deps_alias: str,
-    starter_project: str,
 ) -> Config:
     """Build config."""
     path_to_pyproject_toml = cwd.joinpath("pyproject.toml")
@@ -124,5 +122,4 @@ def build_config(  # noqa: PLR0913
                 encoding="UTF-8",
             ),
         ),
-        starter_project=starter_project,
     )

@@ -4,6 +4,6 @@ from __future__ import annotations
 import sys
 
 if __name__ == "__main__":
-    from pyrgo.cli.pyrgo.cli import root
+    from pyrgo.cli.pyrgo_core.cli import root
 
     sys.exit(root())
