@@ -35,13 +35,22 @@ from pyrgo.core.constants import app_config
     type=bool,
     help="Ignore any `# noqa` comments",
 )
-def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool) -> None:
+@click.option(
+    "--typing/--no-typing",
+    "typing",
+    is_flag=True,
+    default=True,
+    type=bool,
+    help="Check typing with mypy.",
+)
+def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool, typing: bool) -> None:
     """Analyze the current package with `ruff` and `mypy`."""
     executed = ops.check.execute(
         add_noqa=add_noqa,
         ignore_noqa=ignore_noqa,
         deamon_time_out=timeout,
         app_config=app_config,
+        typing=typing,
     )
     if not isinstance(executed, Ok):
         sys.exit(1)

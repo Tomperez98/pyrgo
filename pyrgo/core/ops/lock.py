@@ -24,7 +24,11 @@ def execute(
     generate_hashes: bool,
 ) -> Result[None, list[subprocess.CalledProcessError]]:
     """Execute lock operation."""
-    app_config.requirements_dir.relative_to(app_config.cwd)
+    app_config.requirements_dir.relative_to(app_config.cwd).mkdir(
+        exist_ok=True,
+        parents=False,
+    )
+
     commands: list[PythonExecCommand] = []
 
     if not groups:
