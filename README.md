@@ -32,21 +32,20 @@ pyrgo -h
 #   Pyrgo. Python package manager.
 
 # Options:
-#   --version   Show the version and exit.
-#   -h, --help  Show this message and exit.
+#   -v, --version  Show the version and exit.
+#   -h, --help     Show this message and exit.
 
 # Commands:
-#   add     Add dependencies to a pyproject.toml manifest file and install.
-#   build   Build project.
-#   check   Analyze the current package with `ruff` and `mypy`.
-#   clean   Remove artifacts that pyrgo has generated in the past.
-#   docs    Document you project with `mkdocs-material`.
-#   fmt     Format all files of the current project using `black` and `ruff`.
-#   init    Create a new pyrgo project in an existing directory.
-#   lock    Lock dependencies using `piptools`.
-#   new     Create a new pyrgo project.
-#   remove  Remove dependencies from the manifest file.
-#   sync    Synchronize virtual environment with requirements.txt.
-#   test    Execute tests using `pytest`.
-#   venv    Create project virtual environment.
+#   audit  Scan project requirements for packages with known vulnerabilities.
+#   build  Build project.
+#   check  Analyze the current package with `ruff` and `mypy`.
+#   clean  Remove artifacts that pyrgo has generated in the past.
+#   docs   Document you project with `mkdocs-material`.
+#   fmt    Format all files of the current project using `black` and `ruff`.
+#   lock   Lock dependencies using `piptools`.
+#   sync   Synchronize virtual environment with requirements.txt.
+#   test   Execute tests using `pytest`.
+#   venv   Create project virtual environment.
 ```
+
+Use `pyrgo-new -n <project-name> [path]` to initialize your new project
