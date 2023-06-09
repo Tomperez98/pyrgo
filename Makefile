@@ -44,8 +44,8 @@ build-docs:
 .PHONY: lock-dependencies
 lock-dependencies: ## Lock dependencies specified in pyproject.toml
 	@mkdir -p requirements
-	@pip-compile --resolver=backtracking -o requirements/core.lock pyproject.toml
-	@pip-compile --extra dev --resolver=backtracking -o requirements/dev.lock pyproject.toml
+	@pip-compile --resolver=backtracking -o requirements/core.txt pyproject.toml
+	@pip-compile --extra dev --resolver=backtracking -o requirements/dev.txt pyproject.toml
 
 .PHONY: reload-settings
 reload-settings: ## Reload settings from pyproject.toml
