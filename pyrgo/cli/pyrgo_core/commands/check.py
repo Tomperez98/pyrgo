@@ -12,6 +12,14 @@ from pyrgo.core.constants import app_config
 
 @click.command()
 @click.option(
+    "-t",
+    "--timeout",
+    "timeout",
+    default=360,
+    type=click.IntRange(min=0, max=None, min_open=True),
+    help="To automatically shutdown mypy deamon after n seconds of inactivity",
+)
+@click.option(
     "--add-noqa",
     "add_noqa",
     is_flag=True,
@@ -27,11 +35,12 @@ from pyrgo.core.constants import app_config
     type=bool,
     help="Ignore any `# noqa` comments",
 )
-def check(*, add_noqa: bool, ignore_noqa: bool) -> None:
+def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool) -> None:
     """Analyze the current package with `ruff` and `mypy`."""
     executed = ops.check.execute(
         add_noqa=add_noqa,
         ignore_noqa=ignore_noqa,
+        deamon_time_out=timeout,
         app_config=app_config,
     )
     if not isinstance(executed, Ok):
