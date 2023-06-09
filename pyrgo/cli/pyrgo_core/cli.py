@@ -25,6 +25,7 @@ from pyrgo.cli.utils import add_commands
             "-h",
             "--help",
         ],
+        "show_default": True,
     },
 )
 @click.version_option(

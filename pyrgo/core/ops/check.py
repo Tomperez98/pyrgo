@@ -20,6 +20,7 @@ def execute(
     *,
     add_noqa: bool,
     ignore_noqa: bool,
+    deamon_time_out: int,
     app_config: Config,
 ) -> Result[None, list[subprocess.CalledProcessError]]:
     """Execute check operation."""
@@ -27,8 +28,8 @@ def execute(
         program="ruff",
     )
     mypy_command = PythonExecCommand(
-        program="mypy",
-    )
+        program="mypy.dmypy",
+    ).add_args(args=["run", "--timeout", str(deamon_time_out), "--"])
 
     if add_noqa:
         ruff_command.add_args(args=["--add-noqa"])

@@ -7,6 +7,9 @@ from typing import TYPE_CHECKING
 
 from result import Ok, Result
 
+from pyrgo.core.models.command import PythonExecCommand
+from pyrgo.core.utilities.command import inform_and_run_program
+
 if TYPE_CHECKING:
     from pyrgo.core.models.config import Config
 
@@ -32,5 +35,15 @@ def execute(app_config: Config) -> Result[None, Exception]:
         app_config.requirements_dir.joinpath(
             f"{env_not_as_opt_dep}.{app_config.lock_file_format}",
         ).unlink()
+
+    mypy_deamon_command = PythonExecCommand(
+        program="mypy.dmypy",
+    )
+    mypy_deamon_command.add_args(args=["stop"])
+    inform_and_run_program(
+        commands=[
+            mypy_deamon_command,
+        ],
+    )
 
     return Ok()
