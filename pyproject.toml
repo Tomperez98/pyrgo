@@ -23,7 +23,7 @@ dependencies = [
     "pip-tools",
     "pytest",
     "mkdocs-material",
-    "result",
+    "result==0.10.0",
     "build",
     "loguru",
     "pip-audit>=2.5.5",

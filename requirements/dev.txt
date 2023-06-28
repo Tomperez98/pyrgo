@@ -4,10 +4,6 @@
 #
 #    pip-compile --extra=dev --output-file=requirements/dev.txt --resolver=backtracking pyproject.toml
 #
---trusted-host pypi.python.org
---trusted-host pypi.org
---trusted-host files.pythonhosted.org
-
 black==23.3.0
     # via pyrgo (pyproject.toml)
 build==0.10.0
