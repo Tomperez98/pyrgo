@@ -6,13 +6,8 @@ from typing import TYPE_CHECKING
 import click
 
 if TYPE_CHECKING:
-    import sys
-
-    if sys.version_info >= (3, 9):
-        from typing import Literal
-    else:
-        from typing_extensions import Literal  # pragma: no cover
     from pathlib import Path
+    from typing import Literal  # pragma: no cover
 
 
 def colorize_text(

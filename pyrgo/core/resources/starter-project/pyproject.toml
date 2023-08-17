@@ -3,45 +3,22 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "pyrgo"
-version = "0.4.1"
+name = "project_name"
+version = "0.1.0"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.7"
 classifiers = [
-    "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
-authors = [
-    { name = "Tomas Perez Alvarez", email = "tomasperezalvarez@gmail.com"}
-]
 dependencies = [
-    "click",
-    "ruff",
-    "mypy",
-    "black",
-    "pip-tools",
-    "pytest",
-    "mkdocs-material",
-    "result==0.10.0",
-    "build",
-    "loguru",
-    "pip-audit>=2.5.5",
+    
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest-cov"
+    "pyrgo"
 ]
-
-[project.scripts]
-pyrgo = "pyrgo.cli.pyrgo_core.cli:root"
-pyrgo-new = "pyrgo.cli.pyrgo_new.cli:new"
-
-[project.urls]
-Documentation = "https://github.com/Tomperez98/pyrgo#readme"
-Issues = "https://github.com/Tomperez98/pyrgo/issues"
-Source = "https://github.com/Tomperez98/pyrgo"
 
 [tool.ruff]
 line-length = 88
@@ -76,14 +53,12 @@ exclude = [
 
 [tool.ruff.per-file-ignores]
 "scripts/*.py" = ["INP001"]
-"__init__.py" = ["D104"]
-"tests/*.py" = ["INP001", "S101"]
+"tests/*.py" = ["S101"]
 
 [tool.ruff.isort]
-known-first-party = ["pyrgo"]
+known-first-party = ["project_name"]
 force-wrap-aliases = true
 combine-as-imports = true
-required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.flake8-tidy-imports]
 ban-relative-imports = "all"
@@ -102,33 +77,10 @@ xfail_strict = true
 addopts = [
     "--import-mode=importlib",
     "--strict-markers",
-    "--cov-fail-under=5",
-    "--cov-report=term-missing:skip-covered",
-    "--cov-config=pyproject.toml",
-    "--cov=pyrgo",
 ]
 markers = [
     "integration: mark integration tests.",
     "unit: mark unittest.",
-]
-
-[tool.coverage.run]
-branch = true
-parallel = true
-omit = [
-    "pyrgo/logging.py",
-    "pyrgo/cli/**",
-    "pyrgo/**/__init__.py"
-]
-relative_files = true
-
-[tool.coverage.report]
-precision = 1
-exclude_lines = [
-    "if __name__ == .__main__.:",
-    "if TYPE_CHECKING:",
-    "@overload",
-    "raise NotImplementedError",
 ]
 
 [tool.mypy]

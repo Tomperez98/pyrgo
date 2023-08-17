@@ -1,7 +1,7 @@
 """lock operation."""
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Iterable
+from typing import TYPE_CHECKING
 
 from pyrgo.core.models.command import (
     PythonExecCommand,
@@ -11,6 +11,7 @@ from pyrgo.core.utilities.text import path_to_lock_file
 
 if TYPE_CHECKING:
     import subprocess
+    from collections.abc import Iterable
 
     from result import Result
 

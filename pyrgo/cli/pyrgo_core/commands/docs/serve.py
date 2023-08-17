@@ -7,10 +7,7 @@ from typing import TYPE_CHECKING
 from result import Ok
 
 if TYPE_CHECKING:
-    if sys.version_info >= (3, 9):
-        from typing import Literal
-    else:
-        from typing_extensions import Literal
+    from typing import Literal
 
 
 import click

@@ -9,13 +9,8 @@ import tomli
 from pyrgo.core.errors import PyProjectTOMLNotFoundError
 
 if TYPE_CHECKING:
-    import sys
     from pathlib import Path
-
-    if sys.version_info >= (3, 9):
-        from typing import Literal
-    else:
-        from typing_extensions import Literal
+    from typing import Literal
 
 
 @dataclass(
