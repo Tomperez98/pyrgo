@@ -4,6 +4,7 @@ from __future__ import annotations
 import pathlib
 import sys
 from dataclasses import dataclass
+from typing import Any
 
 import loguru
 import tomli
@@ -28,8 +29,10 @@ class PyrgoConf:
     """Pyrgo configuration."""
 
     cwd: pathlib.Path
+    requirements: pathlib.Path
     logger: loguru.Logger
     relevant_paths: list[str]
+    optional_deps: set[str] | None
 
     @classmethod
     def new(cls: type[PyrgoConf]) -> PyrgoConf:
@@ -51,8 +54,15 @@ class PyrgoConf:
         if extra_paths is not None:
             relevant_paths.extend(extra_paths)
 
+        op_deps: dict[str, Any] | None = pyproject_data["project"].get(
+            "optional-dependencies",
+            None,
+        )
+
         return cls(
             cwd=cwd,
+            requirements=cwd.joinpath("requirements"),
             logger=logger,
             relevant_paths=relevant_paths,
+            optional_deps=None if op_deps is None else set(op_deps.keys()),
         )
