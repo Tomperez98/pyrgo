@@ -1,0 +1,1 @@
+"""Pyrgo cli module."""

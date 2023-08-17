@@ -1,24 +1,21 @@
 """New release."""
+from __future__ import annotations
+
 import pathlib
 import webbrowser
-from typing import Any, Dict
+from typing import Any
 from urllib.parse import urlencode
 
 import tomli
 
 
-def project_project(cwd: pathlib.Path) -> Dict[str, Any]:
+def project_project(cwd: pathlib.Path) -> dict[str, Any]:
     """Read `pyproject.toml` project."""
-    try:
-        pyproject = tomli.loads(
-            cwd.joinpath(
-                "pyproject.toml",
-            ).read_text(encoding="utf-8"),
-        )
-    except FileNotFoundError:
-        raise
-    except Exception:
-        raise
+    pyproject = tomli.loads(
+        cwd.joinpath(
+            "pyproject.toml",
+        ).read_text(encoding="utf-8"),
+    )
 
     return pyproject["project"]
 
