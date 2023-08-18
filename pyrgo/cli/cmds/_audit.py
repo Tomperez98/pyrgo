@@ -1,4 +1,4 @@
-"""Sync command."""
+"""Audit command."""
 from __future__ import annotations
 
 import sys
@@ -11,7 +11,7 @@ from pyrgo.command_exec import PythonCommandExec
 from pyrgo.conf import PyrgoConf
 
 
-@click.command("sync")
+@click.command("audit")
 @click.option(
     "-e",
     "--env",
@@ -20,34 +20,28 @@ from pyrgo.conf import PyrgoConf
     required=True,
 )
 @click.option(
-    "--editable/--no-editable",
-    "editable",
+    "--fix/--no-fix",
+    "fix",
     type=click.BOOL,
-    default=True,
+    default=False,
     show_default=True,
 )
-def sync(env: str, *, editable: bool) -> None:
-    """Sync current python environment to locked deps."""
+def audit(env: str, *, fix: bool) -> None:
     config = PyrgoConf.new()
     ensure_env_exist_in_lock_file(env=env, config=config)
 
-    piptools_command = PythonCommandExec.new(program="piptools").add_args(
+    pip_audit_cmd = PythonCommandExec.new(program="pip_audit").add_args(
         args=[
-            "sync",
+            "-r",
             config.requirements.joinpath(f"{env}.txt")
             .relative_to(config.cwd)
             .as_posix(),
         ],
     )
-    pip_command = PythonCommandExec.new(program="pip").add_args(
-        args=["install", "--no-deps"],
-    )
-    if editable:
-        pip_command.add_args(args=["-e"])
-    pip_command.add_args(args=["."])
+    if fix:
+        pip_audit_cmd.add_args(args=["--fix"])
 
-    program_execution = inform_and_run_program(commands=[piptools_command, pip_command])
-
+    program_execution = inform_and_run_program(commands=[pip_audit_cmd])
     if not isinstance(program_execution, Ok):
         sys.exit(1)
 

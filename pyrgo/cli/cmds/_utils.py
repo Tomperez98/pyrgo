@@ -1,6 +1,7 @@
 """CLI utilities."""
 from __future__ import annotations
 
+import sys
 from typing import TYPE_CHECKING
 
 import click
@@ -10,6 +11,7 @@ if TYPE_CHECKING:
     import subprocess
 
     from pyrgo.command_exec import PythonCommandExec
+    from pyrgo.conf import PyrgoConf
 
 
 def inform_and_run_program(
@@ -27,3 +29,25 @@ def inform_and_run_program(
     if len(subprocess_errors) > 0:
         return Err(subprocess_errors)
     return Ok(None)
+
+
+def ensure_env_exist_in_lock_file(env: str, config: PyrgoConf) -> None:
+    if not config.requirements.exists():
+        click.echo(
+            message=click.style(
+                "No `requirements` folder found. Try locking your deps first",
+                fg="red",
+            ),
+        )
+        sys.exit(1)
+
+    locked_envs = config.locked_envs()
+    if env not in locked_envs:
+        click.echo(
+            click.style(
+                f"`{env}` not found in available envs.\nAvailable envs: {locked_envs}",  # noqa: E501
+                fg="red",
+            ),
+        )
+
+        sys.exit(1)

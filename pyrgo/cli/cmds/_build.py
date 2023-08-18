@@ -13,6 +13,7 @@ from pyrgo.conf import PyrgoConf
 
 @click.command("build")
 def build() -> None:
+    """Build project with `build`."""
     program_execution = inform_and_run_program(
         commands=[
             PythonCommandExec.new(program="build").add_args(

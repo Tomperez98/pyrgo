@@ -20,6 +20,7 @@ PyrgoProgram: TypeAlias = Literal[
     "pip",
     "build",
     "pytest",
+    "pip_audit",
 ]
 
 
