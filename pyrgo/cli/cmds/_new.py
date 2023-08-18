@@ -14,6 +14,7 @@ from pyrgo import resources
 @click.option("-n", "--name", "name", type=click.STRING, required=True)
 @click.option("--path", "path", type=click.Path(), required=True)
 def new(name: str, path: str) -> None:
+    """Create a project."""
     path_path = pathlib.Path(path)
 
     package_name = name.strip().replace("-", "_")

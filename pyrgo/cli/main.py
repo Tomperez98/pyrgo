@@ -17,7 +17,7 @@ from pyrgo.cli import cmds
 )
 @click.version_option(None, "-v", "--version")
 def cli() -> None:
-    """Pyrgo. Python package manager."""
+    """pyrgo. Python package manager."""
 
 
 cli.add_command(cmd=cmds.lock)

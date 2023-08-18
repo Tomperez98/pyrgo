@@ -2,7 +2,7 @@
 
 Python project manager inspired in [Cargo](https://doc.rust-lang.org/cargo/).
 
-`Pyrgo` does not reinvent the wheel. It's just a unified API that leverages popular libraries to improve your development experience.
+**`pyrgo` does not reinvent the wheel**. It's just a unified API that leverages popular libraries to improve your development experience.
 
 - Testing:
   - [pytest](https://docs.pytest.org/en/7.3.x/)
@@ -17,35 +17,38 @@ Python project manager inspired in [Cargo](https://doc.rust-lang.org/cargo/).
 - Package management:
   - [pip](https://pip.pypa.io/en/stable/)
   - [pip-tools](https://pip-tools.readthedocs.io/en/latest/)
-- Code documentation:
-  - [mkdocs-material](https://squidfunk.github.io/mkdocs-material/)
-- Virtual enviroment:
-  - [venv](https://virtualenv.pypa.io/en/latest/)
 
 All behind a unified API.
 
 ```bash
-pyrgo -h
+Usage: pyrgo [OPTIONS] COMMAND [ARGS]...
 
-# Usage: pyrgo [OPTIONS] COMMAND [ARGS]...
+  pyrgo. Python package manager.
 
-#   Pyrgo. Python package manager.
+Options:
+  -v, --version  Show the version and exit.
+  -h, --help     Show this message and exit.
 
-# Options:
-#   -v, --version  Show the version and exit.
-#   -h, --help     Show this message and exit.
-
-# Commands:
-#   audit  Scan project requirements for packages with known vulnerabilities.
-#   build  Build project.
-#   check  Analyze the current package with `ruff` and `mypy`.
-#   clean  Remove artifacts that pyrgo has generated in the past.
-#   docs   Document you project with `mkdocs-material`.
-#   fmt    Format all files of the current project using `black` and `ruff`.
-#   lock   Lock dependencies using `piptools`.
-#   sync   Synchronize virtual environment with requirements.txt.
-#   test   Execute tests using `pytest`.
-#   venv   Create project virtual environment.
+Commands:
+  audit  Audit locked dependencies with `pip_audit`.
+  build  Build project with `build`.
+  check  Check code with `mypy` and `ruff`.
+  clean  Clean project repository.
+  fmt    Format code with `ruff` and `black`.
+  lock   Lock project dependencies with `piptools`.
+  new    Create a project.
+  sync   Sync current python environment to locked deps.
+  test   Run tests with `pytest`.
 ```
 
-Use `pyrgo-new -n <project-name> [path]` to initialize your new project
+The minimal pyrgo project structure, as well as python project structure is this one:
+
+```bash
+.
+├── README.md
+├── pkg
+│   └── __init__.py
+├── pyproject.toml
+└── tests
+    └── test_something.py
+```

@@ -27,6 +27,7 @@ from pyrgo.conf import PyrgoConf
     show_default=True,
 )
 def audit(env: str, *, fix: bool) -> None:
+    """Audit locked dependencies with `pip_audit`."""
     config = PyrgoConf.new()
     ensure_env_exist_in_lock_file(env=env, config=config)
 
