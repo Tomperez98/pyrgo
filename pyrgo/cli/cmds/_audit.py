@@ -1,0 +1,48 @@
+"""Audit command."""
+from __future__ import annotations
+
+import sys
+
+import click
+from result import Ok
+
+from pyrgo.cli.cmds._utils import ensure_env_exist_in_lock_file, inform_and_run_program
+from pyrgo.command_exec import PythonCommandExec
+from pyrgo.conf import PyrgoConf
+
+
+@click.command("audit")
+@click.option(
+    "-e",
+    "--env",
+    "env",
+    type=click.STRING,
+    required=True,
+)
+@click.option(
+    "--fix/--no-fix",
+    "fix",
+    type=click.BOOL,
+    default=False,
+    show_default=True,
+)
+def audit(env: str, *, fix: bool) -> None:
+    config = PyrgoConf.new()
+    ensure_env_exist_in_lock_file(env=env, config=config)
+
+    pip_audit_cmd = PythonCommandExec.new(program="pip_audit").add_args(
+        args=[
+            "-r",
+            config.requirements.joinpath(f"{env}.txt")
+            .relative_to(config.cwd)
+            .as_posix(),
+        ],
+    )
+    if fix:
+        pip_audit_cmd.add_args(args=["--fix"])
+
+    program_execution = inform_and_run_program(commands=[pip_audit_cmd])
+    if not isinstance(program_execution, Ok):
+        sys.exit(1)
+
+    sys.exit(0)
