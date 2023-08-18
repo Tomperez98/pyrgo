@@ -32,7 +32,10 @@ class PyrgoConf:
     requirements: pathlib.Path
     logger: loguru.Logger
     relevant_paths: list[str]
-    optional_deps: set[str] | None
+    artifacts: list[pathlib.Path]
+    caches: list[pathlib.Path]
+    core_deps_alias: str
+    env_groups: set[str]
 
     @classmethod
     def new(cls: type[PyrgoConf]) -> PyrgoConf:
@@ -54,15 +57,42 @@ class PyrgoConf:
         if extra_paths is not None:
             relevant_paths.extend(extra_paths)
 
+        caches = [
+            cwd.joinpath(".pytest_cache"),
+            cwd.joinpath(".ruff_cache"),
+            cwd.joinpath(".mypy_cache"),
+        ]
+
+        extra_caches = pyproject_data["tool"]["pyrgo"].get("extra-caches", None)
+        if extra_caches is not None:
+            caches.extend(cwd.joinpath(extra) for extra in extra_caches)
+
+        core_deps_alias = "core"
+        env_groups = {core_deps_alias}
         op_deps: dict[str, Any] | None = pyproject_data["project"].get(
             "optional-dependencies",
             None,
         )
+        if op_deps is not None:
+            env_groups = env_groups.union(op_deps.keys())
 
         return cls(
             cwd=cwd,
             requirements=cwd.joinpath("requirements"),
             logger=logger,
             relevant_paths=relevant_paths,
-            optional_deps=None if op_deps is None else set(op_deps.keys()),
+            artifacts=[cwd.joinpath("dist")],
+            caches=caches,
+            core_deps_alias=core_deps_alias,
+            env_groups=env_groups,
         )
+
+    def locked_envs(self) -> set[str]:
+        """Get a set of available locked envs."""
+        locked_envs: set[str] = set()
+        for env in self.requirements.glob(pattern="*.txt"):
+            locked_envs.add(
+                env.relative_to(self.requirements).as_posix().removesuffix(".txt"),
+            )
+
+        return locked_envs

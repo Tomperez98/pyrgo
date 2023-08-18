@@ -12,7 +12,15 @@ if TYPE_CHECKING:
     from typing_extensions import Self, TypeAlias
 
 
-PyrgoProgram: TypeAlias = Literal["ruff", "black", "mypy.dmypy", "piptools"]
+PyrgoProgram: TypeAlias = Literal[
+    "ruff",
+    "black",
+    "mypy.dmypy",
+    "piptools",
+    "pip",
+    "build",
+    "pytest",
+]
 
 
 @dataclass(frozen=False)

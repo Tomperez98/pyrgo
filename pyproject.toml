@@ -133,3 +133,4 @@ explicit_package_bases = true
 
 [tool.pyrgo]
 extra-paths = ["scripts"]
+extra-caches = [".coverage"]
