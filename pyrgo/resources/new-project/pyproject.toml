@@ -3,41 +3,19 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "pyrgo"
-version = "0.4.1"
+name = "new-project"
+version = "0.0.1"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
-    "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
-authors = [
-    { name = "Tomas Perez Alvarez", email = "tomasperezalvarez@gmail.com" },
-]
-dependencies = [
-    "click",
-    "ruff",
-    "mypy",
-    "black",
-    "pip-tools>=7.0.0",
-    "pytest",
-    "result",
-    "build",
-    "loguru",
-    "pip-audit>=2.5.5",
-]
+authors = [{ name = "Author name", email = "author@email.com" }]
+dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest-cov"]
-
-[project.scripts]
-pyrgo = "pyrgo.cli.main:cli"
-
-[project.urls]
-Documentation = "https://github.com/Tomperez98/pyrgo#readme"
-Issues = "https://github.com/Tomperez98/pyrgo/issues"
-Source = "https://github.com/Tomperez98/pyrgo"
+dev = ["pyrgo"]
 
 [tool.ruff]
 line-length = 88
@@ -90,13 +68,7 @@ include = '\.pyi?$'
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 xfail_strict = true
-addopts = [
-    "--import-mode=importlib",
-    "--strict-markers",
-    "--cov-report=term-missing:skip-covered",
-    "--cov-config=pyproject.toml",
-    "--cov=pyrgo",
-]
+addopts = ["--import-mode=importlib", "--strict-markers"]
 markers = ["integration: mark integration tests.", "unit: mark unittest."]
 
 [tool.coverage.run]
@@ -132,4 +104,3 @@ explicit_package_bases = true
 
 [tool.pyrgo]
 extra-paths = ["scripts"]
-extra-caches = [".coverage"]

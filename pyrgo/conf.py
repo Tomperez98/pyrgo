@@ -53,19 +53,19 @@ class PyrgoConf:
         relevant_paths.extend(
             pyproject_data["tool"]["pytest"]["ini_options"]["testpaths"],
         )
-        extra_paths = pyproject_data["tool"]["pyrgo"].get("extra-paths", None)
-        if extra_paths is not None:
-            relevant_paths.extend(extra_paths)
-
+        pyrgo_config = pyproject_data["tool"].get("pyrgo", None)
         caches = [
             cwd.joinpath(".pytest_cache"),
             cwd.joinpath(".ruff_cache"),
             cwd.joinpath(".mypy_cache"),
         ]
-
-        extra_caches = pyproject_data["tool"]["pyrgo"].get("extra-caches", None)
-        if extra_caches is not None:
-            caches.extend(cwd.joinpath(extra) for extra in extra_caches)
+        if pyrgo_config is not None:
+            extra_paths = pyrgo_config.get("extra-paths", None)
+            extra_caches = pyrgo_config.get("extra-caches", None)
+            if extra_paths is not None:
+                relevant_paths.extend(extra_paths)
+            if extra_caches is not None:
+                caches.extend(cwd.joinpath(extra) for extra in extra_caches)
 
         core_deps_alias = "core"
         env_groups = {core_deps_alias}
