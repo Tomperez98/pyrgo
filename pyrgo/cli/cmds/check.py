@@ -55,7 +55,7 @@ def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool, fix: bool) -> None
     if ignore_noqa:
         ruff_command.add_args(args=["--ignore-noqa"])
     if fix:
-        ruff_command.add_args(args=["--fix"])
+        ruff_command.add_args(args=["--unsafe-fixes", "--fix"])
 
     for command in [ruff_command, mypy_command]:
         command.add_args(args=configuration.relevant_paths)
