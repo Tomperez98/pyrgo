@@ -15,12 +15,11 @@ from pyrgo.conf import PyrgoConf
 def fmt() -> None:
     """Format code with `ruff` and `black`."""
     configuration = PyrgoConf.new()
-    ruff_command = PythonCommandExec.new(program="ruff").add_args(args=["--fix-only"])
     fmt_command = PythonCommandExec.new(program="ruff").add_args(args=["format", "."])
-    for command in [ruff_command, fmt_command]:
+    for command in [fmt_command]:
         command.add_args(args=configuration.relevant_paths)
 
-    program_execution = inform_and_run_program(commands=[ruff_command, fmt_command])
+    program_execution = inform_and_run_program(commands=[fmt_command])
     if not isinstance(program_execution, Ok):
         sys.exit(1)
     sys.exit(0)
