@@ -38,7 +38,7 @@ from pyrgo.conf import PyrgoConf
 @click.option(
     "--fix/--no-fix",
     "fix",
-    default=True,
+    default=False,
     show_default=True,
     type=click.BOOL,
 )
