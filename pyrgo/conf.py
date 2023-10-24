@@ -19,7 +19,7 @@ class PyProjectNotFoundError(Exception):
 
 def _configure_logger(logger: loguru.Logger) -> loguru.Logger:
     logger.remove()
-    fmt = "<lvl>[{level}]</lvl> {message} <green>{name}:{function}:{line}</green> @ {time:HH:mm:ss}"  # noqa: E501
+    fmt = "<lvl>[{level}]</lvl> {message} <green>{name}:{function}:{line}</green> @ {time:HH:mm:ss}"
     logger.add(sys.stderr, format=fmt)
     return logger
 

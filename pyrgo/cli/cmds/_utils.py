@@ -45,7 +45,7 @@ def ensure_env_exist_in_lock_file(env: str, config: PyrgoConf) -> None:
     if env not in locked_envs:
         click.echo(
             click.style(
-                f"`{env}` not found in available envs.\nAvailable envs: {locked_envs}",  # noqa: E501
+                f"`{env}` not found in available envs.\nAvailable envs: {locked_envs}",
                 fg="red",
             ),
         )

@@ -14,7 +14,6 @@ if TYPE_CHECKING:
 
 PyrgoProgram: TypeAlias = Literal[
     "ruff",
-    "black",
     "mypy.dmypy",
     "piptools",
     "pip",
