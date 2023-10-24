@@ -35,7 +35,14 @@ from pyrgo.conf import PyrgoConf
     show_default=True,
     type=click.BOOL,
 )
-def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool) -> None:
+@click.option(
+    "--fix/--no-fix",
+    "fix",
+    default=True,
+    show_default=True,
+    type=click.BOOL,
+)
+def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool, fix: bool) -> None:
     """Check code with `mypy` and `ruff`."""
     configuration = PyrgoConf.new()
     ruff_command = PythonCommandExec.new(program="ruff")
@@ -47,6 +54,8 @@ def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool) -> None:
         ruff_command.add_args(args=["--add-noqa"])
     if ignore_noqa:
         ruff_command.add_args(args=["--ignore-noqa"])
+    if fix:
+        ruff_command.add_args(args=["--fix"])
 
     for command in [ruff_command, mypy_command]:
         command.add_args(args=configuration.relevant_paths)
