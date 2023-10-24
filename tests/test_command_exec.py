@@ -9,7 +9,7 @@ from pyrgo.command_exec import PyrgoProgram, PythonCommandExec
 
 @pytest.mark.unit()
 class TestPythonCommandExec:
-    @pytest.mark.parametrize(argnames="program", argvalues=["black", "pip"])
+    @pytest.mark.parametrize(argnames="program", argvalues=["ruff", "pip"])
     def test_new(self, program: PyrgoProgram) -> None:
         assert PythonCommandExec.new(program=program).args == [
             sys.executable,
@@ -20,7 +20,7 @@ class TestPythonCommandExec:
     @pytest.mark.parametrize(
         argnames=["command", "args", "expected"],
         argvalues=[
-            (PythonCommandExec.new(program="black"), ["1", "2"], ["black", "1", "2"]),
+            (PythonCommandExec.new(program="pip"), ["1", "2"], ["pip", "1", "2"]),
         ],
     )
     def test_add_args(

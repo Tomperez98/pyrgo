@@ -4,29 +4,26 @@
 #
 #    pip-compile --extra=dev --output-file=requirements/dev.txt pyproject.toml
 #
---trusted-host pypi.python.org
---trusted-host pypi.org
---trusted-host files.pythonhosted.org
-
-black==23.7.0
-    # via pyrgo (pyproject.toml)
 build==0.10.0
     # via
     #   pip-tools
     #   pyrgo (pyproject.toml)
 cachecontrol[filecache]==0.13.1
-    # via pip-audit
+    # via
+    #   cachecontrol
+    #   pip-audit
 certifi==2023.7.22
     # via requests
 charset-normalizer==3.2.0
     # via requests
 click==8.1.7
     # via
-    #   black
     #   pip-tools
     #   pyrgo (pyproject.toml)
 coverage[toml]==7.3.0
-    # via pytest-cov
+    # via
+    #   coverage
+    #   pytest-cov
 cyclonedx-python-lib==4.0.1
     # via pip-audit
 defusedxml==0.7.1
@@ -52,20 +49,15 @@ msgpack==1.0.5
 mypy==1.5.1
     # via pyrgo (pyproject.toml)
 mypy-extensions==1.0.0
-    # via
-    #   black
-    #   mypy
+    # via mypy
 packageurl-python==0.11.2
     # via cyclonedx-python-lib
 packaging==23.1
     # via
-    #   black
     #   build
     #   pip-audit
     #   pip-requirements-parser
     #   pytest
-pathspec==0.11.2
-    # via black
 pip-api==0.0.30
     # via pip-audit
 pip-audit==2.6.1
@@ -74,8 +66,6 @@ pip-requirements-parser==32.0.1
     # via pip-audit
 pip-tools==7.3.0
     # via pyrgo (pyproject.toml)
-platformdirs==3.10.0
-    # via black
 pluggy==1.2.0
     # via pytest
 py-serializable==0.11.1
@@ -100,7 +90,7 @@ result==0.13.1
     # via pyrgo (pyproject.toml)
 rich==13.5.2
     # via pip-audit
-ruff==0.0.285
+ruff==0.1.2
     # via pyrgo (pyproject.toml)
 six==1.16.0
     # via html5lib
@@ -110,7 +100,6 @@ toml==0.10.2
     # via pip-audit
 tomli==2.0.1
     # via
-    #   black
     #   build
     #   coverage
     #   mypy
@@ -119,7 +108,6 @@ tomli==2.0.1
     #   pytest
 typing-extensions==4.7.1
     # via
-    #   black
     #   mypy
     #   result
 urllib3==2.0.4

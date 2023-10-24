@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyrgo"
-version = "1.0.1"
+version = "1.0.2"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
@@ -17,9 +17,8 @@ authors = [
 ]
 dependencies = [
     "click",
-    "ruff",
+    "ruff>=0.1.2",
     "mypy",
-    "black",
     "pip-tools>=7.0.0",
     "pytest",
     "result",
@@ -41,7 +40,18 @@ Source = "https://github.com/Tomperez98/pyrgo"
 
 [tool.ruff]
 line-length = 88
-ignore = ["ANN101", "D203", "D212"]
+ignore = [
+    "ANN101",
+    "D203",
+    "D212",
+    "COM812",
+    "COM819",
+    "D206",
+    "E501",
+    "ISC001",
+    "Q",
+    "W191",
+]
 select = ["ALL"]
 fix = false
 exclude = [
@@ -73,7 +83,6 @@ exclude = [
 
 [tool.ruff.isort]
 known-first-party = ["pyrgo"]
-force-wrap-aliases = true
 combine-as-imports = true
 required-imports = ["from __future__ import annotations"]
 
