@@ -8,7 +8,6 @@ Python project manager inspired in [Cargo](https://doc.rust-lang.org/cargo/).
   - [pytest](https://docs.pytest.org/en/7.3.x/)
 - Code formatting:
   - [ruff](https://beta.ruff.rs/docs/)
-  - [black](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html)
 - Code checking:
   - [ruff](https://beta.ruff.rs/docs/)
   - [mypy](https://mypy.readthedocs.io/en/stable/config_file.html)
