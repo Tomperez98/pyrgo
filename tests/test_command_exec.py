@@ -20,7 +20,11 @@ class TestPythonCommandExec:
     @pytest.mark.parametrize(
         argnames=["command", "args", "expected"],
         argvalues=[
-            (PythonCommandExec.new(program="pip"), ["1", "2"], ["pip", "1", "2"]),
+            (
+                PythonCommandExec.new(program="pip"),
+                ["1", "2"],
+                ["pip", "1", "2"],
+            ),
         ],
     )
     def test_add_args(

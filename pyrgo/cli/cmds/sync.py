@@ -31,7 +31,9 @@ def sync(env: str, *, editable: bool) -> None:
     config = PyrgoConf.new()
     ensure_env_exist_in_lock_file(env=env, config=config)
 
-    piptools_command = PythonCommandExec.new(program="piptools").add_args(
+    piptools_command = PythonCommandExec.new(
+        program="piptools",
+    ).add_args(
         args=[
             "sync",
             config.requirements.joinpath(f"{env}.txt")
@@ -39,7 +41,9 @@ def sync(env: str, *, editable: bool) -> None:
             .as_posix(),
         ],
     )
-    pip_command = PythonCommandExec.new(program="pip").add_args(
+    pip_command = PythonCommandExec.new(
+        program="pip",
+    ).add_args(
         args=["install", "--no-deps"],
     )
     if editable:

@@ -32,7 +32,11 @@ def clean() -> None:
         config.requirements.joinpath(f"{outdated_file}.txt").unlink()
 
     program_execution = inform_and_run_program(
-        commands=[PythonCommandExec.new(program="mypy.dmypy").add_args(args=["stop"])],
+        commands=[
+            PythonCommandExec.new(
+                program="mypy.dmypy",
+            ).add_args(args=["stop"])
+        ],
     )
     if not isinstance(program_execution, Ok):
         sys.exit(1)

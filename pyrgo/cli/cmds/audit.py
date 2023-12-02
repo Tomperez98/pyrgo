@@ -31,7 +31,9 @@ def audit(env: str, *, fix: bool) -> None:
     config = PyrgoConf.new()
     ensure_env_exist_in_lock_file(env=env, config=config)
 
-    pip_audit_cmd = PythonCommandExec.new(program="pip_audit").add_args(
+    pip_audit_cmd = PythonCommandExec.new(
+        program="pip_audit",
+    ).add_args(
         args=[
             "-r",
             config.requirements.joinpath(f"{env}.txt")

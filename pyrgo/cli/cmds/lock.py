@@ -80,7 +80,9 @@ def lock(*, generate_hashes: bool, envs: tuple[str, ...]) -> None:
     if execution_mode == "all":
         all_commands.extend(
             _complete_cmd(
-                cmd=PythonCommandExec.new(program="piptools").add_args(
+                cmd=PythonCommandExec.new(
+                    program="piptools",
+                ).add_args(
                     args=_initial_args(
                         env=env,
                         core_deps_alias=configuration.core_deps_alias,
@@ -100,7 +102,9 @@ def lock(*, generate_hashes: bool, envs: tuple[str, ...]) -> None:
             if env in configuration.env_groups:
                 all_commands.append(
                     _complete_cmd(
-                        cmd=PythonCommandExec.new(program="piptools").add_args(
+                        cmd=PythonCommandExec.new(
+                            program="piptools",
+                        ).add_args(
                             args=_initial_args(
                                 env=env,
                                 core_deps_alias=configuration.core_deps_alias,
