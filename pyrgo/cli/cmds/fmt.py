@@ -13,7 +13,7 @@ from pyrgo.conf import PyrgoConf
 
 @click.command("fmt")
 def fmt() -> None:
-    """Format code with `ruff` and `black`."""
+    """Format code with `ruff`."""
     configuration = PyrgoConf.new()
     fmt_command = PythonCommandExec.new(
         program="ruff",

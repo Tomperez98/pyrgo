@@ -11,6 +11,7 @@ Python project manager inspired in [Cargo](https://doc.rust-lang.org/cargo/).
 - Code checking:
   - [ruff](https://beta.ruff.rs/docs/)
   - [mypy](https://mypy.readthedocs.io/en/stable/config_file.html)
+  - [vulture](https://github.com/jendrikseipp/vulture)
 - Artifacts building:
   - [build](https://pypa-build.readthedocs.io/en/stable/)
 - Package management:
@@ -31,9 +32,9 @@ Options:
 Commands:
   audit  Audit locked dependencies with `pip_audit`.
   build  Build project with `build`.
-  check  Check code with `mypy` and `ruff`.
+  check  Check code with `mypy`, `ruff` and `vulture`.
   clean  Clean project repository.
-  fmt    Format code with `ruff` and `black`.
+  fmt    Format code with `ruff`.
   lock   Lock project dependencies with `piptools`.
   new    Create a project.
   sync   Sync current python environment to locked deps.
