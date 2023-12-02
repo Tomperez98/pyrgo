@@ -35,7 +35,7 @@ class PyrgoConf:
     artifacts: list[pathlib.Path]
     caches: list[pathlib.Path]
     core_deps_alias: str
-    env_groups: set[str]
+    env_groups: list[str]
 
     @classmethod
     def new(cls: type[PyrgoConf]) -> PyrgoConf:
@@ -68,13 +68,13 @@ class PyrgoConf:
                 caches.extend(cwd.joinpath(extra) for extra in extra_caches)
 
         core_deps_alias = "core"
-        env_groups = {core_deps_alias}
+        env_groups = [core_deps_alias]
         op_deps: dict[str, Any] | None = pyproject_data["project"].get(
             "optional-dependencies",
             None,
         )
         if op_deps is not None:
-            env_groups = env_groups.union(op_deps.keys())
+            env_groups.extend(op_deps.keys())
 
         return cls(
             cwd=cwd,
