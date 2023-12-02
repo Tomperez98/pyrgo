@@ -97,7 +97,9 @@ six==1.16.0
 sortedcontainers==2.4.0
     # via cyclonedx-python-lib
 toml==0.10.2
-    # via pip-audit
+    # via
+    #   pip-audit
+    #   vulture
 tomli==2.0.1
     # via
     #   build
@@ -105,6 +107,7 @@ tomli==2.0.1
     #   mypy
     #   pip-tools
     #   pyproject-hooks
+    #   pyrgo (pyproject.toml)
     #   pytest
 typing-extensions==4.7.1
     # via
@@ -112,6 +115,8 @@ typing-extensions==4.7.1
     #   result
 urllib3==2.0.4
     # via requests
+vulture==2.10
+    # via pyrgo (pyproject.toml)
 webencodings==0.5.1
     # via html5lib
 wheel==0.41.1
