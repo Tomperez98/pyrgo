@@ -16,7 +16,9 @@ def build() -> None:
     """Build project with `build`."""
     program_execution = inform_and_run_program(
         commands=[
-            PythonCommandExec.new(program="build").add_args(
+            PythonCommandExec.new(
+                program="build",
+            ).add_args(
                 [PyrgoConf.new().cwd.as_posix()],
             ),
         ],

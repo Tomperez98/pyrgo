@@ -14,7 +14,9 @@ from pyrgo.command_exec import PythonCommandExec
 @click.option("-m", "marker", type=click.STRING, default=None, show_default=True)
 def test(marker: str | None) -> None:
     """Run tests with `pytest`."""
-    pytest_command = PythonCommandExec.new(program="pytest")
+    pytest_command = PythonCommandExec.new(
+        program="pytest",
+    )
     if marker is not None:
         pytest_command.add_args(args=["-m", marker])
     program_execution = inform_and_run_program(commands=[pytest_command])

@@ -9,17 +9,14 @@ from typing import TYPE_CHECKING, Literal
 from result import Err, Ok, Result
 
 if TYPE_CHECKING:
+    import pathlib
+    from io import TextIOWrapper
+
     from typing_extensions import Self, TypeAlias
 
 
 PyrgoProgram: TypeAlias = Literal[
-    "ruff",
-    "mypy.dmypy",
-    "piptools",
-    "pip",
-    "build",
-    "pytest",
-    "pip_audit",
+    "ruff", "mypy.dmypy", "piptools", "pip", "build", "pytest", "pip_audit", "vulture"
 ]
 
 
@@ -28,11 +25,20 @@ class PythonCommandExec:
     """Python command executor."""
 
     args: list[str]
+    output_file: pathlib.Path | None
 
     @classmethod
-    def new(cls: type[PythonCommandExec], program: PyrgoProgram) -> PythonCommandExec:
+    def new(
+        cls: type[PythonCommandExec],
+        program: PyrgoProgram,
+    ) -> PythonCommandExec:
         """Build a new command executor."""
-        return cls(args=[sys.executable, "-m", program])
+        return cls(args=[sys.executable, "-m", program], output_file=None)
+
+    def add_output_file(self, file: pathlib.Path) -> Self:
+        """Add output file to command."""
+        self.output_file = file
+        return self
 
     def add_args(self, args: list[str]) -> Self:
         """Add arguments to command."""
@@ -41,8 +47,13 @@ class PythonCommandExec:
 
     def execute(self) -> Result[None, subprocess.CalledProcessError]:
         """Execute python command."""
+        stdout_file: None | TextIOWrapper = None
+
+        if self.output_file is not None:
+            stdout_file = self.output_file.open(mode="w")
+
         try:
-            subprocess.run(args=self.args, check=True)
+            subprocess.run(args=self.args, check=True, stdout=stdout_file)
         except subprocess.CalledProcessError as e:
             return Err(e)
         return Ok(None)
