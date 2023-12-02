@@ -45,7 +45,7 @@ VULTURE_WHITELIST = ".whitelist.vulture"
     type=click.BOOL,
 )
 def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool, fix: bool) -> None:
-    """Check code with `mypy` and `ruff`."""
+    """Check code with `mypy`, `ruff` and `vulture`."""
     configuration = PyrgoConf.new()
     configuration.cwd.joinpath(VULTURE_WHITELIST).touch(exist_ok=True)
     ruff_command = PythonCommandExec.new(
