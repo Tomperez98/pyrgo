@@ -13,6 +13,25 @@ from pyrgo.conf import PyrgoConf
 VULTURE_WHITELIST = ".whitelist.vulture"
 
 
+def _build_vulture_cmd(
+    *, add_noqa: bool, ignore_noqa: bool, configuration: PyrgoConf
+) -> PythonCommandExec:
+    configuration.cwd.joinpath(VULTURE_WHITELIST).touch(exist_ok=True)
+    vulture_command = PythonCommandExec.new(
+        program="vulture",
+    )
+    if add_noqa:
+        vulture_command.add_args(args=["--make-whitelist"]).add_output_file(
+            file=configuration.cwd.joinpath(VULTURE_WHITELIST)
+        )
+
+    vulture_command.add_args(configuration.relevant_paths)
+    if not ignore_noqa:
+        vulture_command.add_args(args=[VULTURE_WHITELIST])
+
+    return vulture_command
+
+
 @click.command("check")
 @click.option(
     "-t",
@@ -47,7 +66,6 @@ VULTURE_WHITELIST = ".whitelist.vulture"
 def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool, fix: bool) -> None:
     """Check code with `mypy`, `ruff` and `vulture`."""
     configuration = PyrgoConf.new()
-    configuration.cwd.joinpath(VULTURE_WHITELIST).touch(exist_ok=True)
     ruff_command = PythonCommandExec.new(
         program="ruff",
     )
@@ -56,15 +74,9 @@ def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool, fix: bool) -> None
     ).add_args(
         args=["run", "--timeout", str(timeout), "--"],
     )
-    vulture_command = PythonCommandExec.new(
-        program="vulture",
-    )
 
     if add_noqa:
         ruff_command.add_args(args=["--add-noqa"])
-        vulture_command.add_args(args=["--make-whitelist"]).add_output_file(
-            file=configuration.cwd.joinpath(VULTURE_WHITELIST)
-        )
     if ignore_noqa:
         ruff_command.add_args(args=["--ignore-noqa"])
     if fix:
@@ -72,12 +84,15 @@ def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool, fix: bool) -> None
 
     ruff_command.add_args(configuration.relevant_paths)
     mypy_command.add_args(configuration.relevant_paths)
-    vulture_command.add_args(configuration.relevant_paths)
-    if not ignore_noqa:
-        vulture_command.add_args(args=[VULTURE_WHITELIST])
 
     program_execution = inform_and_run_program(
-        commands=[ruff_command, mypy_command, vulture_command]
+        commands=[
+            ruff_command,
+            mypy_command,
+            _build_vulture_cmd(
+                add_noqa=add_noqa, ignore_noqa=ignore_noqa, configuration=configuration
+            ),
+        ]
     )
     if not isinstance(program_execution, Ok):
         sys.exit(1)

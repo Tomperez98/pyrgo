@@ -52,3 +52,12 @@ The minimal pyrgo project structure, as well as python project structure is this
 └── tests
     └── test_something.py
 ```
+
+
+Few extra configurations
+
+```toml
+[tool.pyrgo]
+extra-paths = ["scripts"]
+extra-caches = [".coverage"]
+```
