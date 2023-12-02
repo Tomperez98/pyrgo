@@ -88,12 +88,14 @@ toml==0.10.2
     # via
     #   cyclonedx-python-lib
     #   pip-audit
+    #   vulture
 tomli==2.0.1
     # via
     #   build
     #   mypy
     #   pip-tools
     #   pyproject-hooks
+    #   pyrgo (pyproject.toml)
     #   pytest
 typing-extensions==4.6.3
     # via
@@ -103,6 +105,8 @@ urllib3==1.26.16
     # via
     #   pip-audit
     #   requests
+vulture==2.10
+    # via pyrgo (pyproject.toml)
 webencodings==0.5.1
     # via html5lib
 wheel==0.40.0
