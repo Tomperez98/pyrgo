@@ -1,5 +1,7 @@
 # pyrgo
 
+[![PyPI downloads](https://img.shields.io/pypi/dm/pyrgo.svg)](https://pypistats.org/packages/pyrgo)
+
 Python project manager inspired in [Cargo](https://doc.rust-lang.org/cargo/).
 
 **`pyrgo` does not reinvent the wheel**. It's just a unified API that leverages popular libraries to improve your development experience.
