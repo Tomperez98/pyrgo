@@ -54,7 +54,7 @@ ignore = [
     "ISC001",
     "Q",
     "W191",
-
+    "UP007",
 ]
 select = ["ALL"]
 fix = false
