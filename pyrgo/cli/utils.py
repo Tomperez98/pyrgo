@@ -10,8 +10,7 @@ from result import Err, Ok, Result
 if TYPE_CHECKING:
     import subprocess
 
-    from pyrgo._command_exec import PythonCommandExec
-    from pyrgo._conf import PyrgoConf
+    from pyrgo.core import PyrgoConf, PythonCommandExec
 
 
 def inform_and_run_program(

@@ -4,7 +4,7 @@ import sys
 
 import pytest
 
-from pyrgo._command_exec import PyrgoProgram, PythonCommandExec
+from pyrgo.core._command_exec import PyrgoProgram, PythonCommandExec
 
 
 @pytest.mark.unit()

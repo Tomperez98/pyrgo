@@ -8,6 +8,7 @@ from pyrgo.cli.cmds.build import build
 from pyrgo.cli.cmds.check import check
 from pyrgo.cli.cmds.clean import clean
 from pyrgo.cli.cmds.doc import doc
+from pyrgo.cli.cmds.fix import fix
 from pyrgo.cli.cmds.fmt import fmt
 from pyrgo.cli.cmds.lock import lock
 from pyrgo.cli.cmds.new import new
@@ -39,3 +40,4 @@ cli.add_command(cmd=test)
 cli.add_command(cmd=audit)
 cli.add_command(cmd=new)
 cli.add_command(cmd=doc)
+cli.add_command(cmd=fix)
