@@ -2,17 +2,18 @@
 from __future__ import annotations
 
 import sys
+from typing import Optional
 
 import click
 from result import Ok
 
-from pyrgo.cli.cmds._utils import inform_and_run_program
-from pyrgo.command_exec import PythonCommandExec
+from pyrgo._command_exec import PythonCommandExec
+from pyrgo.cli.utils import inform_and_run_program
 
 
 @click.command("test")
 @click.option("-m", "marker", type=click.STRING, default=None, show_default=True)
-def test(marker: str | None) -> None:
+def test(marker: Optional[str]) -> None:
     """Run tests with `pytest`."""
     pytest_command = PythonCommandExec.new(
         program="pytest",

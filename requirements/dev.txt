@@ -38,10 +38,16 @@ idna==3.4
     # via requests
 iniconfig==2.0.0
     # via pytest
+jinja2==3.1.2
+    # via pdoc
 loguru==0.7.0
     # via pyrgo (pyproject.toml)
 markdown-it-py==3.0.0
     # via rich
+markupsafe==2.1.3
+    # via
+    #   jinja2
+    #   pdoc
 mdurl==0.1.2
     # via markdown-it-py
 msgpack==1.0.5
@@ -58,6 +64,8 @@ packaging==23.1
     #   pip-audit
     #   pip-requirements-parser
     #   pytest
+pdoc==14.1.0
+    # via pyrgo (pyproject.toml)
 pip-api==0.0.30
     # via pip-audit
 pip-audit==2.6.1
@@ -71,7 +79,9 @@ pluggy==1.2.0
 py-serializable==0.11.1
     # via cyclonedx-python-lib
 pygments==2.16.1
-    # via rich
+    # via
+    #   pdoc
+    #   rich
 pyparsing==3.1.1
     # via pip-requirements-parser
 pyproject-hooks==1.0.0

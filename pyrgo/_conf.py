@@ -4,7 +4,7 @@ from __future__ import annotations
 import pathlib
 import sys
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Optional
 
 import loguru
 import tomli
@@ -13,7 +13,7 @@ import tomli
 class PyProjectNotFoundError(Exception):
     """Raised when `pyproject.toml` not found."""
 
-    def __init__(self, path: pathlib.Path) -> None:  # noqa: D107
+    def __init__(self, path: pathlib.Path) -> None:
         super().__init__(f"`pyproject.toml` not found at {path.as_posix()}")
 
 
@@ -36,6 +36,7 @@ class PyrgoConf:
     caches: list[pathlib.Path]
     core_deps_alias: str
     env_groups: list[str]
+    project_name: str
 
     @classmethod
     def new(cls: type[PyrgoConf]) -> PyrgoConf:
@@ -47,8 +48,9 @@ class PyrgoConf:
             raise PyProjectNotFoundError(path=cwd)
 
         pyproject_data = tomli.loads(pyproject_path.read_text())
+        project_name = pyproject_data["project"]["name"].strip().replace("-", "_")
         relevant_paths: list[str] = [
-            pyproject_data["project"]["name"].strip().replace("-", "_"),
+            project_name,
         ]
         relevant_paths.extend(
             pyproject_data["tool"]["pytest"]["ini_options"]["testpaths"],
@@ -69,7 +71,7 @@ class PyrgoConf:
 
         core_deps_alias = "core"
         env_groups = [core_deps_alias]
-        op_deps: dict[str, Any] | None = pyproject_data["project"].get(
+        op_deps: Optional[dict[str, Any]] = pyproject_data["project"].get(
             "optional-dependencies",
             None,
         )
@@ -85,6 +87,7 @@ class PyrgoConf:
             caches=caches,
             core_deps_alias=core_deps_alias,
             env_groups=env_groups,
+            project_name=project_name,
         )
 
     def locked_envs(self) -> set[str]:
