@@ -4,7 +4,7 @@ from __future__ import annotations
 import pathlib
 import sys
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any
 
 import loguru
 import tomli
@@ -71,7 +71,7 @@ class PyrgoConf:
 
         core_deps_alias = "core"
         env_groups = [core_deps_alias]
-        op_deps: Optional[dict[str, Any]] = pyproject_data["project"].get(
+        op_deps: dict[str, Any] | None = pyproject_data["project"].get(
             "optional-dependencies",
             None,
         )

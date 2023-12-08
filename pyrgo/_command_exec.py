@@ -4,7 +4,7 @@ from __future__ import annotations
 import subprocess
 import sys
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Literal, Optional
+from typing import TYPE_CHECKING, Literal
 
 from result import Err, Ok, Result
 
@@ -33,7 +33,7 @@ class PythonCommandExec:
     """Python command executor."""
 
     args: list[str]
-    output_file: Optional[pathlib.Path]
+    output_file: pathlib.Path | None
 
     @classmethod
     def new(
