@@ -10,8 +10,8 @@ from result import Err, Ok, Result
 if TYPE_CHECKING:
     import subprocess
 
-    from pyrgo.command_exec import PythonCommandExec
-    from pyrgo.conf import PyrgoConf
+    from pyrgo._command_exec import PythonCommandExec
+    from pyrgo._conf import PyrgoConf
 
 
 def inform_and_run_program(
@@ -32,6 +32,7 @@ def inform_and_run_program(
 
 
 def ensure_env_exist_in_lock_file(env: str, config: PyrgoConf) -> None:
+    """Ensure selected env exists in `requirements` folder."""
     if not config.requirements.exists():
         click.echo(
             message=click.style(

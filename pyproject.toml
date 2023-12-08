@@ -27,13 +27,14 @@ dependencies = [
     "pip-audit>=2.5.5",
     "vulture < 3",
     "tomli",
+    "pdoc",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest-cov"]
 
 [project.scripts]
-pyrgo = "pyrgo.cli.main:cli"
+pyrgo = "pyrgo.cli._main:cli"
 
 [project.urls]
 Documentation = "https://github.com/Tomperez98/pyrgo#readme"
@@ -53,6 +54,7 @@ ignore = [
     "ISC001",
     "Q",
     "W191",
+    "UP007",
 ]
 select = ["ALL"]
 fix = false

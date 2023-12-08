@@ -6,9 +6,9 @@ import sys
 import click
 from result import Ok
 
-from pyrgo.cli.cmds._utils import ensure_env_exist_in_lock_file, inform_and_run_program
-from pyrgo.command_exec import PythonCommandExec
-from pyrgo.conf import PyrgoConf
+from pyrgo._command_exec import PythonCommandExec
+from pyrgo._conf import PyrgoConf
+from pyrgo.cli.utils import ensure_env_exist_in_lock_file, inform_and_run_program
 
 
 @click.command("sync")

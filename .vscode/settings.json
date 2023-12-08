@@ -13,7 +13,7 @@
     "[python]": {
         "diffEditor.ignoreTrimWhitespace": false,
         "editor.formatOnType": false,
-        "editor.wordBasedSuggestions": false
+        "editor.wordBasedSuggestions": "off"
     },
     "python.analysis.autoImportCompletions": true,
     "python.analysis.extraCommitChars": false,
