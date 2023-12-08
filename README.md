@@ -36,6 +36,8 @@ Commands:
   build  Build project with `build`.
   check  Check code with `mypy`, `ruff` and `vulture`.
   clean  Clean project repository.
+  doc    Build a package's documentation with `pdoc`.
+  fix    Automatically fix lint warnings reported by `ruff`.
   fmt    Format code with `ruff`.
   lock   Lock project dependencies with `piptools`.
   new    Create a project.
