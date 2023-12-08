@@ -13,11 +13,10 @@
     "[python]": {
         "diffEditor.ignoreTrimWhitespace": false,
         "editor.formatOnType": false,
-        "editor.wordBasedSuggestions": "off"
     },
     "python.analysis.autoImportCompletions": true,
     "python.analysis.extraCommitChars": false,
-    "python.analysis.inlayHints.callArgumentNames": false,
+    "python.analysis.inlayHints.callArgumentNames": "off",
     "python.analysis.inlayHints.pytestParameters": false,
     "python.analysis.inlayHints.functionReturnTypes": false,
     "python.analysis.inlayHints.variableTypes": false,

@@ -6,9 +6,8 @@ import sys
 import click
 from result import Ok
 
-from pyrgo._command_exec import PythonCommandExec
-from pyrgo._conf import PyrgoConf
 from pyrgo.cli.utils import inform_and_run_program
+from pyrgo.core import PyrgoConf, PythonCommandExec
 
 
 @click.command("build")

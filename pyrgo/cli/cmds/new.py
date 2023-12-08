@@ -7,7 +7,7 @@ import sys
 
 import click
 
-from pyrgo import _resources
+from pyrgo.core import resources
 
 
 @click.command("new")
@@ -53,7 +53,7 @@ def new(name: str, path: str) -> None:
         sys.exit(1)
 
     shutil.copytree(
-        src=pathlib.Path(_resources.__file__).parent.joinpath("new-project"),
+        src=pathlib.Path(resources.__file__).parent.joinpath("new-project"),
         dst=path_path,
         dirs_exist_ok=True,
     )

@@ -118,12 +118,7 @@ relative_files = true
 
 [tool.coverage.report]
 precision = 1
-exclude_lines = [
-    "if __name__ == .__main__.:",
-    "if TYPE_CHECKING:",
-    "@overload",
-    "raise NotImplementedError",
-]
+exclude_lines = ["if TYPE_CHECKING:", "raise NotImplementedError"]
 
 [tool.mypy]
 show_error_codes = true

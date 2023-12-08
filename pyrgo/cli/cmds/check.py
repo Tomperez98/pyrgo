@@ -6,9 +6,8 @@ import sys
 import click
 from result import Ok
 
-from pyrgo._command_exec import PythonCommandExec
-from pyrgo._conf import PyrgoConf
 from pyrgo.cli.utils import inform_and_run_program
+from pyrgo.core import PyrgoConf, PythonCommandExec
 
 VULTURE_WHITELIST = ".whitelist.vulture"
 
@@ -56,14 +55,7 @@ def _build_vulture_cmd(
     show_default=True,
     type=click.BOOL,
 )
-@click.option(
-    "--fix/--no-fix",
-    "fix",
-    default=False,
-    show_default=True,
-    type=click.BOOL,
-)
-def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool, fix: bool) -> None:
+def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool) -> None:
     """Check code with `mypy`, `ruff` and `vulture`."""
     configuration = PyrgoConf.new()
     ruff_command = PythonCommandExec.new(
@@ -79,8 +71,6 @@ def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool, fix: bool) -> None
         ruff_command.add_args(args=["--add-noqa"])
     if ignore_noqa:
         ruff_command.add_args(args=["--ignore-noqa"])
-    if fix:
-        ruff_command.add_args(args=["--unsafe-fixes", "--fix"])
 
     ruff_command.add_args(configuration.relevant_paths)
     mypy_command.add_args(configuration.relevant_paths)
