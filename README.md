@@ -22,7 +22,7 @@ Python project manager inspired in [Cargo](https://doc.rust-lang.org/cargo/).
 
 All behind a unified API.
 
-```bash
+```zsh
 Usage: pyrgo [OPTIONS] COMMAND [ARGS]...
 
   pyrgo. Python package manager.
