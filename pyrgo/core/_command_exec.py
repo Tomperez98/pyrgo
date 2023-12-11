@@ -4,7 +4,7 @@ from __future__ import annotations
 import subprocess
 import sys
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING
 
 from result import Err, Ok, Result
 
@@ -12,20 +12,9 @@ if TYPE_CHECKING:
     import pathlib
     from io import TextIOWrapper
 
-    from typing_extensions import Self, TypeAlias
+    from typing_extensions import Self
 
-
-PyrgoProgram: TypeAlias = Literal[
-    "ruff",
-    "mypy.dmypy",
-    "piptools",
-    "pip",
-    "build",
-    "pytest",
-    "pip_audit",
-    "vulture",
-    "pdoc",
-]
+    from pyrgo.typing import PyrgoProgram
 
 
 @dataclass(frozen=False)

@@ -1,10 +1,14 @@
 from __future__ import annotations
 
 import sys
+from typing import TYPE_CHECKING
 
 import pytest
 
-from pyrgo.core._command_exec import PyrgoProgram, PythonCommandExec
+from pyrgo.core._command_exec import PythonCommandExec
+
+if TYPE_CHECKING:
+    from pyrgo.typing import PyrgoProgram
 
 
 @pytest.mark.unit()
