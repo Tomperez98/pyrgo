@@ -15,8 +15,11 @@ if TYPE_CHECKING:
     import subprocess
 
 
-def _initial_args(env: str, core_deps_alias: str) -> list[str]:
+def _initial_args(env: str, core_deps_alias: str, *, upgrade: bool) -> list[str]:
     base_args = ["compile"]
+    if upgrade:
+        base_args.append("-U")
+
     if env == core_deps_alias:
         return base_args
 
@@ -57,6 +60,14 @@ def _complete_cmd(
     type=click.BOOL,
 )
 @click.option(
+    "--upgrade",
+    "upgrade",
+    is_flag=True,
+    default=False,
+    show_default=True,
+    type=click.BOOL,
+)
+@click.option(
     "-e",
     "--env",
     "envs",
@@ -64,7 +75,7 @@ def _complete_cmd(
     type=click.STRING,
     required=False,
 )
-def lock(*, generate_hashes: bool, envs: tuple[str, ...]) -> None:
+def lock(*, generate_hashes: bool, envs: tuple[str, ...], upgrade: bool) -> None:
     """Lock project dependencies with `piptools`."""
     configuration = PyrgoConf.new()
 
@@ -85,6 +96,7 @@ def lock(*, generate_hashes: bool, envs: tuple[str, ...]) -> None:
                     args=_initial_args(
                         env=env,
                         core_deps_alias=configuration.core_deps_alias,
+                        upgrade=upgrade,
                     ),
                 ),
                 generate_hashes=generate_hashes,
@@ -107,6 +119,7 @@ def lock(*, generate_hashes: bool, envs: tuple[str, ...]) -> None:
                             args=_initial_args(
                                 env=env,
                                 core_deps_alias=configuration.core_deps_alias,
+                                upgrade=upgrade,
                             ),
                         ),
                         generate_hashes=generate_hashes,
