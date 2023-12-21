@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyrgo"
-version = "2.0.0"
+version = "2.1.0"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
@@ -16,25 +16,24 @@ authors = [
     { name = "Tomas Perez Alvarez", email = "tomasperezalvarez@gmail.com" },
 ]
 dependencies = [
-    "click",
-    "ruff>=0.1.2",
-    "mypy",
-    "pip-tools>=7.0.0",
-    "pytest",
-    "result",
-    "build",
-    "loguru",
-    "pip-audit>=2.5.5",
+    "click < 9",
+    "ruff < 1",
+    "mypy < 2",
+    "pip-tools < 8",
+    "pytest < 8",
+    "result < 1",
+    "build < 2",
+    "pip-audit < 3",
     "vulture < 3",
-    "tomli",
+    "tomli < 3",
     "pdoc < 15",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest-cov"]
+dev = ["pytest-cov < 5"]
 
 [project.scripts]
-pyrgo = "pyrgo.cli._main:cli"
+pyrgo = "pyrgo.cli.__main__:cli"
 
 [project.urls]
 Documentation = "https://github.com/Tomperez98/pyrgo#readme"
@@ -42,6 +41,7 @@ Issues = "https://github.com/Tomperez98/pyrgo/issues"
 Source = "https://github.com/Tomperez98/pyrgo"
 
 [tool.ruff]
+logger-objects = ["pyrgo.logging.logger"]
 line-length = 88
 ignore = [
     "ANN101",
@@ -121,14 +121,12 @@ precision = 1
 exclude_lines = ["if TYPE_CHECKING:", "raise NotImplementedError"]
 
 [tool.mypy]
-show_error_codes = true
 follow_imports = "normal"
 strict_optional = true
 warn_redundant_casts = true
 warn_unused_ignores = true
 disallow_any_generics = true
 check_untyped_defs = true
-no_implicit_reexport = true
 warn_unused_configs = true
 disallow_subclassing_any = true
 disallow_incomplete_defs = true
