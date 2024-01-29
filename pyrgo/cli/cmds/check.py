@@ -80,7 +80,9 @@ def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool) -> None:
             ruff_command,
             mypy_command,
             _build_vulture_cmd(
-                add_noqa=add_noqa, ignore_noqa=ignore_noqa, configuration=configuration
+                add_noqa=add_noqa,
+                ignore_noqa=ignore_noqa,
+                configuration=configuration,
             ),
         ]
     )
