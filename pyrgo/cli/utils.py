@@ -2,10 +2,11 @@
 from __future__ import annotations
 
 import sys
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 
 import click
 from result import Err, Ok, Result
+from typing_extensions import assert_never
 
 if TYPE_CHECKING:
     import subprocess
@@ -30,24 +31,37 @@ def inform_and_run_program(
     return Ok(None)
 
 
-def ensure_env_exist_in_lock_file(env: str, config: PyrgoConf) -> None:
+def ensure_env_exist(
+    env: str, config: PyrgoConf, where: Literal["lock-files", "pyproject"]
+) -> None:
     """Ensure selected env exists in `requirements` folder."""
-    if not config.requirements.exists():
-        click.echo(
-            message=click.style(
-                "No `requirements` folder found. Try locking your deps first",
-                fg="red",
-            ),
-        )
-        sys.exit(1)
+    if where == "lock-files":
+        if not config.requirements.exists():
+            click.echo(
+                message=click.style(
+                    "No `requirements` folder found. Try locking your deps first",
+                    fg="red",
+                ),
+            )
+            sys.exit(1)
 
-    locked_envs = config.locked_envs()
-    if env not in locked_envs:
-        click.echo(
-            click.style(
-                f"`{env}` not found in available envs.\nAvailable envs: {locked_envs}",
-                fg="red",
-            ),
-        )
+        locked_envs = config.locked_envs()
+        if env not in locked_envs:
+            click.echo(
+                click.style(
+                    f"`{env}` not found in available envs.\nAvailable envs: {locked_envs}",
+                    fg="red",
+                ),
+            )
 
-        sys.exit(1)
+            sys.exit(1)
+    elif where == "pyproject":
+        if env not in config.env_groups:
+            click.echo(
+                message=click.style(
+                    f"Environment `{env}` not present in `pyproject.toml`",
+                    fg="red",
+                )
+            )
+    else:
+        assert_never(where)

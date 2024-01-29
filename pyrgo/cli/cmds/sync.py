@@ -6,7 +6,7 @@ import sys
 import click
 from result import Ok
 
-from pyrgo.cli.utils import ensure_env_exist_in_lock_file, inform_and_run_program
+from pyrgo.cli.utils import ensure_env_exist, inform_and_run_program
 from pyrgo.core import PyrgoConf, PythonCommandExec
 
 
@@ -28,7 +28,7 @@ from pyrgo.core import PyrgoConf, PythonCommandExec
 def sync(env: str, *, editable: bool) -> None:
     """Sync current python environment to locked deps."""
     config = PyrgoConf.new()
-    ensure_env_exist_in_lock_file(env=env, config=config)
+    ensure_env_exist(env=env, config=config, where="lock-files")
 
     piptools_command = PythonCommandExec.new(
         program="piptools",
@@ -49,7 +49,12 @@ def sync(env: str, *, editable: bool) -> None:
         pip_command.add_args(args=["-e"])
     pip_command.add_args(args=["."])
 
-    program_execution = inform_and_run_program(commands=[piptools_command, pip_command])
+    program_execution = inform_and_run_program(
+        commands=[
+            piptools_command,
+            pip_command,
+        ]
+    )
 
     if not isinstance(program_execution, Ok):
         sys.exit(1)

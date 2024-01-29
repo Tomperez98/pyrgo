@@ -26,11 +26,13 @@ dependencies = [
     "pip-audit < 3",
     "vulture < 3",
     "tomli < 3",
+    "tomlkit < 1",
     "pdoc < 15",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest-cov < 5"]
+dev = ["pytest-cov < 5", "types-toml"]
+
 
 [project.scripts]
 pyrgo = "pyrgo.cli.__main__:cli"

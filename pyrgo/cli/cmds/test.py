@@ -11,7 +11,13 @@ from pyrgo.core import PythonCommandExec
 
 
 @click.command("test")
-@click.option("-m", "marker", type=click.STRING, default=None, show_default=True)
+@click.option(
+    "-m",
+    "marker",
+    type=click.STRING,
+    default=None,
+    show_default=True,
+)
 def test(marker: str | None) -> None:
     """Run tests with `pytest`."""
     pytest_command = PythonCommandExec.new(

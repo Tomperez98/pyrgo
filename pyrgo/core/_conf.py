@@ -5,7 +5,7 @@ import pathlib
 from dataclasses import dataclass
 from typing import Any
 
-import tomli
+import toml
 
 
 class PyProjectNotFoundError(Exception):
@@ -27,6 +27,7 @@ class PyrgoConf:
     core_deps_alias: str
     env_groups: list[str]
     project_name: str
+    pyproject_path: pathlib.Path
 
     @classmethod
     def new(cls: type[PyrgoConf]) -> PyrgoConf:
@@ -36,7 +37,7 @@ class PyrgoConf:
         if not (pyproject_path.exists() and pyproject_path.is_file()):
             raise PyProjectNotFoundError(path=cwd)
 
-        pyproject_data = tomli.loads(pyproject_path.read_text())
+        pyproject_data = toml.loads(pyproject_path.read_text())
         project_name = pyproject_data["project"]["name"].strip().replace("-", "_")
         relevant_paths: list[str] = [
             project_name,
@@ -77,6 +78,7 @@ class PyrgoConf:
             core_deps_alias=core_deps_alias,
             env_groups=env_groups,
             project_name=project_name,
+            pyproject_path=pyproject_path,
         )
 
     def locked_envs(self) -> set[str]:

@@ -18,7 +18,10 @@ def new(name: str, path: str) -> None:
     path_path = pathlib.Path(path)
 
     package_name = name.strip().replace("-", "_")
-    dir_components = [path_path.joinpath(package_name), path_path.joinpath("tests")]
+    dir_components = [
+        path_path.joinpath(package_name),
+        path_path.joinpath("tests"),
+    ]
     file_componens = [
         path_path.joinpath("README.md"),
         path_path.joinpath("pyproject.toml"),
@@ -62,7 +65,10 @@ def new(name: str, path: str) -> None:
         src=path_path.joinpath("new_project"),
         dst=path_path.joinpath(package_name),
     )
-    file_paths = [path_path.joinpath("README.md"), path_path.joinpath("pyproject.toml")]
+    file_paths = [
+        path_path.joinpath("README.md"),
+        path_path.joinpath("pyproject.toml"),
+    ]
     for file_path in file_paths:
         new_data = file_path.read_text().replace("new-project", name)
         file_path.write_text(new_data)

@@ -15,7 +15,12 @@ if TYPE_CHECKING:
     import subprocess
 
 
-def _initial_args(env: str, core_deps_alias: str, *, upgrade: bool) -> list[str]:
+def _initial_args(
+    env: str,
+    core_deps_alias: str,
+    *,
+    upgrade: bool,
+) -> list[str]:
     base_args = ["compile"]
     if upgrade:
         base_args.append("-U")
