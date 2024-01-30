@@ -33,7 +33,6 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest-cov < 5", "types-toml"]
 
-
 [project.scripts]
 pyrgo = "pyrgo.cli.__main__:cli"
 
