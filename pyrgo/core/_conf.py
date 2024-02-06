@@ -28,6 +28,7 @@ class PyrgoConf:
     env_groups: list[str]
     project_name: str
     pyproject_path: pathlib.Path
+    vulture_allowlist: pathlib.Path
 
     @classmethod
     def new(cls: type[PyrgoConf]) -> PyrgoConf:
@@ -52,9 +53,13 @@ class PyrgoConf:
             cwd.joinpath(".ruff_cache"),
             cwd.joinpath(".mypy_cache"),
         ]
+        vulture_allowlist: str = ".whitelist.vulture"
         if pyrgo_config is not None:
             extra_paths = pyrgo_config.get("extra-paths", None)
             extra_caches = pyrgo_config.get("extra-caches", None)
+
+            if pyrgo_config.get("vulture-allowlist", None):
+                vulture_allowlist = pyrgo_config["vulture-allowlist"]
             if extra_paths is not None:
                 relevant_paths.extend(extra_paths)
             if extra_caches is not None:
@@ -79,6 +84,7 @@ class PyrgoConf:
             env_groups=env_groups,
             project_name=project_name,
             pyproject_path=pyproject_path,
+            vulture_allowlist=cwd.joinpath(vulture_allowlist).relative_to(cwd),
         )
 
     def locked_envs(self) -> set[str]:
