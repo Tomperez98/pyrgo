@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyrgo"
-version = "2.2.0"
+version = "2.2.1"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
@@ -139,3 +139,4 @@ explicit_package_bases = true
 [tool.pyrgo]
 extra-paths = ["scripts"]
 extra-caches = [".coverage"]
+vulture-allowlist = ".allowlist"

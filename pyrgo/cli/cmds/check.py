@@ -9,24 +9,26 @@ from result import Ok
 from pyrgo.cli.utils import inform_and_run_program
 from pyrgo.core import PyrgoConf, PythonCommandExec
 
-VULTURE_WHITELIST = ".whitelist.vulture"
-
 
 def _build_vulture_cmd(
-    *, add_noqa: bool, ignore_noqa: bool, configuration: PyrgoConf
+    *,
+    add_noqa: bool,
+    ignore_noqa: bool,
+    configuration: PyrgoConf,
+    vulture_allowlist: str,
 ) -> PythonCommandExec:
-    configuration.cwd.joinpath(VULTURE_WHITELIST).touch(exist_ok=True)
+    configuration.cwd.joinpath(vulture_allowlist).touch(exist_ok=True)
     vulture_command = PythonCommandExec.new(
         program="vulture",
     )
     if add_noqa:
         vulture_command.add_args(args=["--make-whitelist"]).add_output_file(
-            file=configuration.cwd.joinpath(VULTURE_WHITELIST)
+            file=configuration.cwd.joinpath(vulture_allowlist)
         )
 
     vulture_command.add_args(configuration.relevant_paths)
     if not ignore_noqa:
-        vulture_command.add_args(args=[VULTURE_WHITELIST])
+        vulture_command.add_args(args=[vulture_allowlist])
 
     return vulture_command
 
@@ -83,6 +85,7 @@ def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool) -> None:
                 add_noqa=add_noqa,
                 ignore_noqa=ignore_noqa,
                 configuration=configuration,
+                vulture_allowlist=configuration.vulture_allowlist.as_posix(),
             ),
         ]
     )
