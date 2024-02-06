@@ -32,17 +32,19 @@ Options:
   -h, --help     Show this message and exit.
 
 Commands:
-  audit  Audit locked dependencies with `pip_audit`.
-  build  Build project with `build`.
-  check  Check code with `mypy`, `ruff` and `vulture`.
-  clean  Clean project repository.
-  doc    Build a package's documentation with `pdoc`.
-  fix    Automatically fix lint warnings reported by `ruff`.
-  fmt    Format code with `ruff`.
-  lock   Lock project dependencies with `piptools`.
-  new    Create a project.
-  sync   Sync current python environment to locked deps.
-  test   Run tests with `pytest`.
+  add     Add dependency to env.
+  audit   Audit locked dependencies with `pip_audit`.
+  build   Build project with `build`.
+  check   Check code with `mypy`, `ruff` and `vulture`.
+  clean   Clean project repository.
+  doc     Build a package's documentation with `pdoc`.
+  fix     Automatically fix lint warnings reported by `ruff`.
+  fmt     Format code with `ruff`.
+  lock    Lock project dependencies with `piptools`.
+  new     Create a project.
+  remove  Remove dependency from env.
+  sync    Sync current python environment to locked deps.
+  test    Run tests with `pytest`.
 ```
 
 The minimal pyrgo project structure, as well as python project structure is this one:
@@ -64,4 +66,5 @@ Few extra configurations
 [tool.pyrgo]
 extra-paths = ["scripts"]
 extra-caches = [".coverage"]
+vulture-allowlist = ".allowlist"
 ```
