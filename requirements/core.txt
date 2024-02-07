@@ -49,7 +49,9 @@ markupsafe==2.1.5
     #   jinja2
     #   pdoc
 mashumaro[orjson,toml]==3.12
-    # via pyrgo (pyproject.toml)
+    # via
+    #   mashumaro
+    #   pyrgo (pyproject.toml)
 mdurl==0.1.2
     # via markdown-it-py
 msgpack==1.0.7

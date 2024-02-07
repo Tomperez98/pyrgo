@@ -2,10 +2,46 @@
 from __future__ import annotations
 
 import pathlib
-from dataclasses import dataclass
-from typing import Any
+import sys
+from dataclasses import dataclass, field
+from typing import Any, Optional
 
-import toml
+import click
+from mashumaro import field_options
+from mashumaro.mixins.toml import DataClassTOMLMixin
+
+
+@dataclass(frozen=True)
+class _Project:
+    name: str
+    optional_dependencies: dict[str, Any] = field(
+        metadata=field_options(alias="optional-dependencies")
+    )
+
+
+@dataclass(frozen=True)
+class _Pyrgo:
+    extra_paths: Optional[list[str]] = field(
+        metadata=field_options(alias="extra-paths"), default=None
+    )
+    extra_caches: Optional[list[str]] = field(
+        metadata=field_options(alias="extra-caches"), default=None
+    )
+    vulture_allowlist: Optional[str] = field(
+        metadata=field_options(alias="vulture-allowlist"), default=None
+    )
+
+
+@dataclass(frozen=True)
+class _Tooling:
+    pytest: dict[str, Any]
+    pyrgo: Optional[_Pyrgo] = field(default=None)
+
+
+@dataclass(frozen=True)
+class _PyProjectToml(DataClassTOMLMixin):
+    project: _Project
+    tool: _Tooling
 
 
 class PyProjectNotFoundError(Exception):
@@ -13,6 +49,7 @@ class PyProjectNotFoundError(Exception):
 
     def __init__(self, path: pathlib.Path) -> None:
         super().__init__(f"`pyproject.toml` not found at {path.as_posix()}")
+
 
 @dataclass(frozen=True)
 class PyrgoConf:
@@ -37,41 +74,49 @@ class PyrgoConf:
         if not (pyproject_path.exists() and pyproject_path.is_file()):
             raise PyProjectNotFoundError(path=cwd)
 
-        pyproject_data = toml.loads(pyproject_path.read_text())
-        project_name = pyproject_data["project"]["name"].strip().replace("-", "_")
+        pyproject_data = _PyProjectToml.from_toml(pyproject_path.read_text())
+
+        project_name = pyproject_data.project.name.strip().replace("-", "_")
         relevant_paths: list[str] = [
             project_name,
         ]
-        pyproject_tooling: dict[str, Any] = pyproject_data["tool"]
+        try:
+            test_paths = pyproject_data.tool.pytest["ini_options"]["testpaths"]
+
+        except KeyError:
+            click.echo(
+                message=click.style(
+                    "`tool.pytest.ini_options.testpaths` is required.", fg="red"
+                ),
+                color=True,
+            )
+            sys.exit(1)
+
         relevant_paths.extend(
-            pyproject_tooling["pytest"]["ini_options"]["testpaths"],
+            test_paths,
         )
-        pyrgo_config: dict[str, Any] | None = pyproject_tooling.get("pyrgo")
         caches = [
             cwd.joinpath(".pytest_cache"),
             cwd.joinpath(".ruff_cache"),
             cwd.joinpath(".mypy_cache"),
         ]
         vulture_allowlist: str = ".whitelist.vulture"
-        if pyrgo_config is not None:
-            extra_paths = pyrgo_config.get("extra-paths", None)
-            extra_caches = pyrgo_config.get("extra-caches", None)
-
-            if pyrgo_config.get("vulture-allowlist", None):
-                vulture_allowlist = pyrgo_config["vulture-allowlist"]
-            if extra_paths is not None:
-                relevant_paths.extend(extra_paths)
-            if extra_caches is not None:
-                caches.extend(cwd.joinpath(extra) for extra in extra_caches)
+        if pyproject_data.tool.pyrgo is not None:
+            if pyproject_data.tool.pyrgo.vulture_allowlist:
+                vulture_allowlist = pyproject_data.tool.pyrgo.vulture_allowlist
+            if pyproject_data.tool.pyrgo.extra_paths is not None:
+                relevant_paths.extend(pyproject_data.tool.pyrgo.extra_paths)
+            if pyproject_data.tool.pyrgo.extra_caches is not None:
+                caches.extend(
+                    cwd.joinpath(extra)
+                    for extra in pyproject_data.tool.pyrgo.extra_caches
+                )
 
         core_deps_alias = "core"
-        env_groups = [core_deps_alias]
-        op_deps: dict[str, Any] | None = pyproject_data["project"].get(
-            "optional-dependencies",
-            None,
-        )
-        if op_deps is not None:
-            env_groups.extend(op_deps.keys())
+        env_groups = [
+            core_deps_alias,
+            *pyproject_data.project.optional_dependencies.keys(),
+        ]
 
         return cls(
             cwd=cwd,

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import sys
+from typing import Optional
 
 import click
 from result import Ok
@@ -18,7 +19,7 @@ from pyrgo.core import PythonCommandExec
     default=None,
     show_default=True,
 )
-def test(marker: str | None) -> None:
+def test(marker: Optional[str]) -> None:
     """Run tests with `pytest`."""
     pytest_command = PythonCommandExec.new(
         program="pytest",
