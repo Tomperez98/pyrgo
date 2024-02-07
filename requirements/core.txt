@@ -10,11 +10,11 @@ build==1.0.3
     # via
     #   pip-tools
     #   pyrgo (pyproject.toml)
-cachecontrol[filecache]==0.13.1
+cachecontrol[filecache]==0.14.0
     # via
     #   cachecontrol
     #   pip-audit
-certifi==2023.11.17
+certifi==2024.2.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
@@ -44,10 +44,14 @@ license-expression==30.2.0
     # via cyclonedx-python-lib
 markdown-it-py==3.0.0
     # via rich
-markupsafe==2.1.4
+markupsafe==2.1.5
     # via
     #   jinja2
     #   pdoc
+mashumaro[orjson,toml]==3.12
+    # via
+    #   mashumaro
+    #   pyrgo (pyproject.toml)
 mdurl==0.1.2
     # via markdown-it-py
 msgpack==1.0.7
@@ -56,6 +60,8 @@ mypy==1.8.0
     # via pyrgo (pyproject.toml)
 mypy-extensions==1.0.0
     # via mypy
+orjson==3.9.13
+    # via mashumaro
 packageurl-python==0.13.4
     # via cyclonedx-python-lib
 packaging==23.2
@@ -96,7 +102,7 @@ result==0.16.0
     # via pyrgo (pyproject.toml)
 rich==13.7.0
     # via pip-audit
-ruff==0.1.15
+ruff==0.2.1
     # via pyrgo (pyproject.toml)
 six==1.16.0
     # via html5lib
@@ -107,16 +113,19 @@ toml==0.10.2
 tomli==2.0.1
     # via
     #   build
+    #   mashumaro
     #   mypy
     #   pip-tools
     #   pyproject-hooks
-    #   pyrgo (pyproject.toml)
     #   pytest
     #   vulture
+tomli-w==1.0.0
+    # via mashumaro
 tomlkit==0.12.3
     # via pyrgo (pyproject.toml)
 typing-extensions==4.9.0
     # via
+    #   mashumaro
     #   mypy
     #   result
 urllib3==2.2.0

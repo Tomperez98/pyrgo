@@ -4,7 +4,7 @@ from __future__ import annotations
 import subprocess
 import sys
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from result import Err, Ok, Result
 
@@ -22,7 +22,7 @@ class PythonCommandExec:
     """Python command executor."""
 
     args: list[str]
-    output_file: pathlib.Path | None
+    output_file: Optional[pathlib.Path]
 
     @classmethod
     def new(
@@ -44,7 +44,7 @@ class PythonCommandExec:
 
     def execute(self) -> Result[None, subprocess.CalledProcessError]:
         """Execute python command."""
-        stdout_file: None | TextIOWrapper = None
+        stdout_file: Optional[TextIOWrapper] = None
 
         if self.output_file is not None:
             stdout_file = self.output_file.open(mode="w")
