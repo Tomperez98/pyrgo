@@ -4,7 +4,7 @@ from __future__ import annotations
 import pathlib
 import sys
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Any
 
 import click
 from mashumaro import field_options
@@ -15,27 +15,27 @@ from mashumaro.mixins.toml import DataClassTOMLMixin
 class _Project:
     name: str
     optional_dependencies: dict[str, Any] = field(
-        metadata=field_options(alias="optional-dependencies")
+        metadata=field_options(alias="optional-dependencies"), default_factory=dict
     )
 
 
 @dataclass(frozen=True)
 class _Pyrgo:
-    extra_paths: Optional[list[str]] = field(
-        metadata=field_options(alias="extra-paths"), default=None
+    extra_paths: list[str] = field(
+        metadata=field_options(alias="extra-paths"), default_factory=list
     )
-    extra_caches: Optional[list[str]] = field(
-        metadata=field_options(alias="extra-caches"), default=None
+    extra_caches: list[str] = field(
+        metadata=field_options(alias="extra-caches"), default_factory=list
     )
-    vulture_allowlist: Optional[str] = field(
-        metadata=field_options(alias="vulture-allowlist"), default=None
+    vulture_allowlist: str = field(
+        metadata=field_options(alias="vulture-allowlist"), default=".whitelist.vulture"
     )
 
 
 @dataclass(frozen=True)
 class _Tooling:
     pytest: dict[str, Any]
-    pyrgo: Optional[_Pyrgo] = field(default=None)
+    pyrgo: _Pyrgo = field(default=_Pyrgo())
 
 
 @dataclass(frozen=True)
@@ -102,15 +102,13 @@ class PyrgoConf:
         ]
         vulture_allowlist: str = ".whitelist.vulture"
         if pyproject_data.tool.pyrgo is not None:
-            if pyproject_data.tool.pyrgo.vulture_allowlist:
-                vulture_allowlist = pyproject_data.tool.pyrgo.vulture_allowlist
-            if pyproject_data.tool.pyrgo.extra_paths is not None:
-                relevant_paths.extend(pyproject_data.tool.pyrgo.extra_paths)
-            if pyproject_data.tool.pyrgo.extra_caches is not None:
-                caches.extend(
-                    cwd.joinpath(extra)
-                    for extra in pyproject_data.tool.pyrgo.extra_caches
-                )
+            vulture_allowlist = pyproject_data.tool.pyrgo.vulture_allowlist
+
+            relevant_paths.extend(pyproject_data.tool.pyrgo.extra_paths)
+
+            caches.extend(
+                cwd.joinpath(extra) for extra in pyproject_data.tool.pyrgo.extra_caches
+            )
 
         core_deps_alias = "core"
         env_groups = [
