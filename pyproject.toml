@@ -25,9 +25,9 @@ dependencies = [
     "build < 2",
     "pip-audit < 3",
     "vulture < 3",
-    "tomli < 3",
     "tomlkit < 1",
     "pdoc < 15",
+    "mashumaro[orjson,toml] < 4",
 ]
 
 [project.optional-dependencies]
@@ -42,21 +42,7 @@ Issues = "https://github.com/Tomperez98/pyrgo/issues"
 Source = "https://github.com/Tomperez98/pyrgo"
 
 [tool.ruff]
-logger-objects = ["pyrgo.logging.logger"]
 line-length = 88
-ignore = [
-    "ANN101",
-    "D203",
-    "D212",
-    "COM812",
-    "COM819",
-    "D206",
-    "E501",
-    "ISC001",
-    "Q",
-    "W191",
-]
-select = ["ALL"]
 fix = false
 exclude = [
     ".bzr",
@@ -80,20 +66,36 @@ exclude = [
     "venv",
 ]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint]
+logger-objects = ["pyrgo.logging.logger"]
+ignore = [
+    "ANN101",
+    "D203",
+    "D212",
+    "COM812",
+    "COM819",
+    "D206",
+    "E501",
+    "ISC001",
+    "Q",
+    "W191",
+]
+select = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
 "scripts/*.py" = ["INP001"]
 "__init__.py" = ["D104"]
 "tests/*.py" = ["INP001", "S101", "D"]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["pyrgo"]
 combine-as-imports = true
 required-imports = ["from __future__ import annotations"]
 
-[tool.ruff.flake8-tidy-imports]
+[tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all"
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 inline-quotes = "double"
 
 [tool.black]

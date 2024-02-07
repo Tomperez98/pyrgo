@@ -19,22 +19,6 @@ dev = ["pyrgo < 3"]
 
 [tool.ruff]
 line-length = 88
-ignore = [
-    "ANN101",
-    "D203",
-    "D212",
-    "COM812",
-    "COM819",
-    "D206",
-    "E501",
-    "ISC001",
-    "Q000",
-    "Q001",
-    "Q002",
-    "Q003",
-    "W191",
-]
-select = ["ALL"]
 fix = false
 exclude = [
     ".bzr",
@@ -58,7 +42,25 @@ exclude = [
     "venv",
 ]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint]
+ignore = [
+    "ANN101",
+    "D203",
+    "D212",
+    "COM812",
+    "COM819",
+    "D206",
+    "E501",
+    "ISC001",
+    "Q000",
+    "Q001",
+    "Q002",
+    "Q003",
+    "W191",
+]
+select = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
 "tests/*.py" = ["INP001", "S101", "D"]
 
 [tool.pytest.ini_options]

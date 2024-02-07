@@ -14,7 +14,6 @@ class PyProjectNotFoundError(Exception):
     def __init__(self, path: pathlib.Path) -> None:
         super().__init__(f"`pyproject.toml` not found at {path.as_posix()}")
 
-
 @dataclass(frozen=True)
 class PyrgoConf:
     """Pyrgo configuration."""
@@ -47,7 +46,7 @@ class PyrgoConf:
         relevant_paths.extend(
             pyproject_tooling["pytest"]["ini_options"]["testpaths"],
         )
-        pyrgo_config: dict[str, Any] | None = pyproject_tooling.get("pyrgo", None)
+        pyrgo_config: dict[str, Any] | None = pyproject_tooling.get("pyrgo")
         caches = [
             cwd.joinpath(".pytest_cache"),
             cwd.joinpath(".ruff_cache"),
