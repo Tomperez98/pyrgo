@@ -100,15 +100,14 @@ class PyrgoConf:
             cwd.joinpath(".ruff_cache"),
             cwd.joinpath(".mypy_cache"),
         ]
-        vulture_allowlist: str = ".whitelist.vulture"
-        if pyproject_data.tool.pyrgo is not None:
-            vulture_allowlist = pyproject_data.tool.pyrgo.vulture_allowlist
 
-            relevant_paths.extend(pyproject_data.tool.pyrgo.extra_paths)
+        vulture_allowlist = pyproject_data.tool.pyrgo.vulture_allowlist
 
-            caches.extend(
-                cwd.joinpath(extra) for extra in pyproject_data.tool.pyrgo.extra_caches
-            )
+        relevant_paths.extend(pyproject_data.tool.pyrgo.extra_paths)
+
+        caches.extend(
+            cwd.joinpath(extra) for extra in pyproject_data.tool.pyrgo.extra_caches
+        )
 
         core_deps_alias = "core"
         env_groups = [
