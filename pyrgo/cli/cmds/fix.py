@@ -15,7 +15,7 @@ def fix() -> None:
     """Automatically fix lint warnings reported by `ruff`."""
     configuration = PyrgoConf.new()
     ruff_command = (
-        PythonCommandExec.new(
+        PythonCommandExec(
             program="ruff",
         )
         .add_args(args=["--unsafe-fixes", "--fix"])

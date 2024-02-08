@@ -32,7 +32,7 @@ def clean() -> None:
 
     program_execution = inform_and_run_program(
         commands=[
-            PythonCommandExec.new(
+            PythonCommandExec(
                 program="mypy.dmypy",
             ).add_args(args=["stop"])
         ],

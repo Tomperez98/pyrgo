@@ -27,7 +27,7 @@ from pyrgo.core import PyrgoConf, PythonCommandExec
 def doc(output_dir: Optional[str], port: Optional[int]) -> None:
     """Build a package's documentation with `pdoc`."""
     configuration = PyrgoConf.new()
-    pdoc_command = PythonCommandExec.new(program="pdoc").add_args(
+    pdoc_command = PythonCommandExec(program="pdoc").add_args(
         args=[
             configuration.project_name,
         ]
