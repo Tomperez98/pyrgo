@@ -21,7 +21,7 @@ from pyrgo.core import PythonCommandExec
 )
 def test(marker: Optional[str]) -> None:
     """Run tests with `pytest`."""
-    pytest_command = PythonCommandExec.new(
+    pytest_command = PythonCommandExec(
         program="pytest",
     )
     if marker is not None:

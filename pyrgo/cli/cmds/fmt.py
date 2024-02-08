@@ -14,7 +14,7 @@ from pyrgo.core import PyrgoConf, PythonCommandExec
 def fmt() -> None:
     """Format code with `ruff`."""
     configuration = PyrgoConf.new()
-    fmt_command = PythonCommandExec.new(
+    fmt_command = PythonCommandExec(
         program="ruff",
     ).add_args(args=["format", "."])
     for command in [fmt_command]:

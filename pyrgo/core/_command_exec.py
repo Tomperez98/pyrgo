@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import subprocess
 import sys
-from dataclasses import dataclass
 from typing import TYPE_CHECKING, Optional
 
 from result import Err, Ok, Result
@@ -11,26 +10,23 @@ from result import Err, Ok, Result
 if TYPE_CHECKING:
     import pathlib
     from io import TextIOWrapper
+    from pathlib import Path
 
     from typing_extensions import Self
 
     from pyrgo.typing import PyrgoProgram
 
 
-@dataclass(frozen=False)
 class PythonCommandExec:
     """Python command executor."""
 
-    args: list[str]
-    output_file: Optional[pathlib.Path]
-
-    @classmethod
-    def new(
-        cls: type[PythonCommandExec],
+    def __init__(
+        self,
         program: PyrgoProgram,
-    ) -> PythonCommandExec:
+    ) -> None:
         """Build a new command executor."""
-        return cls(args=[sys.executable, "-m", program], output_file=None)
+        self.args: list[str] = [sys.executable, "-m", program]
+        self.output_file: Path | None = None
 
     def add_output_file(self, file: pathlib.Path) -> Self:
         """Add output file to command."""

@@ -18,7 +18,7 @@ def _build_vulture_cmd(
     vulture_allowlist: str,
 ) -> PythonCommandExec:
     configuration.cwd.joinpath(vulture_allowlist).touch(exist_ok=True)
-    vulture_command = PythonCommandExec.new(
+    vulture_command = PythonCommandExec(
         program="vulture",
     )
     if add_noqa:
@@ -60,10 +60,10 @@ def _build_vulture_cmd(
 def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool) -> None:
     """Check code with `mypy`, `ruff` and `vulture`."""
     configuration = PyrgoConf.new()
-    ruff_command = PythonCommandExec.new(
+    ruff_command = PythonCommandExec(
         program="ruff",
     )
-    mypy_command = PythonCommandExec.new(
+    mypy_command = PythonCommandExec(
         program="mypy.dmypy",
     ).add_args(
         args=["run", "--timeout", str(timeout), "--"],

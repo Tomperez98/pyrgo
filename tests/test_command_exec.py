@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 class TestPythonCommandExec:
     @pytest.mark.parametrize(argnames="program", argvalues=["ruff", "pip"])
     def test_new(self, program: PyrgoProgram) -> None:
-        assert PythonCommandExec.new(program=program).args == [
+        assert PythonCommandExec(program=program).args == [
             sys.executable,
             "-m",
             program,
@@ -25,7 +25,7 @@ class TestPythonCommandExec:
         argnames=["command", "args", "expected"],
         argvalues=[
             (
-                PythonCommandExec.new(program="pip"),
+                PythonCommandExec(program="pip"),
                 ["1", "2"],
                 ["pip", "1", "2"],
             ),

@@ -30,7 +30,7 @@ def audit(env: str, *, fix: bool) -> None:
     config = PyrgoConf.new()
     ensure_env_exist(env=env, config=config, where="lock-files")
 
-    pip_audit_cmd = PythonCommandExec.new(
+    pip_audit_cmd = PythonCommandExec(
         program="pip_audit",
     ).add_args(
         args=[
