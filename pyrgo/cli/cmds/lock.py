@@ -44,6 +44,7 @@ def _complete_cmd(
 
     cmd.add_args(
         args=[
+            "--strip-extras",
             "--resolver=backtracking",
             "-o",
             config.requirements.joinpath(f"{env}.txt")
