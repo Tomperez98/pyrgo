@@ -7,8 +7,8 @@ from typing import Optional
 import click
 from result import Ok
 
-from pyrgo.cli.utils import inform_and_run_program
 from pyrgo.command_exec import PythonCommandExec
+from pyrgo.utils import inform_and_run_program
 
 
 @click.command("test")

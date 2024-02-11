@@ -5,9 +5,9 @@ from typing import Optional
 
 import click
 
-from pyrgo.cli.utils import inform_and_run_program
 from pyrgo.command_exec import PythonCommandExec
 from pyrgo.conf import PyrgoConf
+from pyrgo.utils import inform_and_run_program
 
 
 @click.command("doc")

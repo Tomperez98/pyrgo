@@ -3,19 +3,19 @@ from __future__ import annotations
 
 import click
 
-from pyrgo.cli.cmds.add import add
-from pyrgo.cli.cmds.audit import audit
-from pyrgo.cli.cmds.build import build
-from pyrgo.cli.cmds.check import check
-from pyrgo.cli.cmds.clean import clean
-from pyrgo.cli.cmds.doc import doc
-from pyrgo.cli.cmds.fix import fix
-from pyrgo.cli.cmds.fmt import fmt
-from pyrgo.cli.cmds.lock import lock
-from pyrgo.cli.cmds.new import new
-from pyrgo.cli.cmds.remove import remove
-from pyrgo.cli.cmds.sync import sync
-from pyrgo.cli.cmds.test import test
+from pyrgo.cmds.add import add
+from pyrgo.cmds.audit import audit
+from pyrgo.cmds.build import build
+from pyrgo.cmds.check import check
+from pyrgo.cmds.clean import clean
+from pyrgo.cmds.doc import doc
+from pyrgo.cmds.fix import fix
+from pyrgo.cmds.fmt import fmt
+from pyrgo.cmds.lock import lock
+from pyrgo.cmds.new import new
+from pyrgo.cmds.remove import remove
+from pyrgo.cmds.sync import sync
+from pyrgo.cmds.test import test
 
 
 @click.group(

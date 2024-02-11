@@ -6,8 +6,8 @@ import tomlkit
 from packaging.requirements import Requirement
 from tomlkit.items import Item, Table
 
-from pyrgo.cli.utils import ensure_env_exist
 from pyrgo.conf import PyrgoConf
+from pyrgo.utils import ensure_env_exist
 
 
 @click.command("remove")

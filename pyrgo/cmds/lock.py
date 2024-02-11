@@ -8,9 +8,9 @@ import click
 from result import Ok, Result
 from typing_extensions import assert_never
 
-from pyrgo.cli.utils import inform_and_run_program
 from pyrgo.command_exec import PythonCommandExec
 from pyrgo.conf import PyrgoConf
+from pyrgo.utils import inform_and_run_program
 
 if TYPE_CHECKING:
     import subprocess

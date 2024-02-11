@@ -34,7 +34,7 @@ dependencies = [
 dev = ["pytest-cov < 5", "types-toml"]
 
 [project.scripts]
-pyrgo = "pyrgo.cli.__main__:cli"
+pyrgo = "pyrgo.__main__:cli"
 
 [project.urls]
 Documentation = "https://github.com/Tomperez98/pyrgo#readme"
