@@ -7,7 +7,7 @@ import sys
 
 import click
 
-from pyrgo.core import resources
+from pyrgo import resources
 
 
 @click.command("new")

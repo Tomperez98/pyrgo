@@ -7,13 +7,14 @@ import click
 from result import Ok
 
 from pyrgo.cli.utils import inform_and_run_program
-from pyrgo.core import PyrgoConf, PythonCommandExec
+from pyrgo.command_exec import PythonCommandExec
+from pyrgo.conf import PyrgoConf
 
 
 @click.command("fix")
 def fix() -> None:
     """Automatically fix lint warnings reported by `ruff`."""
-    configuration = PyrgoConf.new()
+    configuration = PyrgoConf()
     ruff_command = (
         PythonCommandExec(
             program="ruff",

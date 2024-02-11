@@ -11,7 +11,8 @@ from typing_extensions import assert_never
 if TYPE_CHECKING:
     import subprocess
 
-    from pyrgo.core import PyrgoConf, PythonCommandExec
+    from pyrgo.command_exec import PythonCommandExec
+    from pyrgo.conf import PyrgoConf
 
 
 def inform_and_run_program(

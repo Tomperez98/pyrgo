@@ -9,13 +9,14 @@ import click
 from result import Ok
 
 from pyrgo.cli.utils import inform_and_run_program
-from pyrgo.core import PyrgoConf, PythonCommandExec
+from pyrgo.command_exec import PythonCommandExec
+from pyrgo.conf import PyrgoConf
 
 
 @click.command("clean")
 def clean() -> None:
     """Clean project repository."""
-    config = PyrgoConf.new()
+    config = PyrgoConf()
     for folder in itertools.chain(config.artifacts, config.caches):
         if folder.exists():
             if folder.is_dir():

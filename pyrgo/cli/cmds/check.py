@@ -7,7 +7,8 @@ import click
 from result import Ok
 
 from pyrgo.cli.utils import inform_and_run_program
-from pyrgo.core import PyrgoConf, PythonCommandExec
+from pyrgo.command_exec import PythonCommandExec
+from pyrgo.conf import PyrgoConf
 
 
 def _build_vulture_cmd(
@@ -59,7 +60,7 @@ def _build_vulture_cmd(
 )
 def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool) -> None:
     """Check code with `mypy`, `ruff` and `vulture`."""
-    configuration = PyrgoConf.new()
+    configuration = PyrgoConf()
     ruff_command = PythonCommandExec(
         program="ruff",
     )

@@ -5,7 +5,7 @@ import click
 import tomlkit
 from tomlkit.items import Item, Table
 
-from pyrgo.core import PyrgoConf
+from pyrgo.conf import PyrgoConf
 
 
 @click.command("add")
@@ -21,7 +21,7 @@ from pyrgo.core import PyrgoConf
 @click.argument("dependency", type=click.STRING)
 def add(env: str, dependency: str) -> None:
     """Add dependency to env."""
-    conf = PyrgoConf.new()
+    conf = PyrgoConf()
 
     pyproject_doc = tomlkit.loads(conf.pyproject_path.read_text())
 

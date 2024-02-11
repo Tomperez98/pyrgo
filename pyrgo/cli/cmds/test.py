@@ -8,7 +8,7 @@ import click
 from result import Ok
 
 from pyrgo.cli.utils import inform_and_run_program
-from pyrgo.core import PythonCommandExec
+from pyrgo.command_exec import PythonCommandExec
 
 
 @click.command("test")

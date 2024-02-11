@@ -7,7 +7,7 @@ from packaging.requirements import Requirement
 from tomlkit.items import Item, Table
 
 from pyrgo.cli.utils import ensure_env_exist
-from pyrgo.core import PyrgoConf
+from pyrgo.conf import PyrgoConf
 
 
 @click.command("remove")
@@ -23,7 +23,7 @@ from pyrgo.core import PyrgoConf
 @click.argument("dependency", type=click.STRING)
 def remove(env: str, dependency: str) -> None:
     """Remove dependency from env."""
-    conf = PyrgoConf.new()
+    conf = PyrgoConf()
     ensure_env_exist(env=env, config=conf, where="pyproject")
     pyproject_doc = tomlkit.loads(conf.pyproject_path.read_text())
 

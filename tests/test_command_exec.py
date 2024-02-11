@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from pyrgo.core._command_exec import PythonCommandExec
+from pyrgo.command_exec import PythonCommandExec
 
 if TYPE_CHECKING:
     from pyrgo.typing import PyrgoProgram

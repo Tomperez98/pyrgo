@@ -47,27 +47,14 @@ class _PyProjectToml(DataClassTOMLMixin):
 class PyProjectNotFoundError(Exception):
     """Raised when `pyproject.toml` not found."""
 
-    def __init__(self, path: pathlib.Path) -> None:
+    def __init__(self, path: pathlib.Path) -> None:  # noqa: D107
         super().__init__(f"`pyproject.toml` not found at {path.as_posix()}")
 
 
-@dataclass(frozen=True)
 class PyrgoConf:
     """Pyrgo configuration."""
 
-    cwd: pathlib.Path
-    requirements: pathlib.Path
-    relevant_paths: list[str]
-    artifacts: list[pathlib.Path]
-    caches: list[pathlib.Path]
-    core_deps_alias: str
-    env_groups: list[str]
-    project_name: str
-    pyproject_path: pathlib.Path
-    vulture_allowlist: pathlib.Path
-
-    @classmethod
-    def new(cls: type[PyrgoConf]) -> PyrgoConf:
+    def __init__(self) -> None:
         """Create new configuration instance."""
         cwd = pathlib.Path().cwd()
         pyproject_path = cwd.joinpath("pyproject.toml")
@@ -92,41 +79,32 @@ class PyrgoConf:
             )
             sys.exit(1)
 
-        relevant_paths.extend(
-            test_paths,
-        )
         caches = [
             cwd.joinpath(".pytest_cache"),
             cwd.joinpath(".ruff_cache"),
             cwd.joinpath(".mypy_cache"),
+            *(cwd.joinpath(extra) for extra in pyproject_data.tool.pyrgo.extra_caches),
         ]
 
-        vulture_allowlist = pyproject_data.tool.pyrgo.vulture_allowlist
-
+        relevant_paths.extend(
+            test_paths,
+        )
         relevant_paths.extend(pyproject_data.tool.pyrgo.extra_paths)
 
-        caches.extend(
-            cwd.joinpath(extra) for extra in pyproject_data.tool.pyrgo.extra_caches
-        )
-
-        core_deps_alias = "core"
-        env_groups = [
-            core_deps_alias,
+        self.cwd: pathlib.Path = cwd
+        self.requirements: pathlib.Path = cwd.joinpath("requirements")
+        self.relevant_paths: list[str] = relevant_paths
+        self.artifacts: list[pathlib.Path] = [cwd.joinpath("dist")]
+        self.caches: list[pathlib.Path] = caches
+        self.env_groups: list[str] = [
+            "core",
             *pyproject_data.project.optional_dependencies.keys(),
         ]
-
-        return cls(
-            cwd=cwd,
-            requirements=cwd.joinpath("requirements"),
-            relevant_paths=relevant_paths,
-            artifacts=[cwd.joinpath("dist")],
-            caches=caches,
-            core_deps_alias=core_deps_alias,
-            env_groups=env_groups,
-            project_name=project_name,
-            pyproject_path=pyproject_path,
-            vulture_allowlist=cwd.joinpath(vulture_allowlist).relative_to(cwd),
-        )
+        self.project_name: str = project_name
+        self.pyproject_path: pathlib.Path = pyproject_path
+        self.vulture_allowlist: pathlib.Path = cwd.joinpath(
+            pyproject_data.tool.pyrgo.vulture_allowlist
+        ).relative_to(cwd)
 
     def locked_envs(self) -> set[str]:
         """Get a set of available locked envs."""

@@ -9,7 +9,8 @@ from result import Ok, Result
 from typing_extensions import assert_never
 
 from pyrgo.cli.utils import inform_and_run_program
-from pyrgo.core import PyrgoConf, PythonCommandExec
+from pyrgo.command_exec import PythonCommandExec
+from pyrgo.conf import PyrgoConf
 
 if TYPE_CHECKING:
     import subprocess
@@ -83,7 +84,7 @@ def _complete_cmd(
 )
 def lock(*, generate_hashes: bool, envs: tuple[str, ...], upgrade: bool) -> None:
     """Lock project dependencies with `piptools`."""
-    configuration = PyrgoConf.new()
+    configuration = PyrgoConf()
 
     if not configuration.requirements.exists():
         configuration.requirements.mkdir()
@@ -101,7 +102,7 @@ def lock(*, generate_hashes: bool, envs: tuple[str, ...], upgrade: bool) -> None
                 ).add_args(
                     args=_initial_args(
                         env=env,
-                        core_deps_alias=configuration.core_deps_alias,
+                        core_deps_alias=configuration.env_groups[0],
                         upgrade=upgrade,
                     ),
                 ),
@@ -124,7 +125,7 @@ def lock(*, generate_hashes: bool, envs: tuple[str, ...], upgrade: bool) -> None
                         ).add_args(
                             args=_initial_args(
                                 env=env,
-                                core_deps_alias=configuration.core_deps_alias,
+                                core_deps_alias=configuration.env_groups[0],
                                 upgrade=upgrade,
                             ),
                         ),

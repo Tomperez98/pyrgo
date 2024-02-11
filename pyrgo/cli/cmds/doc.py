@@ -6,7 +6,8 @@ from typing import Optional
 import click
 
 from pyrgo.cli.utils import inform_and_run_program
-from pyrgo.core import PyrgoConf, PythonCommandExec
+from pyrgo.command_exec import PythonCommandExec
+from pyrgo.conf import PyrgoConf
 
 
 @click.command("doc")
@@ -26,7 +27,7 @@ from pyrgo.core import PyrgoConf, PythonCommandExec
 )
 def doc(output_dir: Optional[str], port: Optional[int]) -> None:
     """Build a package's documentation with `pdoc`."""
-    configuration = PyrgoConf.new()
+    configuration = PyrgoConf()
     pdoc_command = PythonCommandExec(program="pdoc").add_args(
         args=[
             configuration.project_name,

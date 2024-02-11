@@ -7,13 +7,14 @@ import click
 from result import Ok
 
 from pyrgo.cli.utils import inform_and_run_program
-from pyrgo.core import PyrgoConf, PythonCommandExec
+from pyrgo.command_exec import PythonCommandExec
+from pyrgo.conf import PyrgoConf
 
 
 @click.command("fmt")
 def fmt() -> None:
     """Format code with `ruff`."""
-    configuration = PyrgoConf.new()
+    configuration = PyrgoConf()
     fmt_command = PythonCommandExec(
         program="ruff",
     ).add_args(args=["format", "."])

@@ -7,7 +7,8 @@ import click
 from result import Ok
 
 from pyrgo.cli.utils import ensure_env_exist, inform_and_run_program
-from pyrgo.core import PyrgoConf, PythonCommandExec
+from pyrgo.command_exec import PythonCommandExec
+from pyrgo.conf import PyrgoConf
 
 
 @click.command("sync")
@@ -27,7 +28,7 @@ from pyrgo.core import PyrgoConf, PythonCommandExec
 )
 def sync(env: str, *, editable: bool) -> None:
     """Sync current python environment to locked deps."""
-    config = PyrgoConf.new()
+    config = PyrgoConf()
     ensure_env_exist(env=env, config=config, where="lock-files")
 
     piptools_command = PythonCommandExec(
