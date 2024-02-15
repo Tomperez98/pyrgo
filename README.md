@@ -17,8 +17,7 @@ Python project manager inspired in [Cargo](https://doc.rust-lang.org/cargo/).
 - Artifacts building:
   - [build](https://pypa-build.readthedocs.io/en/stable/)
 - Package management:
-  - [pip](https://pip.pypa.io/en/stable/)
-  - [pip-tools](https://pip-tools.readthedocs.io/en/latest/)
+  - [uv](https://github.com/astral-sh/uv)
 
 All behind a unified API.
 
