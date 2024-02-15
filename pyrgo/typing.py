@@ -9,8 +9,7 @@ if TYPE_CHECKING:
 PyrgoProgram: TypeAlias = Literal[
     "ruff",
     "mypy.dmypy",
-    "piptools",
-    "pip",
+    "uv",
     "build",
     "pytest",
     "pip_audit",

@@ -19,22 +19,16 @@ from pyrgo.utils import ensure_env_exist, inform_and_run_program
     type=click.STRING,
     required=True,
 )
-@click.option(
-    "--editable/--no-editable",
-    "editable",
-    type=click.BOOL,
-    default=True,
-    show_default=True,
-)
-def sync(env: str, *, editable: bool) -> None:
+def sync(env: str) -> None:
     """Sync current python environment to locked deps."""
     config = PyrgoConf()
     ensure_env_exist(env=env, config=config, where="lock-files")
 
     piptools_command = PythonCommandExec(
-        program="piptools",
+        program="uv",
     ).add_args(
         args=[
+            "pip",
             "sync",
             config.requirements.joinpath(f"{env}.txt")
             .relative_to(config.cwd)
@@ -42,13 +36,12 @@ def sync(env: str, *, editable: bool) -> None:
         ],
     )
     pip_command = PythonCommandExec(
-        program="pip",
+        program="uv",
     ).add_args(
-        args=["install", "--no-deps"],
+        args=["pip", "install"],
     )
-    if editable:
-        pip_command.add_args(args=["-e"])
-    pip_command.add_args(args=["."])
+
+    pip_command.add_args(args=["-e", "."])
 
     program_execution = inform_and_run_program(
         commands=[

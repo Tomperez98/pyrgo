@@ -22,14 +22,14 @@ def _initial_args(
     *,
     upgrade: bool,
 ) -> list[str]:
-    base_args = ["compile"]
+    base_args = ["pip", "compile"]
     if upgrade:
-        base_args.append("-U")
+        base_args.append("--upgrade")
 
     if env == core_deps_alias:
         return base_args
 
-    base_args.extend(["--no-strip-extras", "--extra", env])
+    base_args.extend(["--extra", env])
     return base_args
 
 
@@ -45,8 +45,6 @@ def _complete_cmd(
 
     cmd.add_args(
         args=[
-            "--strip-extras",
-            "--resolver=backtracking",
             "-o",
             config.requirements.joinpath(f"{env}.txt")
             .relative_to(config.cwd)
@@ -98,7 +96,7 @@ def lock(*, generate_hashes: bool, envs: tuple[str, ...], upgrade: bool) -> None
         all_commands.extend(
             _complete_cmd(
                 cmd=PythonCommandExec(
-                    program="piptools",
+                    program="uv",
                 ).add_args(
                     args=_initial_args(
                         env=env,
@@ -121,7 +119,7 @@ def lock(*, generate_hashes: bool, envs: tuple[str, ...], upgrade: bool) -> None
                 all_commands.append(
                     _complete_cmd(
                         cmd=PythonCommandExec(
-                            program="piptools",
+                            program="uv",
                         ).add_args(
                             args=_initial_args(
                                 env=env,

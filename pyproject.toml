@@ -19,7 +19,6 @@ dependencies = [
     "click < 9",
     "ruff < 1",
     "mypy < 2",
-    "pip-tools < 8",
     "pytest < 8",
     "result < 1",
     "build < 2",
@@ -28,6 +27,7 @@ dependencies = [
     "tomlkit < 1",
     "pdoc < 15",
     "mashumaro[orjson,toml] < 4",
+    "uv < 1",
 ]
 
 [project.optional-dependencies]
