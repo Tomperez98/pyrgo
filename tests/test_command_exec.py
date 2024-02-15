@@ -25,9 +25,9 @@ class TestPythonCommandExec:
         argnames=["command", "args", "expected"],
         argvalues=[
             (
-                PythonCommandExec(program="pip"),
+                PythonCommandExec(program="uv"),
                 ["1", "2"],
-                ["pip", "1", "2"],
+                ["uv", "1", "2"],
             ),
         ],
     )
