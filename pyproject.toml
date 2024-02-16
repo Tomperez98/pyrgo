@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyrgo"
-version = "2.2.8"
+version = "2.2.9"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
@@ -28,6 +28,7 @@ dependencies = [
     "pdoc < 15",
     "mashumaro[orjson,toml] < 4",
     "uv < 1",
+    "pip-tools < 8",
 ]
 
 [project.optional-dependencies]

@@ -25,10 +25,9 @@ def sync(env: str) -> None:
     ensure_env_exist(env=env, config=config, where="lock-files")
 
     piptools_command = PythonCommandExec(
-        program="uv",
+        program="piptools",
     ).add_args(
         args=[
-            "pip",
             "sync",
             config.requirements.joinpath(f"{env}.txt")
             .relative_to(config.cwd)
@@ -36,12 +35,12 @@ def sync(env: str) -> None:
         ],
     )
     pip_command = PythonCommandExec(
-        program="uv",
+        program="pip",
     ).add_args(
-        args=["pip", "install"],
+        args=["install"],
     )
 
-    pip_command.add_args(args=["-e", "."])
+    pip_command.add_args(args=["--no-deps", "-e", "."])
 
     program_execution = inform_and_run_program(
         commands=[
