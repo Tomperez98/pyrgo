@@ -45,6 +45,7 @@ def _complete_cmd(
 
     cmd.add_args(
         args=[
+            "--no-cache",
             "-o",
             config.requirements.joinpath(f"{env}.txt")
             .relative_to(config.cwd)
