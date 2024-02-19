@@ -15,6 +15,4 @@ PyrgoProgram: TypeAlias = Literal[
     "pip_audit",
     "vulture",
     "pdoc",
-    "pip",
-    "piptools",
 ]
