@@ -31,10 +31,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
           cache-dependency-path: pyproject.toml
-
+        
+      - uses: yezz123/setup-uv@v1
+      
       - name: Install deps
         run: |
-          pip install -U uv
           uv pip install -r requirements/dev.txt
           uv pip install --no-deps -e .
 
