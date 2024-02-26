@@ -82,7 +82,7 @@ def _complete_cmd(
     required=False,
 )
 def lock(*, generate_hashes: bool, envs: tuple[str, ...], upgrade: bool) -> None:
-    """Lock project dependencies with `piptools`."""
+    """Lock project dependencies with `uv`."""
     configuration = PyrgoConf()
 
     if not configuration.requirements.exists():

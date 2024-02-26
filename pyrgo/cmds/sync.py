@@ -20,11 +20,11 @@ from pyrgo.utils import ensure_env_exist, inform_and_run_program
     required=True,
 )
 def sync(env: str) -> None:
-    """Sync current python environment to locked deps."""
+    """Sync current python environment to locked deps using `uv`."""
     config = PyrgoConf()
     ensure_env_exist(env=env, config=config, where="lock-files")
 
-    piptools_command = PythonCommandExec(
+    sync_command = PythonCommandExec(
         program="uv",
     ).add_args(
         args=[
@@ -45,7 +45,7 @@ def sync(env: str) -> None:
 
     program_execution = inform_and_run_program(
         commands=[
-            piptools_command,
+            sync_command,
             pip_command,
         ]
     )

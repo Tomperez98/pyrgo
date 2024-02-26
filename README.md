@@ -21,7 +21,7 @@ Python project manager inspired in [Cargo](https://doc.rust-lang.org/cargo/).
 
 All behind a unified API.
 
-```zsh
+```
 Usage: pyrgo [OPTIONS] COMMAND [ARGS]...
 
   pyrgo. Python package manager.
@@ -39,10 +39,10 @@ Commands:
   doc     Build a package's documentation with `pdoc`.
   fix     Automatically fix lint warnings reported by `ruff`.
   fmt     Format code with `ruff`.
-  lock    Lock project dependencies with `piptools`.
+  lock    Lock project dependencies with `uv`.
   new     Create a project.
   remove  Remove dependency from env.
-  sync    Sync current python environment to locked deps.
+  sync    Sync current python environment to locked deps using `uv`.
   test    Run tests with `pytest`.
 ```
 
