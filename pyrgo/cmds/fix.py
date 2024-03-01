@@ -1,4 +1,5 @@
 """Fix command."""
+
 from __future__ import annotations
 
 import sys
@@ -19,7 +20,7 @@ def fix() -> None:
         PythonCommandExec(
             program="ruff",
         )
-        .add_args(args=["--unsafe-fixes", "--fix"])
+        .add_args(args=["check", "--unsafe-fixes", "--fix"])
         .add_args(configuration.relevant_paths)
     )
 

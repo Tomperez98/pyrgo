@@ -1,4 +1,5 @@
 """Check command."""
+
 from __future__ import annotations
 
 import sys
@@ -63,7 +64,7 @@ def check(*, timeout: int, add_noqa: bool, ignore_noqa: bool) -> None:
     configuration = PyrgoConf()
     ruff_command = PythonCommandExec(
         program="ruff",
-    )
+    ).add_args(args=["check"])
     mypy_command = PythonCommandExec(
         program="mypy.dmypy",
     ).add_args(
