@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyrgo"
-version = "2.2.11"
+version = "2.2.12"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
@@ -17,7 +17,7 @@ authors = [
 ]
 dependencies = [
     "click < 9",
-    "ruff < 1",
+    "ruff >= 0.3.0, < 1",
     "mypy < 2",
     "pytest < 8",
     "result < 1",
