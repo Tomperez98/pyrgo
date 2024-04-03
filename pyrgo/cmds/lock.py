@@ -39,14 +39,17 @@ def _complete_cmd(
     env: str,
     cmd: PythonCommandExec,
     generate_hashes: bool,
+    cache: bool,
     config: PyrgoConf,
 ) -> PythonCommandExec:
     if generate_hashes:
         cmd.add_args(args=["--generate-hashes"])
 
+    if not cache:
+        cmd.add_args(args=["--no-cache"])
+
     cmd.add_args(
         args=[
-            "--no-cache",
             "-o",
             config.requirements.joinpath(f"{env}.txt")
             .relative_to(config.cwd)
@@ -82,7 +85,10 @@ def _complete_cmd(
     type=click.STRING,
     required=False,
 )
-def lock(*, generate_hashes: bool, envs: tuple[str, ...], upgrade: bool) -> None:
+@click.option("--cache/--no-cache", "cache", default=True, show_default=True)
+def lock(
+    *, generate_hashes: bool, envs: tuple[str, ...], upgrade: bool, cache: bool
+) -> None:
     """Lock project dependencies with `uv`."""
     configuration = PyrgoConf()
 
@@ -109,6 +115,7 @@ def lock(*, generate_hashes: bool, envs: tuple[str, ...], upgrade: bool) -> None
                 generate_hashes=generate_hashes,
                 config=configuration,
                 env=env,
+                cache=cache,
             )
             for env in configuration.env_groups
         )
@@ -132,6 +139,7 @@ def lock(*, generate_hashes: bool, envs: tuple[str, ...], upgrade: bool) -> None
                         generate_hashes=generate_hashes,
                         config=configuration,
                         env=env,
+                        cache=cache,
                     ),
                 )
 
